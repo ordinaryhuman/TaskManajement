@@ -38,7 +38,7 @@
 <!-- Popup Login -->
     <a href="#x" class="overlay" id="login_form"> </a>
         <div class="popup">
-        	<form>
+        	<form action="HomeController" method="post">
             <h2>User Login</h2>
             <p>Please enter Username and Password</p>
             <div>
@@ -50,6 +50,7 @@
                 <input type="password" id="passlogin" name="password" value="" />
             </div>
             <div align="right">
+            	<input name="action" value="login" hidden="true"/>
             	<input type="submit" value="Login"/>
             </div>
 
@@ -60,6 +61,7 @@
     <!-- Popup Register -->
     <a href="#x" class="overlay" id="register_form"> </a>
         <div class="popup">
+        <form action="HomeController" method="post">
             <h2>Register</h2>
             <p>Please enter your details here</p>
             
@@ -129,26 +131,27 @@
                 <div class="requirement">YYYY-MM-DD</div>
       </div>
             
-            <div class="iinfo" id="email_info"></div>
-            <div>
-                <label for="email">Email</label>
-                <input name="email" type="text" id="email" value="" onChange="validate_email()"/>
-                <div class="requirement">Min. 1 character before @.<br/>Min. 1 character between @ and'.'<br/>Top level domain should contain at least 2 characters.<br/>ex. x@x.xx</div>
-            </div>
-            
-             <div class="iinfo" id="avatar_info"></div>
-            <div>
-                <label for="avatar">Avatar</label>
-                <input type="file" name="avatar_path" id="avatar" value="" onChange="validate_avatar()"/>
-                <div class="requirement">File must be .jpg or .jpeg.</div>
-            </div>
-           	<form action="#">
-       		<div align="right"><input type="submit" value="Register" name="register">
-            </div>
-        	</form>
+	            <div class="iinfo" id="email_info"></div>
+	            <div>
+	                <label for="email">Email</label>
+	                <input name="email" type="text" id="email" value="" onChange="validate_email()"/>
+	                <div class="requirement">Min. 1 character before @.<br/>Min. 1 character between @ and'.'<br/>Top level domain should contain at least 2 characters.<br/>ex. x@x.xx</div>
+	            </div>
+	            
+	             <div class="iinfo" id="avatar_info"></div>
+	            <div>
+	                <label for="avatar">Avatar</label>
+	                <input type="file" name="avatar_path" id="avatar" value="" onChange="validate_avatar()"/>
+	                <div class="requirement">File must be .jpg or .jpeg.</div>
+	            </div>
+	            <input name="action" value="register" hidden="true"/>
+	       		<div align="right"><input type="submit" value="Register" name="register">
+	            </div>
+     
             
 
             <a class="close" href="#close"></a>
+            </form>
 		</div>
     
     
