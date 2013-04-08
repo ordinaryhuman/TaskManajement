@@ -12,20 +12,49 @@ public class Comment extends BaseModel {
 
 	@Override
 	public void addOnDB() {
-		// TODO Auto-generated method stub
+		DBQueryExecutor executor = new DBQueryExecutor();
+		String stmt = String.format("INSERT INTO `%s` (`commentID`, `taskID`, `username`, `content`, `timestamp`)" +
+				"VALUES ('%s', '%s', '%s', '%s', '%s');", DBTable.ATTACHMENT, mID, mTaskID, mUsername, mContent, mTimestamp);
 		
+		try {
+			executor.executeQuery(stmt);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
 	}
 
 	@Override
 	public void editOnDB() {
-		// TODO Auto-generated method stub
-		
+		DBQueryExecutor executor = new DBQueryExecutor();
+		String stmt = String.format("UPDATE `%s` SET `taskID` = '%s', `username` = '%s', `content` = '%s', `timestamp` = '%s'" +
+				"WHERE `%s`.`commentID` = '%s'", DBTable.ATTACHMENT, mTaskID, mUsername, mContent, mTimestamp, DBTable.ATTACHMENT, mID);
+				
+		try {
+			executor.executeQuery(stmt);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
 	}
 
 	@Override
 	public void deleteOnDB() {
-		// TODO Auto-generated method stub
-		
+		DBQueryExecutor executor = new DBQueryExecutor();
+		String stmt = String.format("DELETE FROM `%s` WHERE `%s`.`commentID` = '%s'", DBTable.ATTACHMENT, DBTable.ATTACHMENT, mID);
+				
+		try {
+			executor.executeQuery(stmt);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
 	}
 
 	private Integer mID;

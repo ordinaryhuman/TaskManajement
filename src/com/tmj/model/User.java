@@ -15,20 +15,49 @@ public class User extends BaseModel {
 
 	@Override
 	public void addOnDB() {
-		// TODO Auto-generated method stub
+		DBQueryExecutor executor = new DBQueryExecutor();
+		String stmt = String.format("INSERT INTO `%s` (`username`, `password`, `fullname`, `birthplace`, `birthdate`, `email`, `avatar`)" +
+				"VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s');", DBTable.ATTACHMENT, mUsername, mPassword, mFullname, mBirthplace, mBirthdate, mEmail, mAvatarPath);
 		
+		try {
+			executor.executeQuery(stmt);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
 	}
 
 	@Override
 	public void editOnDB() {
-		// TODO Auto-generated method stub
-		
+		DBQueryExecutor executor = new DBQueryExecutor();
+		String stmt = String.format("UPDATE `%s` SET `password` = '%s', `fullname` = '%s', `birthplace` = '%s', `birthdate` = '%s', `email` = '%s', `avatar` = '%s'" +
+				"WHERE `%s`.`username` = '%s'", DBTable.ATTACHMENT, mPassword, mFullname, mBirthplace, mBirthdate, mEmail, mAvatarPath, DBTable.ATTACHMENT, mID);
+				
+		try {
+			executor.executeQuery(stmt);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
 	}
 
 	@Override
 	public void deleteOnDB() {
-		// TODO Auto-generated method stub
-		
+		DBQueryExecutor executor = new DBQueryExecutor();
+		String stmt = String.format("DELETE FROM `%s` WHERE `%s`.`username` = '%s'", DBTable.ATTACHMENT, DBTable.ATTACHMENT, mID);
+				
+		try {
+			executor.executeQuery(stmt);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
 	}
 
 	private String mUsername;

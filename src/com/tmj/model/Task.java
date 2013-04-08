@@ -13,20 +13,49 @@ public class Task extends BaseModel {
 
 	@Override
 	public void addOnDB() {
-		// TODO Auto-generated method stub
+		DBQueryExecutor executor = new DBQueryExecutor();
+		String stmt = String.format("INSERT INTO `%s` (`taskID`, `categoryID`, `username`, `taskname`, `status`, `deadline`)" +
+				"VALUES ('%s', '%s', '%s', '%s', '%s', '%s');", DBTable.ATTACHMENT, mID, mCategoryID, mUsername, mTaskname, mStatus, mDeadline);
 		
+		try {
+			executor.executeQuery(stmt);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
 	}
 
 	@Override
 	public void editOnDB() {
-		// TODO Auto-generated method stub
-		
+		DBQueryExecutor executor = new DBQueryExecutor();
+		String stmt = String.format("UPDATE `%s` SET `categoryID` = '%s', `username` = '%s', `taskname` = '%s', `status` = '%s', `deadline` = '%s'" +
+				"WHERE `%s`.`taskID` = '%s'", DBTable.ATTACHMENT, mTaskID, mFilename, mType, DBTable.ATTACHMENT, mID);
+				
+		try {
+			executor.executeQuery(stmt);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
 	}
 
 	@Override
 	public void deleteOnDB() {
-		// TODO Auto-generated method stub
-		
+		DBQueryExecutor executor = new DBQueryExecutor();
+		String stmt = String.format("DELETE FROM `%s` WHERE `%s`.`taskID` = '%s'", DBTable.ATTACHMENT, DBTable.ATTACHMENT, mID);
+				
+		try {
+			executor.executeQuery(stmt);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
 	}
 	
 	private Integer mID;
