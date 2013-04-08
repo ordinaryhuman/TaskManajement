@@ -1,5 +1,10 @@
 package com.tmj.model;
 
+import java.sql.SQLException;
+
+import com.tmj.helper.DBQueryExecutor;
+import com.tmj.helper.DBTable;
+
 public class Task extends BaseModel {
 	
 	public Task(Integer ID, Integer categoryID, String username, String taskname, Boolean status, String deadline) {
@@ -15,7 +20,7 @@ public class Task extends BaseModel {
 	public void addOnDB() {
 		DBQueryExecutor executor = new DBQueryExecutor();
 		String stmt = String.format("INSERT INTO `%s` (`taskID`, `categoryID`, `username`, `taskname`, `status`, `deadline`)" +
-				"VALUES ('%s', '%s', '%s', '%s', '%s', '%s');", DBTable.ATTACHMENT, mID, mCategoryID, mUsername, mTaskname, mStatus, mDeadline);
+				"VALUES ('%s', '%s', '%s', '%s', '%s', '%s');", DBTable.TASK, mID, mCategoryID, mUsername, mTaskname, mStatus, mDeadline);
 		
 		try {
 			executor.executeQuery(stmt);
@@ -31,7 +36,7 @@ public class Task extends BaseModel {
 	public void editOnDB() {
 		DBQueryExecutor executor = new DBQueryExecutor();
 		String stmt = String.format("UPDATE `%s` SET `categoryID` = '%s', `username` = '%s', `taskname` = '%s', `status` = '%s', `deadline` = '%s'" +
-				"WHERE `%s`.`taskID` = '%s'", DBTable.ATTACHMENT, mTaskID, mFilename, mType, DBTable.ATTACHMENT, mID);
+				"WHERE `%s`.`taskID` = '%s'", DBTable.TASK, mCategoryID, mUsername, mTaskname, DBTable.TASK, mID);
 				
 		try {
 			executor.executeQuery(stmt);
@@ -46,7 +51,7 @@ public class Task extends BaseModel {
 	@Override
 	public void deleteOnDB() {
 		DBQueryExecutor executor = new DBQueryExecutor();
-		String stmt = String.format("DELETE FROM `%s` WHERE `%s`.`taskID` = '%s'", DBTable.ATTACHMENT, DBTable.ATTACHMENT, mID);
+		String stmt = String.format("DELETE FROM `%s` WHERE `%s`.`taskID` = '%s'", DBTable.TASK, DBTable.TASK, mID);
 				
 		try {
 			executor.executeQuery(stmt);

@@ -1,5 +1,10 @@
 package com.tmj.model;
 
+import java.sql.SQLException;
+
+import com.tmj.helper.DBQueryExecutor;
+import com.tmj.helper.DBTable;
+
 public class Comment extends BaseModel {
 	
 	public Comment(Integer ID, Integer taskID, String username, String content, String timestamp) {
@@ -14,7 +19,7 @@ public class Comment extends BaseModel {
 	public void addOnDB() {
 		DBQueryExecutor executor = new DBQueryExecutor();
 		String stmt = String.format("INSERT INTO `%s` (`commentID`, `taskID`, `username`, `content`, `timestamp`)" +
-				"VALUES ('%s', '%s', '%s', '%s', '%s');", DBTable.ATTACHMENT, mID, mTaskID, mUsername, mContent, mTimestamp);
+				"VALUES ('%s', '%s', '%s', '%s', '%s');", DBTable.COMMENT, mID, mTaskID, mUsername, mContent, mTimestamp);
 		
 		try {
 			executor.executeQuery(stmt);
@@ -30,7 +35,7 @@ public class Comment extends BaseModel {
 	public void editOnDB() {
 		DBQueryExecutor executor = new DBQueryExecutor();
 		String stmt = String.format("UPDATE `%s` SET `taskID` = '%s', `username` = '%s', `content` = '%s', `timestamp` = '%s'" +
-				"WHERE `%s`.`commentID` = '%s'", DBTable.ATTACHMENT, mTaskID, mUsername, mContent, mTimestamp, DBTable.ATTACHMENT, mID);
+				"WHERE `%s`.`commentID` = '%s'", DBTable.COMMENT, mTaskID, mUsername, mContent, mTimestamp, DBTable.ATTACHMENT, mID);
 				
 		try {
 			executor.executeQuery(stmt);
@@ -45,7 +50,7 @@ public class Comment extends BaseModel {
 	@Override
 	public void deleteOnDB() {
 		DBQueryExecutor executor = new DBQueryExecutor();
-		String stmt = String.format("DELETE FROM `%s` WHERE `%s`.`commentID` = '%s'", DBTable.ATTACHMENT, DBTable.ATTACHMENT, mID);
+		String stmt = String.format("DELETE FROM `%s` WHERE `%s`.`commentID` = '%s'", DBTable.COMMENT, DBTable.COMMENT, mID);
 				
 		try {
 			executor.executeQuery(stmt);

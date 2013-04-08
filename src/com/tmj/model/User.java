@@ -1,5 +1,10 @@
 package com.tmj.model;
 
+import java.sql.SQLException;
+
+import com.tmj.helper.DBQueryExecutor;
+import com.tmj.helper.DBTable;
+
 public class User extends BaseModel {
 	
 	public User(String username, String password, String fullname, String birthplace, String birthdate,
@@ -17,7 +22,7 @@ public class User extends BaseModel {
 	public void addOnDB() {
 		DBQueryExecutor executor = new DBQueryExecutor();
 		String stmt = String.format("INSERT INTO `%s` (`username`, `password`, `fullname`, `birthplace`, `birthdate`, `email`, `avatar`)" +
-				"VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s');", DBTable.ATTACHMENT, mUsername, mPassword, mFullname, mBirthplace, mBirthdate, mEmail, mAvatarPath);
+				"VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s');", DBTable.USER, mUsername, mPassword, mFullname, mBirthplace, mBirthdate, mEmail, mAvatarPath);
 		
 		try {
 			executor.executeQuery(stmt);
@@ -33,7 +38,7 @@ public class User extends BaseModel {
 	public void editOnDB() {
 		DBQueryExecutor executor = new DBQueryExecutor();
 		String stmt = String.format("UPDATE `%s` SET `password` = '%s', `fullname` = '%s', `birthplace` = '%s', `birthdate` = '%s', `email` = '%s', `avatar` = '%s'" +
-				"WHERE `%s`.`username` = '%s'", DBTable.ATTACHMENT, mPassword, mFullname, mBirthplace, mBirthdate, mEmail, mAvatarPath, DBTable.ATTACHMENT, mID);
+				"WHERE `%s`.`username` = '%s'", DBTable.USER, mPassword, mFullname, mBirthplace, mBirthdate, mEmail, mAvatarPath, DBTable.USER, mUsername);
 				
 		try {
 			executor.executeQuery(stmt);
@@ -48,7 +53,7 @@ public class User extends BaseModel {
 	@Override
 	public void deleteOnDB() {
 		DBQueryExecutor executor = new DBQueryExecutor();
-		String stmt = String.format("DELETE FROM `%s` WHERE `%s`.`username` = '%s'", DBTable.ATTACHMENT, DBTable.ATTACHMENT, mID);
+		String stmt = String.format("DELETE FROM `%s` WHERE `%s`.`username` = '%s'", DBTable.USER, DBTable.USER, mUsername);
 				
 		try {
 			executor.executeQuery(stmt);
