@@ -1,21 +1,55 @@
 package com.tmj.model;
 
 public class Tag extends BaseModel {
+
+	public Tag(Integer ID, String name) {
+		mID = ID;
+		mName = name;
+	}
 	
 	@Override
 	public void addOnDB() {
-		// TODO Auto-generated method stub
+		DBQueryExecutor executor = new DBQueryExecutor();
+		String stmt = String.format("INSERT INTO `%s` (`taskID`, `tagname`)" +
+				"VALUES ('%s', '%s');", DBTable.ATTACHMENT, mID, mName);
 		
+		try {
+			executor.executeQuery(stmt);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
 	}
 	@Override
 	public void editOnDB() {
-		// TODO Auto-generated method stub
-		
+		DBQueryExecutor executor = new DBQueryExecutor();
+		String stmt = String.format("UPDATE `%s` SET `taskID` = '%s', `tagname` = '%s'" +
+				"WHERE `%s`.`taskID` = '%s' AND `%s`.`tagname` = '%s'", DBTable.ATTACHMENT, mID, mName, DBTable.ATTACHMENT, mID, DBTable.ATTACHMENT, mName);
+				
+		try {
+			executor.executeQuery(stmt);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
 	}
 	@Override
 	public void deleteOnDB() {
-		// TODO Auto-generated method stub
-		
+		DBQueryExecutor executor = new DBQueryExecutor();
+		String stmt = String.format("DELETE FROM `%s` WHERE `%s`.`taskID` = '%s' AND `%s`.`tagname` = '%s'", DBTable.ATTACHMENT, DBTable.ATTACHMENT, mID, DBTable.ATTACHMENT, mName);
+				
+		try {
+			executor.executeQuery(stmt);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
 	}
 	
 	private Integer mTaskID;

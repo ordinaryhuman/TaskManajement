@@ -33,7 +33,7 @@ public class User extends BaseModel {
 	public void editOnDB() {
 		DBQueryExecutor executor = new DBQueryExecutor();
 		String stmt = String.format("UPDATE `%s` SET `password` = '%s', `fullname` = '%s', `birthplace` = '%s', `birthdate` = '%s', `email` = '%s', `avatar` = '%s'" +
-				"WHERE `%s`.`username` = '%s'", DBTable.ATTACHMENT, mPassword, mFullname, mBirthplace, mBirthdate, mEmail, mAvatarPath, DBTable.ATTACHMENT, mID);
+				"WHERE `%s`.`username` = '%s'", DBTable.ATTACHMENT, mPassword, mFullname, mBirthplace, mBirthdate, mEmail, mAvatarPath, DBTable.ATTACHMENT, mUsername);
 				
 		try {
 			executor.executeQuery(stmt);
@@ -48,7 +48,7 @@ public class User extends BaseModel {
 	@Override
 	public void deleteOnDB() {
 		DBQueryExecutor executor = new DBQueryExecutor();
-		String stmt = String.format("DELETE FROM `%s` WHERE `%s`.`username` = '%s'", DBTable.ATTACHMENT, DBTable.ATTACHMENT, mID);
+		String stmt = String.format("DELETE FROM `%s` WHERE `%s`.`username` = '%s'", DBTable.ATTACHMENT, DBTable.ATTACHMENT, mUsername);
 				
 		try {
 			executor.executeQuery(stmt);
