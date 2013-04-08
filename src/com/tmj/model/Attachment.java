@@ -34,7 +34,7 @@ public class Attachment extends BaseModel {
 	public void editOnDB() {
 		DBQueryExecutor executor = new DBQueryExecutor();
 		String stmt = String.format("UPDATE `%s` SET `taskID` = '%s', `filename` = '%s', `type` = '%s'" +
-				"WHERE `%s`.`attachmentID` = '%s'", DBTable.ATTACHMENT, mTaskID, mFilename, mTaskID, DBTable.ATTACHMENT, mID);
+				"WHERE `%s`.`attachmentID` = '%s'", DBTable.ATTACHMENT, mTaskID, mFilename, mType, DBTable.ATTACHMENT, mID);
 				
 		try {
 			executor.executeQuery(stmt);

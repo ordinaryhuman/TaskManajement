@@ -10,20 +10,49 @@ public class Category extends BaseModel {
 
 	@Override
 	public void addOnDB() {
-		// TODO Auto-generated method stub
+		DBQueryExecutor executor = new DBQueryExecutor();
+		String stmt = String.format("INSERT INTO `%s` (`categoryID`, `categoryname`, `creatorID`)" +
+				"VALUES ('%s', '%s', '%s');", DBTable.ATTACHMENT, mID, mName, mCreatorID);
 		
+		try {
+			executor.executeQuery(stmt);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
 	}
 
 	@Override
 	public void editOnDB() {
-		// TODO Auto-generated method stub
-		
+		DBQueryExecutor executor = new DBQueryExecutor();
+		String stmt = String.format("UPDATE `%s` SET `categoryname` = '%s', `creatorID` = '%s'" +
+				"WHERE `%s`.`categoryID` = '%s'", DBTable.ATTACHMENT, mTaskID, mFilename, mType, DBTable.ATTACHMENT, mID);
+				
+		try {
+			executor.executeQuery(stmt);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
 	}
 
 	@Override
 	public void deleteOnDB() {
-		// TODO Auto-generated method stub
-		
+		DBQueryExecutor executor = new DBQueryExecutor();
+		String stmt = String.format("DELETE FROM `%s` WHERE `%s`.`categoryID` = '%s'", DBTable.ATTACHMENT, DBTable.ATTACHMENT, mID);
+				
+		try {
+			executor.executeQuery(stmt);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
 	}
 
 	private Integer mID;
