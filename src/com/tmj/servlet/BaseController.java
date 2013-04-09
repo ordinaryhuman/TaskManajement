@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.tmj.model.User;
+
 /**
  * Servlet implementation class BaseController
  */
@@ -46,6 +48,14 @@ public class BaseController extends HttpServlet {
 	}
 	
 	protected void doUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	}
+	
+	protected void checkLoggedIn(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		User user = (User) request.getSession().getAttribute("user");
+		if(user == null) {
+			mRD = request.getRequestDispatcher("index.jsp");
+			mRD.forward(request, response);
+		}
 	}
 
 	protected RequestDispatcher mRD;

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.tmj.model.Category;
 import com.tmj.model.User;
 
 /**
@@ -29,8 +30,15 @@ public class DashboardController extends BaseController {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		super.doGet(request, response);
+		checkLoggedIn(request, response);
 		
 		if(mAction == null) {
+			mRD = request.getRequestDispatcher("dashboard/index.jsp");
+			mRD.forward(request, response);
+		} if(mAction == "delete") {
+			Integer categoryID = new Integer(request.getParameter("categoryID"));
+			Category.getCategoryFromCategoryID(categoryID).deleteOnDB();
+			
 			mRD = request.getRequestDispatcher("dashboard/index.jsp");
 			mRD.forward(request, response);
 		}
@@ -41,6 +49,21 @@ public class DashboardController extends BaseController {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		super.doPost(request, response);
+		checkLoggedIn(request, response);
+		
+		User activeUser = (User) request.getSession().getAttribute("user");
+		
+		if(mAction.equals("addCategory")) {
+			String categoryName = request.getParameter("categoryname");
+			String usernameMembers = request.getParameter("users").concat(";" + activeUser.getUsername());
+			
+			Category category = new Category(Category.getAvailableCategoryID(), categoryName, activeUser.getUsername());
+			category.addOnDB();
+			category.setMembers(usernameMembers);
+			
+			mRD = request.getRequestDispatcher("dashboard/index.jsp");
+			mRD.forward(request, response);
+		}
 	}
 
 }

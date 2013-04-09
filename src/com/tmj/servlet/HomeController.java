@@ -27,6 +27,11 @@ public class HomeController extends BaseController {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		super.doGet(request, response);
+		request.getSession().setAttribute("user", null);
+		request.getSession().setAttribute("loggedIn", null);
+		
+		mRD = request.getRequestDispatcher("index.jsp");
+		mRD.forward(request, response);
 	}
 	
 	/**
@@ -38,7 +43,7 @@ public class HomeController extends BaseController {
 			request.getSession().setAttribute("user", null);
 			request.getSession().setAttribute("loggedIn", null);
 			
-			response.sendRedirect("index.jsp");
+			response.sendRedirect("/");
 		} else if(mAction.equals("login")) {
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");

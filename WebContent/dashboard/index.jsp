@@ -52,15 +52,15 @@
         
         <div class="popup">
             <h2>Add Category</h2>
-            <form action="category" method="post">
+            <form action="dashboard" method="post">
 	            <p>Please enter category name and user who can access it</p>
 	            <div>
 	                <label for="category">Category Name</label>
-	                <input type="text" id="category" name="category" value="" />
+	                <input type="text" id="category" name="categoryname" value="" />
 	            </div>
 	            <div>
 	                <label for="name">User (Seperated with ";")</label>
-	                <input type="text" id="name" name="name" value="" />
+	                <input type="text" id="name" name="users" value="" />
 	            </div>
 	            <div align="right">
 	            	<input name="action" value="addCategory" />
