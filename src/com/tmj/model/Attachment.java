@@ -23,10 +23,11 @@ public class Attachment extends BaseModel {
 			if (result != null) {
 				ArrayList<Attachment> temp = new ArrayList<Attachment>();
 				while (result.next()) {
-					int attachmendID= result.getInt("attachmendID");
+					Integer attachmendID= result.getInt("attachmendID");
 					String filename = result.getString("filename");
 					String type = result.getString("type");
 					Attachment attachment = new Attachment(attachmendID, taskID, filename, type);
+					temp.add(attachment);
 				}
 				
 				retval = new Attachment[temp.size()];

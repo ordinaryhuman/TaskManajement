@@ -24,10 +24,11 @@ public class Category extends BaseModel {
 			if (result != null) {
 				ArrayList<Category> temp = new ArrayList<Category>();
 				while (result.next()) {
-					int categoryID	= result.getInt("categoryID");
+					Integer categoryID	= result.getInt("categoryID");
 					String categoryname	= result.getString("categoryname");
 					String creatorID 	= result.getString("creatorID");
 					Category category = new Category(categoryID, categoryname, creatorID);
+					temp.add(category);
 				}
 				
 				retval = new Category[temp.size()];
@@ -75,9 +76,10 @@ public class Category extends BaseModel {
 			if (result != null) {
 				ArrayList<Category> temp = new ArrayList<Category>();
 				while (result.next()) {
-					int categoryID	= result.getInt("categoryID");
+					Integer categoryID	= result.getInt("categoryID");
 					String categoryname	= result.getString("categoryname");
 					Category category = new Category(categoryID, categoryname, username);
+					temp.add(category);
 				}
 				
 				retval = new Category[temp.size()];

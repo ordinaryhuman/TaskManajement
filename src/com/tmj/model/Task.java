@@ -27,13 +27,14 @@ public class Task extends BaseModel {
 			if (result != null) {
 				ArrayList<Task> temp = new ArrayList<Task>();
 				while (result.next()) {
-					int taskID		= result.getInt("taskID");
-					int categoryID	= result.getInt("categoryID");
+					Integer taskID		= result.getInt("taskID");
+					Integer categoryID	= result.getInt("categoryID");
 					String username = result.getString("username");
 					String taskname = result.getString("taskname");
-					boolean status	= result.getBoolean("status");
+					Boolean status	= result.getBoolean("status");
 					String deadline = result.getString("deadline");
 					Task task = new Task(taskID, categoryID, username, taskname, status, deadline);
+					temp.add(task);
 				}
 				
 				retval = new Task[temp.size()];
@@ -57,10 +58,10 @@ public class Task extends BaseModel {
 			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `taskID` = '%s';", DBTable.TASK, id));
 			if (result != null) {
 				while (result.next()) {
-					int categoryID	= result.getInt("categoryID");
+					Integer categoryID	= result.getInt("categoryID");
 					String username = result.getString("username");
 					String taskname = result.getString("taskname");
-					boolean status	= result.getBoolean("status");
+					Boolean status	= result.getBoolean("status");
 					String deadline = result.getString("deadline");
 					retval = new Task(id, categoryID, username, taskname, status, deadline);
 				}
@@ -84,12 +85,13 @@ public class Task extends BaseModel {
 			if (result != null) {
 				ArrayList<Task> temp = new ArrayList<Task>();
 				while (result.next()) {
-					int taskID		= result.getInt("taskID");
+					Integer taskID		= result.getInt("taskID");
 					String username = result.getString("username");
 					String taskname = result.getString("taskname");
-					boolean status	= result.getBoolean("status");
+					Boolean status	= result.getBoolean("status");
 					String deadline = result.getString("deadline");
 					Task task = new Task(taskID, categoryID, username, taskname, status, deadline);
+					temp.add(task);
 				}
 				
 				retval = new Task[temp.size()];
@@ -114,12 +116,13 @@ public class Task extends BaseModel {
 			if (result != null) {
 				ArrayList<Task> temp = new ArrayList<Task>();
 				while (result.next()) {
-					int taskID		= result.getInt("taskID");
-					int categoryID	= result.getInt("categoryID");
+					Integer taskID		= result.getInt("taskID");
+					Integer categoryID	= result.getInt("categoryID");
 					String taskname = result.getString("taskname");
-					boolean status	= result.getBoolean("status");
+					Boolean status	= result.getBoolean("status");
 					String deadline = result.getString("deadline");
 					Task task = new Task(taskID, categoryID, username, taskname, status, deadline);
+					temp.add(task);
 				}
 				
 				retval = new Task[temp.size()];
@@ -144,11 +147,12 @@ public class Task extends BaseModel {
 			if (result != null) {
 				ArrayList<Task> temp = new ArrayList<Task>();
 				while (result.next()) {
-					int taskID		= result.getInt("taskID");
-					int categoryID	= result.getInt("categoryID");
+					Integer taskID		= result.getInt("taskID");
+					Integer categoryID	= result.getInt("categoryID");
 					String taskname = result.getString("taskname");
 					String deadline = result.getString("deadline");
 					Task task = new Task(taskID, categoryID, username, taskname, 1, deadline);
+					temp.add(task);
 				}
 				
 				retval = new Task[temp.size()];
@@ -173,11 +177,12 @@ public class Task extends BaseModel {
 			if (result != null) {
 				ArrayList<Task> temp = new ArrayList<Task>();
 				while (result.next()) {
-					int taskID		= result.getInt("taskID");
-					int categoryID	= result.getInt("categoryID");
+					Integer taskID		= result.getInt("taskID");
+					Integer categoryID	= result.getInt("categoryID");
 					String taskname = result.getString("taskname");
 					String deadline = result.getString("deadline");
 					Task task = new Task(taskID, categoryID, username, taskname, 0, deadline);
+					temp.add(task);
 				}
 				
 				retval = new Task[temp.size()];

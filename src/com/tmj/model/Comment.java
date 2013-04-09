@@ -24,12 +24,13 @@ public class Comment extends BaseModel {
 			if (result != null) {
 				ArrayList<Comment> temp = new ArrayList<Comment>();
 				while (result.next()) {
-					int commentID		= result.getInt("commentID");
-					int taskID			= result.getInt("taskID");
+					Integer commentID		= result.getInt("commentID");
+					Integer taskID			= result.getInt("taskID");
 					String username 	= result.getString("username");
 					String content 		= result.getString("content");
 					String timestamps 	= result.getString("timestamps");
 					Comment comment = new Comment(commentID, taskID, username, content, timestamps);
+					temp.add(comment);
 				}
 				
 				retval = new Comment[temp.size()];
@@ -54,11 +55,12 @@ public class Comment extends BaseModel {
 			if (result != null) {
 				ArrayList<Comment> temp = new ArrayList<Comment>();
 				while (result.next()) {
-					int commentID		= result.getInt("commentID");
+					Integer commentID		= result.getInt("commentID");
 					String username 	= result.getString("username");
 					String content 		= result.getString("content");
 					String timestamps = result.getString("timestamps");
 					Comment comment = new Comment(commentID, taskID, username, content, timestamps);
+					temp.add(comment);
 				}
 				
 				retval = new Comment[temp.size()];
@@ -83,11 +85,12 @@ public class Comment extends BaseModel {
 			if (result != null) {
 				ArrayList<Comment> temp = new ArrayList<Comment>();
 				while (result.next()) {
-					int commentID		= result.getInt("commentID");
-					int taskID			= result.getInt("taskID");
+					Integer commentID		= result.getInt("commentID");
+					Integer taskID			= result.getInt("taskID");
 					String content 		= result.getString("content");
 					String timestamps = result.getString("timestamps");
 					Comment comment = new Comment(commentID, taskID, username, content, timestamps);
+					temp.add(comment);
 				}
 				
 				retval = new Comment[temp.size()];
