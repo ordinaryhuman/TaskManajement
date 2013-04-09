@@ -231,6 +231,28 @@ public class Task extends BaseModel {
 		return retval;
 	}
 
+	public static Integer getAvailableTaskID() {
+		// get all task
+		Task[] tasks = Task.getAllTask();
+		Integer i = 1;
+		while(true) {
+			boolean available = true;
+			
+			// traverse to all exist task, see if i available
+			for(Task task:tasks) {
+				if(task.getID() == i) {
+					available = false;
+					break;
+				}
+			}
+			
+			if(available)
+				return i;
+			
+			i++;
+		}
+	}
+	
 	@Override
 	public void addOnDB() {
 		DBQueryExecutor executor = new DBQueryExecutor();

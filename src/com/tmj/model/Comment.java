@@ -107,6 +107,28 @@ public class Comment extends BaseModel {
 		
 		return retval;
 	}
+	
+	public static Integer getAvailableCommentID() {
+		// get all comment
+		Comment[] comments = Comment.getAllComment();
+		Integer i = 1;
+		while(true) {
+			boolean available = true;
+			
+			// traverse to all exist comment, see if i available
+			for(Comment comment:comments) {
+				if(comment.getID() == i) {
+					available = false;
+					break;
+				}
+			}
+			
+			if(available)
+				return i;
+			
+			i++;
+		}
+	}
 
 	@Override
 	public void addOnDB() {

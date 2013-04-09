@@ -16,18 +16,19 @@ public class Attachment extends BaseModel {
 		mType = type;
 	}
 	
-	public Attachment[] getAttachmentFromTaskID(Integer taskID) {
+	public static Attachment[] getAllAttachment() {
 		DBQueryExecutor executor = new DBQueryExecutor();
 		Attachment[] retval = new Attachment[0];
 
 		try {
-			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `taskID` = '%d';", DBTable.TASK, taskID));
+			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s`;", DBTable.ATTACHMENT));
 			if (result != null) {
 				ArrayList<Attachment> temp = new ArrayList<Attachment>();
 				while (result.next()) {
 					Integer attachmendID= result.getInt("attachmendID");
+					Integer taskID		= result.getInt("taskID");
 					String filename 	= result.getString("filename");
-					String type 	= result.getString("type");
+					String type 		= result.getString("type");
 					Attachment attachment = new Attachment(attachmendID, taskID, filename, type);
 					temp.add(attachment);
 				}
@@ -43,6 +44,57 @@ public class Attachment extends BaseModel {
 		}
 		
 		return retval;
+	}
+	
+	public Attachment[] getAttachmentFromTaskID(Integer taskID) {
+		DBQueryExecutor executor = new DBQueryExecutor();
+		Attachment[] retval = new Attachment[0];
+
+		try {
+			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `taskID` = '%d';", DBTable.TASK, taskID));
+			if (result != null) {
+				ArrayList<Attachment> temp = new ArrayList<Attachment>();
+				while (result.next()) {
+					Integer attachmendID= result.getInt("attachmendID");
+					String filename 	= result.getString("filename");
+					String type 		= result.getString("type");
+					Attachment attachment = new Attachment(attachmendID, taskID, filename, type);
+					temp.add(attachment);
+				}
+				
+				retval = new Attachment[temp.size()];
+				retval = temp.toArray(retval);
+			}
+		} catch (SQLException sEx) {
+			sEx.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
+		
+		return retval;
+	}
+	
+	public static Integer getAvailableAttachmentID() {
+		// get all attachment
+		Attachment[] attachments = Attachment.getAllAttachment();
+		Integer i = 1;
+		while(true) {
+			boolean available = true;
+			
+			// traverse to all exist attachment, see if i available
+			for(Attachment attachment:attachments) {
+				if(attachment.getID() == i) {
+					available = false;
+					break;
+				}
+			}
+			
+			if(available)
+				return i;
+			
+			i++;
+		}
 	}
 	
 	@Override

@@ -14,6 +14,34 @@ public class Tag extends BaseModel {
 		mTagname = name;
 	}
 	
+	public static Tag[] getAllTag() {
+		DBQueryExecutor executor = new DBQueryExecutor();
+		Tag[] retval = new Tag[0];
+
+		try {
+			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s`;", DBTable.TAG));
+			if (result != null) {
+				ArrayList<Tag> temp = new ArrayList<Tag>();
+				while (result.next()) {
+					Integer taskID	= result.getInt("taskID");
+					String tagname 	= result.getString("tagname");
+					Tag tag = new Tag(taskID, tagname);
+					temp.add(tag);
+				}
+				
+				retval = new Tag[temp.size()];
+				retval = temp.toArray(retval);
+			}
+		} catch (SQLException sEx) {
+			sEx.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
+		
+		return retval;
+	}
+	
 	public static String[] getAllTagname() {
 		DBQueryExecutor executor = new DBQueryExecutor();
 		String[] retval = new String[0];
@@ -70,6 +98,28 @@ public class Tag extends BaseModel {
 		}
 		
 		return retval;
+	}
+	
+	public static Integer getAvailableTagID() {
+		// get all tag
+		Tag[] tags = Tag.getAllTag();
+		Integer i = 1;
+		while(true) {
+			boolean available = true;
+			
+			// traverse to all exist tag, see if i available
+			for(Tag tag:tags) {
+				if(tag.getID() == i) {
+					available = false;
+					break;
+				}
+			}
+			
+			if(available)
+				return i;
+			
+			i++;
+		}
 	}
 	
 	@Override
