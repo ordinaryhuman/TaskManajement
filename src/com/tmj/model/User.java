@@ -95,8 +95,35 @@ public class User extends BaseModel {
 	}
 	
 	public static User[] getAllUsers() {
-		// TODO
-		return null;
+		DBQueryExecutor executor = new DBQueryExecutor();
+		User[] retval;
+
+		try {
+			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s`;", DBTable.USER));
+			if (result != null) {
+				result.last();
+				retval = new User[result.getRow()];
+				result.beforeFirst();
+				int i = 0;
+				while (result.next()) {
+					String username		= result.getString("username");
+					String password 	= result.getString("password");
+					String fullname 	= result.getString("fullname");
+					String birthdate 	= result.getString("birthdate");
+					String email 		= result.getString("email");
+					String avatarPath	= result.getString("avatar");
+					retval[i] = new User(username, password, fullname, birthdate, email, avatarPath);
+					i++;
+				}
+			}
+		} catch (SQLException sEx) {
+			sEx.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
+		
+		return retval;
 	}
 	
 	public static User[] getUserFromQuery(String query) {

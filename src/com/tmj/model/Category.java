@@ -16,18 +16,83 @@ public class Category extends BaseModel {
 	}
 	
 	public static Category[] getAllCategory() {
-		// TODO
-		return null;
+		DBQueryExecutor executor = new DBQueryExecutor();
+		Category[] retval;
+
+		try {
+			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s`;", DBTable.CATEGORY));
+			if (result != null) {
+				result.last();
+				retval = new Category[result.getRow()];
+				result.beforeFirst();
+				int i = 0;
+				while (result.next()) {
+					int categoryID	= result.getInt("categoryID");
+					String categoryname	= result.getString("categoryname");
+					String creatorID 	= result.getString("creatorID");
+					retval[i] = new Category(categoryID, categoryname, creatorID);
+					i++;
+				}
+			}
+		} catch (SQLException sEx) {
+			sEx.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
+		
+		return retval;
 	}
 	
 	public static Category getCategoryFromCategoryID(String categoryID) {
-		// TODO
-		return null;
+		DBQueryExecutor executor = new DBQueryExecutor();
+		Category retval = null;
+
+		try {
+			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `categoryID` = '%s';", DBTable.CATEGORY, categoryID));
+			if (result != null) {
+				while (result.next()) {
+					String categoryname	= result.getString("categoryname");
+					String creatorID 	= result.getString("creatorID");
+					retval = new Category(categoryID, categoryname, creatorID);
+				}
+			}
+		} catch (SQLException sEx) {
+			sEx.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
+		
+		return retval;
 	}
 	
 	public static Category[] getCategoryFromUsername(String username) {
-		// TODO
-		return null;
+		DBQueryExecutor executor = new DBQueryExecutor();
+		Category[] retval;
+
+		try {
+			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `creatorID` = '%s';", DBTable.CATEGORY, username));
+			if (result != null) {
+				result.last();
+				retval = new Category[result.getRow()];
+				result.beforeFirst();
+				int i = 0;
+				while (result.next()) {
+					int categoryID	= result.getInt("categoryID");
+					String categoryname	= result.getString("categoryname");
+					retval[i] = new Category(categoryID, categoryname, username);
+					i++;
+				}
+			}
+		} catch (SQLException sEx) {
+			sEx.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
+		
+		return retval;
 	}
 	
 	public static Category[] getCategoryFromQuery(String query) {
