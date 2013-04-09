@@ -14,6 +14,11 @@ public class Attachment extends BaseModel {
 		mType = type;
 	}
 	
+	public Attachment[] getAttachmentFromTaskID(String taskID) {
+		// TODO
+		return null;
+	}
+	
 	@Override
 	public void addOnDB() {
 		DBQueryExecutor executor = new DBQueryExecutor();

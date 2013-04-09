@@ -12,6 +12,16 @@ public class Category extends BaseModel {
 		mName = name;
 		mCreatorID = creatorID;
 	}
+	
+	public static Category[] getAllCategory() {
+		// TODO
+		return null;
+	}
+	
+	public static Category getCategoryFromCategoryID() {
+		// TODO
+		return null;
+	}
 
 	@Override
 	public void addOnDB() {
@@ -58,6 +68,19 @@ public class Category extends BaseModel {
 			executor.closeQuery();
 			executor.closeConnection();
 		}
+	}
+
+	/**
+	 * get member of this category
+	 * @return
+	 */
+	public User[] getMembers() {
+		// TODO : use table category_user
+		return null;
+	}
+	
+	public User getCreator() {
+		return User.getUserFromUsername(mCreatorID);
 	}
 
 	private Integer mID;

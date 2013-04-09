@@ -14,6 +14,21 @@ public class Comment extends BaseModel {
 		mContent = content;
 		mTimestamp = timestamp;
 	}
+	
+	public static Comment[] getAllComment() {
+		// TODO
+		return null;
+	}
+	
+	public static Comment[] getCommentFromTaskID(String taskID) {
+		// TODO
+		return null;
+	}
+	
+	public static Comment[] getCommentFromUsername(String username) {
+		// TODO
+		return null;
+	}
 
 	@Override
 	public void addOnDB() {

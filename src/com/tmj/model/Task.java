@@ -15,6 +15,36 @@ public class Task extends BaseModel {
 		mStatus = status;
 		mDeadline = deadline;
 	}
+	
+	public static Task[] getAllTask() {
+		// TODO
+		return null;
+	}
+	
+	public static Task getTaskFromTaskID(Integer id) {
+		// TODO
+		return null;
+	}
+	
+	public static Task[] getTasksFromCategoryID(Integer categoryID) {
+		// TODO
+		return null;
+	}
+	
+	public static Task[] getTasksFromUsername(String username) {
+		// TODO
+		return null;
+	}
+	
+	public static Task[] getTasksDoneFromUsername(String username) {
+		// TODO
+		return null;
+	}
+	
+	public static Task[] getTasksNotDoneFromUsername(String username) {
+		// TODO
+		return null;
+	}
 
 	@Override
 	public void addOnDB() {
@@ -61,6 +91,10 @@ public class Task extends BaseModel {
 			executor.closeQuery();
 			executor.closeConnection();
 		}
+	}
+	
+	public User getOwner() {
+		return User.getUserFromUsername(mUsername);
 	}
 	
 	private Integer mID;

@@ -92,6 +92,11 @@ public class User extends BaseModel {
 		
 		return retval;
 	}
+	
+	public static User[] getAllUsers() {
+		// TODO
+		return null;
+	}
 
 	@Override
 	public void addOnDB() {
