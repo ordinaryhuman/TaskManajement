@@ -6,6 +6,7 @@
 	<link rel='stylesheet' type="text/css" href="style/Design.css"/>
     <script type="text/javascript" src="script/validation.js"> </script>
     <script type="text/javascript" src="script/calendar.js"></script>
+    <script type="text/javascript" src="script/home.js"></script>
 </head>
 
 <body class="main">
@@ -33,6 +34,18 @@
     	<p>You can also share your Task with your friends.</p>
     	<p>Like our motto, Prodictiveness is the key to Success, So <b>LET'S STAY PRODUCTIVE</b> with <b>TaskManajement.</b></p>
     	<p>Click <b>REGISTER</b> if you wants to join us or <b>LOGIN</b> if you already join.</p>
+    	<p style="color: red;">
+    	<%
+    	if(request.getParameter("status") != null) {
+    		String s = request.getParameter("status");
+    		if(s == "1") {
+    			out.println("User not found");
+    		} else {
+    			out.println("Password mismatch");
+    		}
+    	}
+    	%>
+    	</p>
     </div>
     
 <!-- Popup Login -->
@@ -68,8 +81,11 @@
             <div class="iinfo" id="name_info"></div>
             <div>
                 <label for="userid">Username</label>
-                <input type="text" id="userid" value="" name="username" onChange="validate_userid()"/>
-                <div class="requirement">Min. 5 characters, only space and alphabet.</div>
+                <input type="text" id="userid" value="" name="username" onChange="validate_userid()" onkeyup="validateUsernameAJAX()"/>
+                <div class="requirement">
+                Min. 5 characters, only space and alphabet.<br>
+                <a id="userVal"></a>
+                </div>
             </div>
             
             <div class="iinfo" id="pass_info"></div>
@@ -134,8 +150,11 @@
 	            <div class="iinfo" id="email_info"></div>
 	            <div>
 	                <label for="email">Email</label>
-	                <input name="email" type="text" id="email" value="" onChange="validate_email()"/>
-	                <div class="requirement">Min. 1 character before @.<br/>Min. 1 character between @ and'.'<br/>Top level domain should contain at least 2 characters.<br/>ex. x@x.xx</div>
+	                <input name="email" type="text" id="email" value="" onChange="validate_email()"  onkeyup="validateEmailAJAX()"/>
+	                <div class="requirement">
+	                Min. 1 character before @.<br/>Min. 1 character between @ and'.'<br/>Top level domain should contain at least 2 characters.<br/>ex. x@x.xx<br>
+	                <a id="emailVal"></a>
+	                </div>
 	            </div>
 	            
 	             <div class="iinfo" id="avatar_info"></div>

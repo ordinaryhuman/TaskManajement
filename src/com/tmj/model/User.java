@@ -1,5 +1,6 @@
 package com.tmj.model;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.tmj.helper.DBQueryExecutor;
@@ -7,22 +8,96 @@ import com.tmj.helper.DBTable;
 
 public class User extends BaseModel {
 	
-	public User(String username, String password, String fullname, String birthplace, String birthdate,
+	public User(String username, String password) {
+		mUsername = username;
+		mPassword = password;
+	}
+	
+	public User(String username, String password, String fullname, String birthdate,
 			String email, String avatarPath) {
 		mUsername = username;
 		mPassword = password;
 		mFullname = fullname;
-		mBirthplace = birthplace;
 		mBirthdate = birthdate;
 		mEmail = email;
 		mAvatarPath = avatarPath;
+	}
+	
+	/**
+	 * Authenticate this object by checking at database 
+	 * @return 1 if user not found, 2 if password mismatch, 0 if OK
+	 */
+	public Integer authenticate() {
+		User user = User.getUserFromUsername(mUsername);
+		if(user == null) {
+			return 1;
+		} else if(user.getPassword().equals(mPassword)) {
+			mFullname = user.getFullname();
+			mBirthdate = user.getBirthdate();
+			mEmail = user.getEmail();
+			mAvatarPath = user.getAvatarPath();
+			return 0;
+		}
+		return 2;
+	}
+	
+	public static User getUserFromEmail(String email) {
+		DBQueryExecutor executor = new DBQueryExecutor();
+		User retval = null;
+
+		try {
+			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `email` = '%s';", DBTable.USER, email));
+			if (result != null) {
+				while (result.next()) {
+					String username 	= result.getString("username");
+					String password 	= result.getString("password");
+					String fullname 	= result.getString("fullname");
+					String birthdate 	= result.getString("birthdate");
+					String avatarPath	= result.getString("avatar");
+					retval = new User(username, password, fullname, birthdate, email, avatarPath);
+				}
+			}
+		} catch (SQLException sEx) {
+			sEx.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
+		
+		return retval;
+	}
+	
+	public static User getUserFromUsername(String username) {
+		DBQueryExecutor executor = new DBQueryExecutor();
+		User retval = null;
+
+		try {
+			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `username` = '%s';", DBTable.USER, username));
+			if (result != null) {
+				while (result.next()) {
+					String password 	= result.getString("password");
+					String fullname 	= result.getString("fullname");
+					String birthdate 	= result.getString("birthdate");
+					String email 		= result.getString("email");
+					String avatarPath	= result.getString("avatar");
+					retval = new User(username, password, fullname, birthdate, email, avatarPath);
+				}
+			}
+		} catch (SQLException sEx) {
+			sEx.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
+		
+		return retval;
 	}
 
 	@Override
 	public void addOnDB() {
 		DBQueryExecutor executor = new DBQueryExecutor();
-		String stmt = String.format("INSERT INTO `%s` (`username`, `password`, `fullname`, `birthplace`, `birthdate`, `email`, `avatar`)" +
-				"VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s');", DBTable.USER, mUsername, mPassword, mFullname, mBirthplace, mBirthdate, mEmail, mAvatarPath);
+		String stmt = String.format("INSERT INTO `%s` (`username`, `password`, `fullname`, `birthdate`, `email`, `avatar`)" +
+				"VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s');", DBTable.USER, mUsername, mPassword, mFullname, mBirthdate, mEmail, mAvatarPath);
 		
 		try {
 			executor.executeQuery(stmt);
@@ -37,8 +112,8 @@ public class User extends BaseModel {
 	@Override
 	public void editOnDB() {
 		DBQueryExecutor executor = new DBQueryExecutor();
-		String stmt = String.format("UPDATE `%s` SET `password` = '%s', `fullname` = '%s', `birthplace` = '%s', `birthdate` = '%s', `email` = '%s', `avatar` = '%s'" +
-				"WHERE `%s`.`username` = '%s'", DBTable.USER, mPassword, mFullname, mBirthplace, mBirthdate, mEmail, mAvatarPath, DBTable.USER, mUsername);
+		String stmt = String.format("UPDATE `%s` SET `password` = '%s', `fullname` = '%s', `birthdate` = '%s', `email` = '%s', `avatar` = '%s'" +
+				"WHERE `%s`.`username` = '%s'", DBTable.USER, mPassword, mFullname, mBirthdate, mEmail, mAvatarPath, DBTable.USER, mUsername);
 				
 		try {
 			executor.executeQuery(stmt);
@@ -68,7 +143,6 @@ public class User extends BaseModel {
 	private String mUsername;
 	private String mPassword;
 	private String mFullname;
-	private String mBirthplace;
 	private String mBirthdate;
 	private String mEmail;
 	private String mAvatarPath;
@@ -83,10 +157,6 @@ public class User extends BaseModel {
 
 	public String getFullname() {
 		return mFullname;
-	}
-
-	public String getBirthplace() {
-		return mBirthplace;
 	}
 
 	public String getBirthdate() {
@@ -111,10 +181,6 @@ public class User extends BaseModel {
 
 	public void setFullname(String fullname) {
 		this.mFullname = fullname;
-	}
-
-	public void setBirthplace(String birthplace) {
-		this.mBirthplace = birthplace;
 	}
 
 	public void setBirthdate(String birthdate) {

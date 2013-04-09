@@ -18,7 +18,7 @@ function validate_Output(regexp, input, syntaxerror, syntaxvalid, idToWrite) {
 }
 
 function validate_userid() {
-		validate_Output(/^.{5,}$/, document.getElementById('userid').value,'INVALID','VALID','name_info');
+	validate_Output(/^.{5,}$/, document.getElementById('userid').value,'INVALID','VALID','name_info');
 }
 
 function validate_passid() {
