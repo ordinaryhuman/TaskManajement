@@ -176,8 +176,35 @@ public class Category extends BaseModel {
 	 * @return
 	 */
 	public User[] getMembers() {
-		// TODO : use table category_user
-		return null;
+		DBQueryExecutor executor = new DBQueryExecutor();
+		User[] retval = new User[0];
+
+		try {
+			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `username` IN (SELECT `username` FROM `%s` WHERE `categoryID` = '%s');", DBTable.USER, DBTable.CATEGORY_USER, this.getID()));
+			if (result != null) {
+				ArrayList<User> temp = new ArrayList<User>();
+				while (result.next()) {
+					String username 	= result.getString("username");
+					String password 	= result.getString("password");
+					String fullname 	= result.getString("fullname");
+					String birthdate 	= result.getString("birthdate");
+					String email 		= result.getString("email");
+					String avatarPath	= result.getString("avatar");
+					User user = new User(username, password, fullname, birthdate, email, avatarPath);
+					temp.add(user);
+				}
+				
+				retval = new User[temp.size()];
+				retval = temp.toArray(retval);
+			}
+		} catch (SQLException sEx) {
+			sEx.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
+		
+		return retval;
 	}
 	
 	public User getCreator() {

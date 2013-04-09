@@ -40,38 +40,27 @@ public class Tag extends BaseModel {
 	
 	public static Task[] getAllTaskFromTagname(String tagname) {
 		DBQueryExecutor executor = new DBQueryExecutor();
-		int[] tasks = new int[0];
 		Task[] retval = new Task[0];
 
 		try {
-			// ambil taskID
-			ResultSet result = executor.executeQuery(String.format("SELECT `taskID` FROM `%s` WHERE `tagname` = '%s';", DBTable.TAG, tagname));
+			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `taskID` IN (SELECT `taskID` FROM `%s` WHERE `tagname` = '%s');", DBTable.TASK, DBTable.TAG, tagname));
 			if (result != null) {
-				ArrayList<int> temp = new ArrayList<int>();
+				ArrayList<Task> temp = new ArrayList<Task>();
 				while (result.next()) {
-					int taskID 	= result.getInt("taskID");
-					temp.add(taskID);
+					while (result.next()) {
+					Integer ID		 	= result.getInt("taskID");
+					Integer categoryID 	= result.getInt("categoryID");
+					String username 	= result.getString("username");
+					String taskname 	= result.getString("taskname");
+					Boolean status 		= result.getBoolean("email");
+					String deadline		= result.getString("deadline");
+					Task task = new Task(ID, categoryID, username, taskname, status, deadline);
+					temp.add(task);
 				}
 				
-				tasks = new int[temp.size()];
-				tasks = temp.toArray(retval);
+				retval = new Task[temp.size()];
+				retval = temp.toArray(retval);
 			}
-			// ambil task
-			ArrayList<Task> temp2 = new ArrayList<Task>();
-			for (int i = 0; i < tasks.length; i++) {
-				ResultSet rs = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `taskID` = '%s';", DBTable.TASK, tasks[i]));
-				rs.first();
-				Integer categoryID 	= rs.getInt("categoryID");
-				String username 	= rs.getString("username");
-				String taskname 	= rs.getString("taskname");
-				Boolean status 		= rs.getBoolean("email");
-				String deadline		= rs.getString("deadline");
-				Task task = new Task(tasks[i], categoryID, username, taskname, status, deadline);
-				temp2.add(task);
-			}
-			
-			retval = new Task[temp2.size()];
-			retval = temp2.toArray(retval);
 		} catch (SQLException sEx) {
 			sEx.printStackTrace();
 		} finally {
