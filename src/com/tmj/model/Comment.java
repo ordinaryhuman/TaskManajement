@@ -1,6 +1,8 @@
 package com.tmj.model;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.tmj.helper.DBQueryExecutor;
 import com.tmj.helper.DBTable;
@@ -46,12 +48,12 @@ public class Comment extends BaseModel {
 		return retval;
 	}
 	
-	public static Comment[] getCommentFromTaskID(String taskID) {
+	public static Comment[] getCommentFromTaskID(Integer taskID) {
 		DBQueryExecutor executor = new DBQueryExecutor();
 		Comment[] retval = new Comment[0];
 
 		try {
-			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `taskID` = '%s';", DBTable.COMMENT, taskID));
+			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `taskID` = '%d';", DBTable.COMMENT, taskID));
 			if (result != null) {
 				ArrayList<Comment> temp = new ArrayList<Comment>();
 				while (result.next()) {

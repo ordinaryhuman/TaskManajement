@@ -1,6 +1,8 @@
 package com.tmj.model;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.tmj.helper.DBQueryExecutor;
 import com.tmj.helper.DBTable;
@@ -47,7 +49,6 @@ public class Tag extends BaseModel {
 			if (result != null) {
 				ArrayList<Task> temp = new ArrayList<Task>();
 				while (result.next()) {
-					while (result.next()) {
 					Integer ID		 	= result.getInt("taskID");
 					Integer categoryID 	= result.getInt("categoryID");
 					String username 	= result.getString("username");

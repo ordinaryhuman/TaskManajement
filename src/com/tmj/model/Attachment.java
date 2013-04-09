@@ -1,6 +1,8 @@
 package com.tmj.model;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.tmj.helper.DBQueryExecutor;
 import com.tmj.helper.DBTable;
@@ -14,18 +16,18 @@ public class Attachment extends BaseModel {
 		mType = type;
 	}
 	
-	public Attachment[] getAttachmentFromTaskID(String taskID) {
+	public Attachment[] getAttachmentFromTaskID(Integer taskID) {
 		DBQueryExecutor executor = new DBQueryExecutor();
 		Attachment[] retval = new Attachment[0];
 
 		try {
-			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `taskID` = '%s';", DBTable.ATTACHMENT, taskID));
+			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `taskID` = '%d';", DBTable.TASK, taskID));
 			if (result != null) {
 				ArrayList<Attachment> temp = new ArrayList<Attachment>();
 				while (result.next()) {
 					Integer attachmendID= result.getInt("attachmendID");
-					String filename = result.getString("filename");
-					String type = result.getString("type");
+					String filename 	= result.getString("filename");
+					String type 	= result.getString("type");
 					Attachment attachment = new Attachment(attachmendID, taskID, filename, type);
 					temp.add(attachment);
 				}

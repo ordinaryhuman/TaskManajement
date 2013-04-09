@@ -44,12 +44,12 @@ public class Category extends BaseModel {
 		return retval;
 	}
 	
-	public static Category getCategoryFromCategoryID(String categoryID) {
+	public static Category getCategoryFromCategoryID(Integer categoryID) {
 		DBQueryExecutor executor = new DBQueryExecutor();
 		Category retval = null;
 
 		try {
-			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `categoryID` = '%s';", DBTable.CATEGORY, categoryID));
+			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `categoryID` = '%d';", DBTable.CATEGORY, categoryID));
 			if (result != null) {
 				while (result.next()) {
 					String categoryname	= result.getString("categoryname");

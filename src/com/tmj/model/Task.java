@@ -151,7 +151,7 @@ public class Task extends BaseModel {
 					Integer categoryID	= result.getInt("categoryID");
 					String taskname = result.getString("taskname");
 					String deadline = result.getString("deadline");
-					Task task = new Task(taskID, categoryID, username, taskname, 1, deadline);
+					Task task = new Task(taskID, categoryID, username, taskname, true, deadline);
 					temp.add(task);
 				}
 				
@@ -181,7 +181,7 @@ public class Task extends BaseModel {
 					Integer categoryID	= result.getInt("categoryID");
 					String taskname = result.getString("taskname");
 					String deadline = result.getString("deadline");
-					Task task = new Task(taskID, categoryID, username, taskname, 0, deadline);
+					Task task = new Task(taskID, categoryID, username, taskname, false, deadline);
 					temp.add(task);
 				}
 				
