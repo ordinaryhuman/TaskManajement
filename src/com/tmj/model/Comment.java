@@ -17,24 +17,23 @@ public class Comment extends BaseModel {
 	
 	public static Comment[] getAllComment() {
 		DBQueryExecutor executor = new DBQueryExecutor();
-		Comment[] retval;
+		Comment[] retval = new Comment[0];
 
 		try {
 			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s`;", DBTable.COMMENT));
 			if (result != null) {
-				result.last();
-				retval = new Comment[result.getRow()];
-				result.beforeFirst();
-				int i = 0;
+				ArrayList<Comment> temp = new ArrayList<Comment>();
 				while (result.next()) {
 					int commentID		= result.getInt("commentID");
 					int taskID			= result.getInt("taskID");
 					String username 	= result.getString("username");
 					String content 		= result.getString("content");
 					String timestamps 	= result.getString("timestamps");
-					retval[i] = new Comment(commentID, taskID, username, content, timestamps);
-					i++;
+					Comment comment = new Comment(commentID, taskID, username, content, timestamps);
 				}
+				
+				retval = new Comment[temp.size()];
+				retval = temp.toArray(retval);
 			}
 		} catch (SQLException sEx) {
 			sEx.printStackTrace();
@@ -48,23 +47,22 @@ public class Comment extends BaseModel {
 	
 	public static Comment[] getCommentFromTaskID(String taskID) {
 		DBQueryExecutor executor = new DBQueryExecutor();
-		Comment[] retval;
+		Comment[] retval = new Comment[0];
 
 		try {
 			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `taskID` = '%s';", DBTable.COMMENT, taskID));
 			if (result != null) {
-				result.last();
-				retval = new Comment[result.getRow()];
-				result.beforeFirst();
-				int i = 0;
+				ArrayList<Comment> temp = new ArrayList<Comment>();
 				while (result.next()) {
 					int commentID		= result.getInt("commentID");
 					String username 	= result.getString("username");
 					String content 		= result.getString("content");
 					String timestamps = result.getString("timestamps");
-					retval[i] = new Comment(commentID, taskID, username, content, timestamps);
-					i++;
+					Comment comment = new Comment(commentID, taskID, username, content, timestamps);
 				}
+				
+				retval = new Comment[temp.size()];
+				retval = temp.toArray(retval);
 			}
 		} catch (SQLException sEx) {
 			sEx.printStackTrace();
@@ -78,23 +76,22 @@ public class Comment extends BaseModel {
 	
 	public static Comment[] getCommentFromUsername(String username) {
 		DBQueryExecutor executor = new DBQueryExecutor();
-		Comment[] retval;
+		Comment[] retval = new Comment[0];
 
 		try {
 			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `username` = '%s';", DBTable.COMMENT, username));
 			if (result != null) {
-				result.last();
-				retval = new Comment[result.getRow()];
-				result.beforeFirst();
-				int i = 0;
+				ArrayList<Comment> temp = new ArrayList<Comment>();
 				while (result.next()) {
 					int commentID		= result.getInt("commentID");
 					int taskID			= result.getInt("taskID");
 					String content 		= result.getString("content");
 					String timestamps = result.getString("timestamps");
-					retval[i] = new Comment(commentID, taskID, username, content, timestamps);
-					i++;
+					Comment comment = new Comment(commentID, taskID, username, content, timestamps);
 				}
+				
+				retval = new Comment[temp.size()];
+				retval = temp.toArray(retval);
 			}
 		} catch (SQLException sEx) {
 			sEx.printStackTrace();

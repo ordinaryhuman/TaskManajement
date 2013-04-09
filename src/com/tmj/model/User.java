@@ -96,15 +96,12 @@ public class User extends BaseModel {
 	
 	public static User[] getAllUsers() {
 		DBQueryExecutor executor = new DBQueryExecutor();
-		User[] retval;
+		User[] retval = new User[0];
 
 		try {
 			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s`;", DBTable.USER));
 			if (result != null) {
-				result.last();
-				retval = new User[result.getRow()];
-				result.beforeFirst();
-				int i = 0;
+				ArrayList<User> temp = new ArrayList<User>();
 				while (result.next()) {
 					String username		= result.getString("username");
 					String password 	= result.getString("password");
@@ -112,9 +109,12 @@ public class User extends BaseModel {
 					String birthdate 	= result.getString("birthdate");
 					String email 		= result.getString("email");
 					String avatarPath	= result.getString("avatar");
-					retval[i] = new User(username, password, fullname, birthdate, email, avatarPath);
-					i++;
+					User user = new User(username, password, fullname, birthdate, email, avatarPath);
+					temp.add(user);
 				}
+				
+				retval = new User[temp.size()];
+				retval = temp.toArray(retval);
 			}
 		} catch (SQLException sEx) {
 			sEx.printStackTrace();

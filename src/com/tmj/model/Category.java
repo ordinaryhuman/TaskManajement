@@ -17,22 +17,21 @@ public class Category extends BaseModel {
 	
 	public static Category[] getAllCategory() {
 		DBQueryExecutor executor = new DBQueryExecutor();
-		Category[] retval;
+		Category[] retval = new Category[0];
 
 		try {
 			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s`;", DBTable.CATEGORY));
 			if (result != null) {
-				result.last();
-				retval = new Category[result.getRow()];
-				result.beforeFirst();
-				int i = 0;
+				ArrayList<Category> temp = new ArrayList<Category>();
 				while (result.next()) {
 					int categoryID	= result.getInt("categoryID");
 					String categoryname	= result.getString("categoryname");
 					String creatorID 	= result.getString("creatorID");
-					retval[i] = new Category(categoryID, categoryname, creatorID);
-					i++;
+					Category category = new Category(categoryID, categoryname, creatorID);
 				}
+				
+				retval = new Category[temp.size()];
+				retval = temp.toArray(retval);
 			}
 		} catch (SQLException sEx) {
 			sEx.printStackTrace();
@@ -69,21 +68,20 @@ public class Category extends BaseModel {
 	
 	public static Category[] getCategoryFromUsername(String username) {
 		DBQueryExecutor executor = new DBQueryExecutor();
-		Category[] retval;
+		Category[] retval = new Category[0];
 
 		try {
 			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `creatorID` = '%s';", DBTable.CATEGORY, username));
 			if (result != null) {
-				result.last();
-				retval = new Category[result.getRow()];
-				result.beforeFirst();
-				int i = 0;
+				ArrayList<Category> temp = new ArrayList<Category>();
 				while (result.next()) {
 					int categoryID	= result.getInt("categoryID");
 					String categoryname	= result.getString("categoryname");
-					retval[i] = new Category(categoryID, categoryname, username);
-					i++;
+					Category category = new Category(categoryID, categoryname, username);
 				}
+				
+				retval = new Category[temp.size()];
+				retval = temp.toArray(retval);
 			}
 		} catch (SQLException sEx) {
 			sEx.printStackTrace();

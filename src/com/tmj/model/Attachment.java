@@ -16,22 +16,21 @@ public class Attachment extends BaseModel {
 	
 	public Attachment[] getAttachmentFromTaskID(String taskID) {
 		DBQueryExecutor executor = new DBQueryExecutor();
-		Attachment[] retval;
+		Attachment[] retval = new Attachment[0];
 
 		try {
 			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `taskID` = '%s';", DBTable.ATTACHMENT, taskID));
 			if (result != null) {
-				result.last();
-				retval = new Attachment[result.getRow()];
-				result.beforeFirst();
-				int i = 0;
+				ArrayList<Attachment> temp = new ArrayList<Attachment>();
 				while (result.next()) {
 					int attachmendID= result.getInt("attachmendID");
 					String filename = result.getString("filename");
 					String type = result.getString("type");
-					retval[i] = new Attachment(attachmendID, taskID, filename, type);
-					i++;
+					Attachment attachment = new Attachment(attachmendID, taskID, filename, type);
 				}
+				
+				retval = new Attachment[temp.size()];
+				retval = temp.toArray(retval);
 			}
 		} catch (SQLException sEx) {
 			sEx.printStackTrace();
