@@ -18,7 +18,12 @@ public class Category extends BaseModel {
 		return null;
 	}
 	
-	public static Category getCategoryFromCategoryID() {
+	public static Category getCategoryFromCategoryID(String categoryID) {
+		// TODO
+		return null;
+	}
+	
+	public static Category[] getCategoryFromUsername(String username) {
 		// TODO
 		return null;
 	}

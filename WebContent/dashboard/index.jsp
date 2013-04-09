@@ -1,17 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="com.tmj.model.User" %>
+<%@ page import="com.tmj.model.Category" %>
 <%
 	User user = (User) request.getSession().getAttribute("user");
+	Category[] categories = Category.getAllCategory();
 %>
 <!DOCTYPE html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>My Dashboard</title>
-    <link rel='stylesheet' type="text/css" href="../style/Design.css"/>
-    <script type="text/javascript" src="../script/validation.js"> </script>
-    <script type="text/javascript" src="../script/global.js"> </script>
-    <script type="text/javascript" src="../script/dashboard.js"> </script>
+    <link rel='stylesheet' type="text/css" href="style/Design.css"/>
+    <script type="text/javascript" src="script/validation.js"> </script>
+    <script type="text/javascript" src="script/global.js"> </script>
+    <script type="text/javascript" src="script/dashboard.js"> </script>
 </head>
 
 <body class="main">
@@ -29,7 +31,7 @@
     	foreach ($categories as $category) {
 			printf('<li>');
 			if($category->creatorID == $_SESSION['username']) {
-				printf('<a href="dashboard.php?action=delete&categoryID=%s"><img src="../images/delete.png"></img></a>', $category->id);
+				printf('<a href="dashboard.php?action=delete&categoryID=%s"><img src="images/delete.png"></img></a>', $category->id);
 			}
 			printf('<a href="kategori.php?categoryID=%s" target="categoryframe" id="%d" onclick="selectCategory(\'%s\')">%s</a>', $category->id, $category->id, $category->id, $category->name);
 			printf('</li>');
@@ -70,7 +72,7 @@
 
 <!-- Content -->
 <div>
-	<iframe src="kategori.php" width="605" height="340" name="categoryframe" id="categoryframe">  </iframe>
+	<iframe src="dashboard/kategori.jsp" width="605" height="340" name="categoryframe" id="categoryframe">  </iframe>
 </div>
 
 
