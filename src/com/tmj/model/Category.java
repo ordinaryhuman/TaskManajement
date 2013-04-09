@@ -123,12 +123,34 @@ public class Category extends BaseModel {
 		
 		return retval;
 	}
+	
+	public static Integer getAvailableCategoryID() {
+		// get all category
+		Category[] categories = Category.getAllCategory();
+		Integer i = 1;
+		while(true) {
+			boolean available = true;
+			
+			// traverse to all exist category, see if i available
+			for(Category category:categories) {
+				if(category.getID() == i) {
+					available = false;
+					break;
+				}
+			}
+			
+			if(available)
+				return i;
+			
+			i++;
+		}
+	}
 
 	@Override
 	public void addOnDB() {
 		DBQueryExecutor executor = new DBQueryExecutor();
 		String stmt = String.format("INSERT INTO `%s` (`categoryID`, `categoryname`, `creatorID`)" +
-				"VALUES ('%s', '%s', '%s');", DBTable.CATEGORY, mID, mName, mCreatorID);
+				"VALUES ('%d', '%s', '%s');", DBTable.CATEGORY, mID, mName, mCreatorID);
 		
 		try {
 			executor.executeQuery(stmt);
@@ -144,7 +166,7 @@ public class Category extends BaseModel {
 	public void editOnDB() {
 		DBQueryExecutor executor = new DBQueryExecutor();
 		String stmt = String.format("UPDATE `%s` SET `categoryname` = '%s', `creatorID` = '%s'" +
-				"WHERE `%s`.`categoryID` = '%s'", DBTable.CATEGORY, mID, mName, mCreatorID, DBTable.CATEGORY, mID);
+				"WHERE `%s`.`categoryID` = '%d'", DBTable.CATEGORY, mID, mName, mCreatorID, DBTable.CATEGORY, mID);
 				
 		try {
 			executor.executeQuery(stmt);
@@ -159,12 +181,34 @@ public class Category extends BaseModel {
 	@Override
 	public void deleteOnDB() {
 		DBQueryExecutor executor = new DBQueryExecutor();
-		String stmt = String.format("DELETE FROM `%s` WHERE `%s`.`categoryID` = '%s'", DBTable.CATEGORY, DBTable.CATEGORY, mID);
+		String stmt = String.format("DELETE FROM `%s` WHERE `%s`.`categoryID` = '%d'", DBTable.CATEGORY, DBTable.CATEGORY, mID);
 				
 		try {
 			executor.executeQuery(stmt);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
+	}
+	
+	/**
+	 * get member of this category
+	 * @return
+	 */
+	public void setMembers(String usernameMembers) {
+		DBQueryExecutor executor = new DBQueryExecutor();
+		String[] usernames = usernameMembers.split(";");
+
+		try {
+			executor.executeQuery(String.format("DELETE FROM `%s` WHERE `%s`.`categoryID` = '%d'", DBTable.CATEGORY_USER, DBTable.CATEGORY_USER, mID));
+			for(String username : usernames) {
+				executor.executeQuery(String.format("INSERT INTO `%s` (`categoryID`, `username`) VALUES ('%d', '%s')",
+						mID, username));
+			}
+		} catch (SQLException sEx) {
+			sEx.printStackTrace();
 		} finally {
 			executor.closeQuery();
 			executor.closeConnection();
