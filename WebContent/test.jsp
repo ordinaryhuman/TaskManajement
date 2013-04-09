@@ -10,15 +10,16 @@
 <body>
 <%
 	ResultSet result = (ResultSet) request.getAttribute("result");
-if(result != null)
-	while (result.next())
-	{
-		out.println(result.getString(1));
-		out.println(result.getString(2));
-		out.println(result.getString(3));
-		out.println();
-	}
-else
+	out.println(String.format("SELECT * FROM `%s` WHERE `username` LIKE '%s'; <br>", "user", "%" + "apaa" + "%"));
+	if(result != null)
+		while (result.next())
+		{
+			out.println(result.getString(1));
+			out.println(result.getString(2));
+			out.println(result.getString(3));
+			out.println();
+		}
+	else
 	out.println("gak nemu");
 %>
 Test Servlet

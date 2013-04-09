@@ -1,6 +1,8 @@
 package com.tmj.model;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.tmj.helper.DBQueryExecutor;
 import com.tmj.helper.DBTable;
@@ -44,6 +46,39 @@ public class Task extends BaseModel {
 	public static Task[] getTasksNotDoneFromUsername(String username) {
 		// TODO
 		return null;
+	}
+	
+	public static Task[] getTaskFromQuery(String query) {
+		DBQueryExecutor executor = new DBQueryExecutor();
+		Task[] retval = new Task[0];
+
+		try {
+			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `taskname` LIKE '%s';", DBTable.TASK, "%" + query + "%"));
+			if (result != null) {
+				ArrayList<Task> temp = new ArrayList<Task>();
+				
+				while (result.next()) {
+					Integer ID		 	= result.getInt("taskID");
+					Integer categoryID 	= result.getInt("categoryID");
+					String username 	= result.getString("username");
+					String taskname 	= result.getString("taskname");
+					Boolean status 		= result.getBoolean("email");
+					String deadline		= result.getString("deadline");
+					Task task = new Task(ID, categoryID, username, taskname, status, deadline);
+					temp.add(task);
+				}
+				
+				retval = new Task[temp.size()];
+				retval = temp.toArray(retval);
+			}
+		} catch (SQLException sEx) {
+			sEx.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
+		
+		return retval;
 	}
 
 	@Override

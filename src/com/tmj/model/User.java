@@ -2,6 +2,7 @@ package com.tmj.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.tmj.helper.DBQueryExecutor;
 import com.tmj.helper.DBTable;
@@ -96,6 +97,137 @@ public class User extends BaseModel {
 	public static User[] getAllUsers() {
 		// TODO
 		return null;
+	}
+	
+	public static User[] getUserFromQuery(String query) {
+		User[] a = User.getUserFromQueryUsername(query);
+		User[] b = User.getUserFromQueryEmail(query);
+		User[] c = User.getUserFromQueryFullname(query);
+		ArrayList<User> AL = new ArrayList<User>();
+		
+		for(User u : a)		
+			AL.add(u);
+		for(User u : b) {
+			boolean x = true;
+			for(User uAL: AL) {
+				if(uAL.getUsername().equals(u.getUsername())) {
+					x = false;
+				}
+			}
+			if(x)
+				AL.add(u);
+		}
+		for(User u : c) {
+			boolean x = true;
+			for(User uAL: AL) {
+				if(uAL.getUsername().equals(u.getUsername())) {
+					x = false;
+				}
+			}
+			if(x)
+				AL.add(u);
+		}
+		
+		User[] retval = new User[AL.size()];
+		retval = AL.toArray(retval);
+		
+		return retval;
+	}
+	
+	public static User[] getUserFromQueryUsername(String query) {
+		DBQueryExecutor executor = new DBQueryExecutor();
+		User[] retval = new User[0];
+
+		try {
+			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `username` LIKE '%s';", DBTable.USER, "%" + query + "%"));
+			if (result != null) {
+				ArrayList<User> temp = new ArrayList<User>();
+				while (result.next()) {
+					String username 	= result.getString("username");
+					String password 	= result.getString("password");
+					String fullname 	= result.getString("fullname");
+					String birthdate 	= result.getString("birthdate");
+					String email 		= result.getString("email");
+					String avatarPath	= result.getString("avatar");
+					User user = new User(username, password, fullname, birthdate, email, avatarPath);
+					temp.add(user);
+				}
+				
+				retval = new User[temp.size()];
+				retval = temp.toArray(retval);
+			}
+		} catch (SQLException sEx) {
+			sEx.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
+		
+		return retval;
+	}
+	
+	public static User[] getUserFromQueryEmail(String query) {
+		DBQueryExecutor executor = new DBQueryExecutor();
+		User[] retval = new User[0];
+
+		try {
+			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `email` LIKE '%s';", DBTable.USER, "%" + query + "%"));
+			if (result != null) {
+				ArrayList<User> temp = new ArrayList<User>();
+				while (result.next()) {
+					String username 	= result.getString("username");
+					String password 	= result.getString("password");
+					String fullname 	= result.getString("fullname");
+					String birthdate 	= result.getString("birthdate");
+					String email 		= result.getString("email");
+					String avatarPath	= result.getString("avatar");
+					User user = new User(username, password, fullname, birthdate, email, avatarPath);
+					temp.add(user);
+				}
+				
+				retval = new User[temp.size()];
+				retval = temp.toArray(retval);
+			}
+		} catch (SQLException sEx) {
+			sEx.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
+		
+		return retval;
+	}
+	
+	public static User[] getUserFromQueryFullname(String query) {
+		DBQueryExecutor executor = new DBQueryExecutor();
+		User[] retval = new User[0];
+
+		try {
+			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `fullname` LIKE '%s';", DBTable.USER, "%" + query + "%"));
+			if (result != null) {
+				ArrayList<User> temp = new ArrayList<User>();
+				while (result.next()) {
+					String username 	= result.getString("username");
+					String password 	= result.getString("password");
+					String fullname 	= result.getString("fullname");
+					String birthdate 	= result.getString("birthdate");
+					String email 		= result.getString("email");
+					String avatarPath	= result.getString("avatar");
+					User user = new User(username, password, fullname, birthdate, email, avatarPath);
+					temp.add(user);
+				}
+				
+				retval = new User[temp.size()];
+				retval = temp.toArray(retval);
+			}
+		} catch (SQLException sEx) {
+			sEx.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
+		
+		return retval;
 	}
 
 	@Override

@@ -72,27 +72,6 @@ public class HomeController extends BaseController {
 			request.getSession().setAttribute("loggedIn", new Boolean(true));
 			
 			response.sendRedirect("dashboard");
-		} else if(mAction.equals("registrationEmailAJAX")) {
-			ServletOutputStream out = response.getOutputStream();
-			
-			String email = request.getParameter("email");
-			User user = User.getUserFromEmail(email);
-			if(user == null) {
-				out.println(1);
-			} else {
-				out.println(0);
-			}
-		} else if(mAction.equals("registrationUsernameAJAX")) {
-			ServletOutputStream out = response.getOutputStream();
-			
-			String username = request.getParameter("username");
-			User user = User.getUserFromUsername(username);
-			out.println(username);
-			if(user == null) {
-				out.println(1);
-			} else {
-				out.println(0);
-			}
 		}
 	}
 }

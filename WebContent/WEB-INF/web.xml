@@ -25,4 +25,12 @@
     <servlet-name>DashboardController</servlet-name>
     <url-pattern>/dashboard</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>SearchController</servlet-name>
+    <servlet-class>com.tmj.servlet.SearchController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SearchController</servlet-name>
+    <url-pattern>/search</url-pattern>
+  </servlet-mapping>
 </web-app>

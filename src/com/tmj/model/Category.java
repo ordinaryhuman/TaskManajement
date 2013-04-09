@@ -1,6 +1,8 @@
 package com.tmj.model;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.tmj.helper.DBQueryExecutor;
 import com.tmj.helper.DBTable;
@@ -26,6 +28,35 @@ public class Category extends BaseModel {
 	public static Category[] getCategoryFromUsername(String username) {
 		// TODO
 		return null;
+	}
+	
+	public static Category[] getCategoryFromQuery(String query) {
+		DBQueryExecutor executor = new DBQueryExecutor();
+		Category[] retval = new Category[0];
+
+		try {
+			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `categoryname` LIKE '%s';", DBTable.CATEGORY, "%" + query + "%"));
+			if (result != null) {
+				ArrayList<Category> temp = new ArrayList<Category>();
+				while (result.next()) {
+					Integer categoryID 	= result.getInt("categoryID");
+					String name 		= result.getString("categoryname");
+					String creatorID 	= result.getString("creatorID");
+					Category category = new Category(categoryID, name, creatorID);
+					temp.add(category);
+				}
+				
+				retval = new Category[temp.size()];
+				retval = temp.toArray(retval);
+			}
+		} catch (SQLException sEx) {
+			sEx.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
+		
+		return retval;
 	}
 
 	@Override

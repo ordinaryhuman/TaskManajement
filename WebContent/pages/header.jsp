@@ -12,6 +12,10 @@
     </ul>
     <form method="post" action="search">
     	<input type="text" name="query" />
+    	<input type="radio" name="typeQuery" value="user"/> User
+    	<input type="radio" name="typeQuery" value="kategori"/> Kategori
+    	<input type="radio" name="typeQuery" value="task"/> Task
+    	<input type="radio" name="typeQuery" value="all"/> All
     	<input type="submit" value="Search" />
     </form>
 </div>

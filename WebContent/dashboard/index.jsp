@@ -27,16 +27,19 @@
 	<h3> Kategori </h3>
     <ul class="navigation2">
     <li> <a href="kategori.php" target="categoryframe" id="category-all" onclick="selectCategory(null)"> All </a></li>
-    <?php
-    	foreach ($categories as $category) {
-			printf('<li>');
-			if($category->creatorID == $_SESSION['username']) {
-				printf('<a href="dashboard.php?action=delete&categoryID=%s"><img src="images/delete.png"></img></a>', $category->id);
-			}
-			printf('<a href="kategori.php?categoryID=%s" target="categoryframe" id="%d" onclick="selectCategory(\'%s\')">%s</a>', $category->id, $category->id, $category->id, $category->name);
-			printf('</li>');
-		}
-    ?>
+    <%
+    if(categories != null)
+    for(Category category: categories) {
+    	out.println("<li>");
+    	if(category.getCreatorID().equals(user.getUsername())) {
+    		out.println(String.format("<a href='dashboard?action=delete&categoryID=%d'><img src='images/delete.png'></img></a>",
+    				category.getID()));
+    	}
+    	out.println(String.format("<a href='kategori.jsp?categoryID=%d' target='categoryframe' id='%d' onclick='selectCategory(\'%d\')'>%s</a>",
+    			category.getID(), category.getID(), category.getID(), category.getName()));
+    	out.println("</li>");
+    }
+    %>
     </ul>
     <a class="categbutton" href="addtugas.php" id="addtask_button">Add Task</a>
     <div align="right" >
@@ -49,7 +52,7 @@
         
         <div class="popup">
             <h2>Add Category</h2>
-            <form action="dashboard.php" method="post">
+            <form action="category" method="post">
 	            <p>Please enter category name and user who can access it</p>
 	            <div>
 	                <label for="category">Category Name</label>
@@ -60,6 +63,7 @@
 	                <input type="text" id="name" name="name" value="" />
 	            </div>
 	            <div align="right">
+	            	<input name="action" value="addCategory" />
 	            	<input type="submit" value="Add Category" />
 	     		</div>
 			</form>
