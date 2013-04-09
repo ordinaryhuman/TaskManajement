@@ -29,7 +29,8 @@ public class SearchController extends BaseController {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		super.doGet(request, response);
+		checkLoggedIn(request, response);
 	}
 
 	/**
@@ -37,11 +38,12 @@ public class SearchController extends BaseController {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		super.doPost(request, response);
+		checkLoggedIn(request, response);
 		
 		String query = request.getParameter("query");
 		String typeQuery = request.getParameter("typeQuery");
 		
-		if((typeQuery == null) || (typeQuery.equals("user"))) {
+		if((typeQuery.equals("user"))) {
 			User[] users = User.getUserFromQuery(query);
 			request.setAttribute("users", users);
 		} else if(typeQuery.equals("kategori")) {
