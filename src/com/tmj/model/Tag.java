@@ -100,28 +100,6 @@ public class Tag extends BaseModel {
 		return retval;
 	}
 	
-	public static Integer getAvailableTagID() {
-		// get all tag
-		Tag[] tags = Tag.getAllTag();
-		Integer i = 1;
-		while(true) {
-			boolean available = true;
-			
-			// traverse to all exist tag, see if i available
-			for(Tag tag:tags) {
-				if(tag.getID() == i) {
-					available = false;
-					break;
-				}
-			}
-			
-			if(available)
-				return i;
-			
-			i++;
-		}
-	}
-	
 	@Override
 	public void addOnDB() {
 		DBQueryExecutor executor = new DBQueryExecutor();
