@@ -1,0 +1,21 @@
+Pada semester 6 ini, saya mendapatkan tugas yang sangat menarik, yaitu menyembunyikan dan mengenkripsi pesan melalui media video. Tugas besar mata kuliah kriptografi ini merupakan salah satu tugas yang menarik bagi saya. Bagaimana di dalam sebuah video kita bisa menyembunyikan sebuah pesan dalam bentuk tulisan (.txt, .html, .pdf, dsb),  musik (.mp3, .wav, dsb), video (.mp4, .avi, dsb), dan bentuk penyimpanan elektronik lainnya. Dalam kasus ini saya akan menggunakan file .avi sebagai media penyimpanan.
+
+Bagaimana kita dapat menyembuyikan sebuah pesan di dalam sebuah video format .avi ?
+
+Sebuah berkas AVI (Audio Video Interleave) terdiri atas beberapa kanal yang masing-masing menyimpan informasi yang berbeda. Kanal-kanal utama yang terdapat pada AVI adalah kanal citra dan kanal suara. Kanal citra pada dasarnya merupakan sebuah deretan citra bitmap yang masing-masing mewakili satu buah frame pada video. Gambar yang tampak bergerak dihasilkan dari pergantian frame tersebut. 
+
+Setiap frame video AVI merupakan citra dengan format bitmap. Sehingga bila saya ingin menyembunyikan pesan pada video AVI, saya harus bisa menyimpan pesan tersebut pada bitmap-bitmap penyusunnya. Menyembunyikan pesan pada sebuah file berformat bitmap dapat menggunakan metode modifikasi LSB (Least Significant Bit). Dengan metode ini, pesan dipecah menjadi potongan byte, setiap byte tersebut dipecah dalam potongan bit. Bit-bit inilah yang disembunyikan pada pixel-pixel sebuah file bitmap.
+
+Misalkan kita ingin menyembunyikan 1 byte (8 bit) : 10010101. Sebuah pixel bitmap memiliki 3 properti angka, yaitu Red, Green dan Blue. Sehingga untuk menyembunyikan 1 byte tersebut kita membutuhkan 3 pixel dari bitmap, sebagai contoh:
+R: 10001010   10001010   00101001
+G: 11100001   10011110   00001010
+B: 10100011   11100001   11110101
+diubah menjadi berikut (angka yang tebal adalah pesan yang disembunyikan)
+R: 10001011   10001011   00101000
+G: 11100000   10011110   00001011
+B: 10100010   11100001   11110101
+Dengan cara tersebut, kita dapat menyembunyikan pesan digital apapun selama medianya memiliki size sekitar 10 lebih besar. Tentunya dengan membagi byte dari pesan digital tersebut pada LSB media yang kita gunakan.
+
+Selain menyembunyikan pesan, kita juga mengenkripsi pesan digital tersebut menggunakan algoritma kriptografi klasik Vigenere Cipher. Sehingga data yang kita kirimkan lebih sulit untuk dipecahkan. Detil dari algoritma Vigenere Cipher dapat dilihat pada link berikut ini: [http://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher]. Aplikasi yang saya buat untuk mengenkripsi data menggunakan Vigenere cipher dapat dilihat pada link berikut [https://github.com/gmochid/VignereCipherApplet]
+
+Pengerjaan tugas ini menggunakan framework .NET dan bahasa C#. Untuk  membantu melakukan modifikasi file AVI, kita menggunakan library AVIReader. Hasil dari program yang dibuat dapat dilihat pada link berikut ini [https://github.com/andhikanugraha/stegosaurus]
