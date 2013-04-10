@@ -7,7 +7,7 @@
 
   	<ul class="navigation">
 		<li> <a href="dashboard"> Dashboard </a> </li>
-        <li> <a href="profil?username=<%= user.getUsername() %>"> Profile </a> </li>
+        <li> <a href="profile?username=<%= user.getUsername() %>"> Profile </a> </li>
         <li> <a href="home"> Log Out </a> </li>
     </ul>
     <form method="post" action="search">

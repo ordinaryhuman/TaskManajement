@@ -33,4 +33,12 @@
     <servlet-name>SearchController</servlet-name>
     <url-pattern>/search</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>ProfileController</servlet-name>
+    <servlet-class>com.tmj.servlet.ProfileController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProfileController</servlet-name>
+    <url-pattern>/profile</url-pattern>
+  </servlet-mapping>
 </web-app>
