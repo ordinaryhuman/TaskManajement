@@ -257,7 +257,7 @@ public class Task extends BaseModel {
 	public void addOnDB() {
 		DBQueryExecutor executor = new DBQueryExecutor();
 		String stmt = String.format("INSERT INTO `%s` (`taskID`, `categoryID`, `username`, `taskname`, `status`, `deadline`)" +
-				"VALUES ('%s', '%s', '%s', '%s', '%s', '%s');", DBTable.TASK, mID, mCategoryID, mUsername, mTaskname, mStatus, mDeadline);
+				"VALUES ('%s', '%s', '%s', '%s', '%s', '%s');", DBTable.TASK, mID, mCategoryID, mUsername, mTaskname, mStatus ? 1 : 0, mDeadline);
 		
 		try {
 			executor.executeQuery(stmt);
@@ -273,7 +273,7 @@ public class Task extends BaseModel {
 	public void editOnDB() {
 		DBQueryExecutor executor = new DBQueryExecutor();
 		String stmt = String.format("UPDATE `%s` SET `categoryID` = '%s', `username` = '%s', `taskname` = '%s', `status` = '%s', `deadline` = '%s'" +
-				"WHERE `%s`.`taskID` = '%s'", DBTable.TASK, mCategoryID, mUsername, mTaskname, DBTable.TASK, mID);
+				"WHERE `%s`.`taskID` = '%s'", DBTable.TASK, mCategoryID, mUsername, mTaskname, mStatus ? 1 : 0, mDeadline, DBTable.TASK, mID);
 				
 		try {
 			executor.executeQuery(stmt);

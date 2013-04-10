@@ -7,6 +7,30 @@ window.onload = function() {
 	$id("addtask_button").style.visibility = 'hidden';
 }
 
+function changeTaskStateAJAX(taskID) {
+var xmlhttp;
+	
+	if (window.XMLHttpRequest)
+	{// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	}
+	else
+	{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	
+	xmlhttp.onreadystatechange=function()
+	{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			$id('task_status' + taskID).innerHTML = xmlhttp.responseText;
+		}
+	}
+	
+	xmlhttp.open("GET","ajaxHandler/changeTaskStatus.jsp?taskID=" + taskID, true);
+	xmlhttp.send();
+}
+
 function selectCategoryAJAX(selectedCategoryID) {
 	var xmlhttp;
 	
@@ -35,7 +59,7 @@ function selectCategoryAJAX(selectedCategoryID) {
 				s = s + '<tr>';
 				for(j = 0; j < 2; j++) {
 					obj = response[i * 2 + j - 1];
-					s = s + '<td width="26" class="black"><p class="kategori_status">' + obj.status + '</p>' +
+					s = s + '<td width="26" class="black"><p class="kategori_status" id="task_status' + obj.ID + '">' + obj.status + '</p>' +
 						'<a class="kategori_statuschange" onclick="changeTaskStateAJAX(' + obj.ID + ')">(change)</a></td>';
 					s = s + '<td width="264" class="' + ((i + j - 1) % 2 == 0 ? 'blue' : 'green') + '">' + 
 						'<a href="rincian?taskid=' + obj.ID + '" target="_parent" class="ordintext">' + obj.taskname + '</a><br />';
@@ -48,7 +72,7 @@ function selectCategoryAJAX(selectedCategoryID) {
 			if((response.length - 1) % 2 != 0) {
 				obj = response[i * 2 - 1];
 				s = s + '<tr>';
-				s = s + '<td width="26" class="black"><p class="kategori_status">' + obj.status + '</p>' +
+				s = s + '<td width="26" class="black"><p class="kategori_status" id="task_status' + obj.ID + '">' + obj.status + '</p>' +
 					'<a class="kategori_statuschange" onclick="changeTaskStateAJAX(' + obj.ID + ')">(change)</a></td>';
 				s = s + '<td width="264" class="' + ((i + j - 1) % 2 == 0 ? 'blue' : 'green') + '">' + 
 					'<a href="rincian?taskid=' + obj.ID + '" target="_parent" class="ordintext">' + obj.taskname + '</a><br />';
