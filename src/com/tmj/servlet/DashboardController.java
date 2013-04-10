@@ -36,7 +36,8 @@ public class DashboardController extends BaseController {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		super.doGet(request, response);
-		checkLoggedIn(request, response);
+		if(checkLoggedIn(request, response))
+			return;
 		
 		if(mAction == null) {
 			mRD = request.getRequestDispatcher("dashboard/index.jsp");

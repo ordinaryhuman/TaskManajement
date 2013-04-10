@@ -25,11 +25,42 @@ function selectCategoryAJAX(selectedCategoryID) {
 		{
 			response = JSON.parse(xmlhttp.responseText);
 			
-			for(i = 1; i < response.length; i++) {
-				console.log(response[i]);
+			var s = '<h4 align="center">' + response[0].name + '</h4>';
+			s = s + 'Click on task name to see the details';
+			s = s + '<table width="580" border="1" cellspacing="0" cellpadding="0">';
+			
+			i = 1;
+			lim = ((response.length - 1) % 2 == 0) ? response.length - 1 : response.length - 2;
+			for(; i <= (lim / 2); i++) {
+				s = s + '<tr>';
+				for(j = 0; j < 2; j++) {
+					obj = response[i * 2 + j - 1];
+					s = s + '<td width="26" class="black"><p class="kategori_status">' + obj.status + '</p>' +
+						'<a class="kategori_statuschange" onclick="changeTaskStateAJAX(' + obj.ID + ')">(change)</a></td>';
+					s = s + '<td width="264" class="' + ((i + j - 1) % 2 == 0 ? 'blue' : 'green') + '">' + 
+						'<a href="rincian?taskid=' + obj.ID + '" target="_parent" class="ordintext">' + obj.taskname + '</a><br />';
+					s = s + 'Deadline : <b class="redtext">' + obj.deadline + '</b><br />';
+					s = s + 'Kategori : ' + obj.category + '<br />';
+					s = s + obj.tags;
+				}
+				s = s + '</tr>';
+			}
+			if((response.length - 1) % 2 != 0) {
+				obj = response[i * 2 - 1];
+				s = s + '<tr>';
+				s = s + '<td width="26" class="black"><p class="kategori_status">' + obj.status + '</p>' +
+					'<a class="kategori_statuschange" onclick="changeTaskStateAJAX(' + obj.ID + ')">(change)</a></td>';
+				s = s + '<td width="264" class="' + ((i + j - 1) % 2 == 0 ? 'blue' : 'green') + '">' + 
+					'<a href="rincian?taskid=' + obj.ID + '" target="_parent" class="ordintext">' + obj.taskname + '</a><br />';
+				s = s + 'Deadline : <b class="redtext">' + obj.deadline + '</b><br />';
+				s = s + 'Kategori : ' + obj.category + '<br />';
+				s = s + obj.tags;
+				s = s + '</tr>';
 			}
 			
-			$id('content').innerHTML = xmlhttp.responseText;
+			s = s + '</table>';
+			
+			$id('content').innerHTML = s;
 		}
 	}
 	

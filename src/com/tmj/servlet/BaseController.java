@@ -50,12 +50,14 @@ public class BaseController extends HttpServlet {
 	protected void doUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 	}
 	
-	protected void checkLoggedIn(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected Boolean checkLoggedIn(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		User user = (User) request.getSession().getAttribute("user");
 		if(user == null) {
 			mRD = request.getRequestDispatcher("index.jsp");
 			mRD.forward(request, response);
+			return true;
 		}
+		return false;
 	}
 
 	protected RequestDispatcher mRD;

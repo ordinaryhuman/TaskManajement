@@ -212,7 +212,7 @@ public class Task extends BaseModel {
 					Integer categoryID 	= result.getInt("categoryID");
 					String username 	= result.getString("username");
 					String taskname 	= result.getString("taskname");
-					Boolean status 		= result.getBoolean("email");
+					Boolean status 		= result.getBoolean("status");
 					String deadline		= result.getString("deadline");
 					Task task = new Task(ID, categoryID, username, taskname, status, deadline);
 					temp.add(task);
@@ -303,6 +303,22 @@ public class Task extends BaseModel {
 	public Tag[] getTags() {
 		// TODO
 		return null;
+	}
+	
+	public String getTagsString() {
+		Tag[] tags = getTags();
+		StringBuilder sb = new StringBuilder();
+		
+		for(Tag tag : tags) {
+			sb.append('#');
+			sb.append(tag.getTagname());
+			sb.append(", ");
+		}
+		return sb.toString();
+	}
+	
+	public Category getCategory() {
+		return Category.getCategoryFromCategoryID(mCategoryID);
 	}
 	
 	public User getOwner() {

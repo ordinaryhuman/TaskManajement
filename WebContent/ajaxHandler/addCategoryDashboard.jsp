@@ -12,6 +12,7 @@
 		JSONObject o = new JSONObject();
 		if(categoryID == 0) {
 			o.append("ID", categoryID);
+			o.append("name", "ALL");
 		} else {
 			Category category = Category.getCategoryFromCategoryID(categoryID);
 			o.append("ID", category.getID());
@@ -24,11 +25,12 @@
 			JSONObject obj = new JSONObject();
 			
 			obj.append("ID", tasks[i-1].getID());
-			obj.append("categoryID", tasks[i-1].getCategoryID());
+			obj.append("category", tasks[i-1].getCategory().getName());
 			obj.append("username", tasks[i-1].getUsername());
 			obj.append("taskname", tasks[i-1].getTaskname());
-			obj.append("status", tasks[i-1].getStatus());
+			obj.append("status", tasks[i-1].getStatus() ? "DONE" : "NOT-DONE");
 			obj.append("deadline", tasks[i-1].getDeadline());
+			obj.append("tags", "tasks[i-1].getTagsString()");
 			
 			retval.put(i, obj);
 		}
