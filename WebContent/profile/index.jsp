@@ -38,15 +38,15 @@ Task[] tasksNotDone = (Task[]) request.getAttribute("tasksNotDone");
 	</p>
     <p>Nama Lengkap	: <br>
     <div id="fullnameDisp"><%= user.getFullname() %></div>
-    <div id="fullnameEdit" hidden><input type="text" name="fullname" /></div>
+    <div id="fullnameEdit" hidden><input type="text" name="fullname" value="<%= user.getFullname() %>" /></div>
     </p>
 	<p>Tanggal lahir : <br>
 	<div id="birthdateDisp"><%= user.getBirthdate() %></div>
-	<div id="birthdateEdit" hidden><input type="date" name="birthdate" /></div>
+	<div id="birthdateEdit" hidden><input id="dateInput" type="date" name="birthdate" value="<%= user.getBirthdate() %>" /></div>
 	</p>
     <p>Email : <br>
     <div id="emailDisp"><%= user.getEmail() %></div>
-    <div id="emailEdit" hidden><input type="text" name="email" /></div>
+    <div id="emailEdit" hidden><input type="text" name="email" value="<%= user.getEmail() %>" /></div>
     </p>
     <div id="password" hidden>
     	<p>Password Lama : <br>
