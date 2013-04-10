@@ -300,6 +300,11 @@ public class Task extends BaseModel {
 		}
 	}
 	
+	public Tag[] getTags() {
+		// TODO
+		return null;
+	}
+	
 	public User getOwner() {
 		return User.getUserFromUsername(mUsername);
 	}
@@ -327,7 +332,7 @@ public class Task extends BaseModel {
 		return mTaskname;
 	}
 
-	public Boolean gemStatus() {
+	public Boolean getStatus() {
 		return mStatus;
 	}
 

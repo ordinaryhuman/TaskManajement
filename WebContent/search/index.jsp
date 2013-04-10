@@ -3,6 +3,7 @@
 <%@ page import="com.tmj.model.User" %>
 <%@ page import="com.tmj.model.Category" %>
 <%@ page import="com.tmj.model.Task" %>
+<%@ page import="com.tmj.model.Tag" %>
 <%
 	String typeQuery = (String) request.getParameter("typeQuery"); 
 %>
@@ -40,27 +41,26 @@
 		
 		<% if(typeQuery.equals("all") || typeQuery.equals("task")) { %>
 		<h4>Task</h4>
-		<!-- 
-		<?php
-			foreach ($result_task as $task) {
-				printf('<p>');
-				printf('Nama     : %s<br>', $task->taskname);
-				printf('Deadline : %s<br>', $task->deadline);
-				$tags = $task->getTags();
-				printf('Tag      : ');
-				foreach ($tags as $tag) {
-					printf('%s,', $tag->tagname);
+		<%
+			Task[] tasks = (Task[]) request.getAttribute("tasks");
+			for(Task task:tasks) {
+				out.println("<p>");
+				out.println(String.format("Nama      : <a href='%s'>%s</a> <br>", task.getID(), task.getTaskname()));
+				out.println(String.format("Deadline  : %s <br>", task.getDeadline()));
+				out.println(String.format("Tag       : "));
+				Tag[] tags = task.getTags();
+				for(Tag tag:tags) {
+					out.print(String.format("%s,", tag.getTagname()));
 				}
-				printf('<br>');
-				printf('Status   : ');
-				?>
-				<input type="checkbox" name="status" onclick="sendStatus(<?php printf("'%s'", $task->id); ?>)" value="1" <?php echo $task->status == 1 ? "checked":""; ?> > DONE<br>
-				<?php
-				printf('<br>');
-				printf('</p>');
+				out.println("<br>");
+				out.println(String.format("Status    : "));
+		%>
+				<input type="checkbox" name="status" onclick="sendStatus(<% out.print(task.getID()); %>) <% out.print((task.getStatus()) ? "checked" : ""); %>">
+		<%
+				out.println("<br>");
+				out.println("</p>");
 			}
-		?>
-		 -->
+		%>
 		<% } %>
 		
 		<% if(typeQuery.equals("all") || typeQuery.equals("user")) { %>
