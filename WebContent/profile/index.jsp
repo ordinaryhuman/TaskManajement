@@ -27,6 +27,7 @@ Task[] tasksNotDone = (Task[]) request.getAttribute("tasksNotDone");
 <div class="kategori2">
 	<h2> Profile </h2>
     <div><img src="upload/avatars/<%= user.getAvatarPath() %>" class="profpic"/></div>
+    <div id="avatarEdit" hidden><input type="file" name="avatar"/></div>
     <p><div align="right"> <input type="button" value="Edit Profile" class="buttonbox1" onclick="toogleEdit()"/> </div></p>
 </div>
     

@@ -11,6 +11,7 @@ function toogleEdit() {
 		$id("birthdateDisp").hidden = true;
 		$id("emailDisp").hidden = true;
 		
+		$id("avatarEdit").hidden = false;
 		$id("fullnameEdit").hidden = false;
 		$id("birthdateEdit").hidden = false;
 		$id("emailEdit").hidden = false;
@@ -20,6 +21,7 @@ function toogleEdit() {
 		$id("birthdateDisp").hidden = false;
 		$id("emailDisp").hidden = false;
 		
+		$id("avatarEdit").hidden = true;
 		$id("fullnameEdit").hidden = true;
 		$id("birthdateEdit").hidden = true;
 		$id("emailEdit").hidden = true;
