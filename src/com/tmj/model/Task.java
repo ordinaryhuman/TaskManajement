@@ -301,8 +301,31 @@ public class Task extends BaseModel {
 	}
 	
 	public Tag[] getTags() {
-		// TODO
-		return null;
+		DBQueryExecutor executor = new DBQueryExecutor();
+		Tag[] retval = new Tag[0];
+
+		try {
+			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `taskID` = '%s';", DBTable.TAG, this.getID()));
+			if (result != null) {
+				ArrayList<Tag> temp = new ArrayList<Tag>();
+				while (result.next()) {
+					Integer taskID	= result.getInt("taskID");
+					String tagname	= result.getString("tagname");
+					Tag tag = new Tag(taskID, tagname);
+					temp.add(tag);
+				}
+				
+				retval = new Tag[temp.size()];
+				retval = temp.toArray(retval);
+			}
+		} catch (SQLException sEx) {
+			sEx.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
+		
+		return retval;
 	}
 	
 	public String getTagsString() {
