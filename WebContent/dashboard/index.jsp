@@ -26,7 +26,7 @@
 <div class="kategori">
 	<h3> Kategori </h3>
     <ul class="navigation2">
-    <li> <a href="kategori.php" target="categoryframe" id="category-all" onclick="selectCategory(null)"> All </a></li>
+    <li> <a target="categoryframe" id="category-all" onclick="selectCategoryAJAX(0)"> All </a></li>
     <%
     if(categories != null)
     for(Category category: categories) {
@@ -35,8 +35,8 @@
     		out.println(String.format("<a href='dashboard?action=delete&categoryID=%d'><img src='images/delete.png'></img></a>",
     				category.getID()));
     	}
-    	out.println(String.format("<a href='kategori.jsp?categoryID=%d' target='categoryframe' id='%d' onclick='selectCategory(\'%d\')'>%s</a>",
-    			category.getID(), category.getID(), category.getID(), category.getName()));
+    	out.println(String.format("<a target='categoryframe' id='%d' onclick='selectCategoryAJAX(%d)'>%s</a>",
+    			category.getID(), category.getID(), category.getName()));
     	out.println("</li>");
     }
     %>
@@ -75,8 +75,8 @@
 
 
 <!-- Content -->
-<div>
-	<iframe src="dashboard/kategori.jsp" width="605" height="340" name="categoryframe" id="categoryframe">  </iframe>
+<div id="content">
+	
 </div>
 
 
