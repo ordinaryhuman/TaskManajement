@@ -32,12 +32,6 @@ public class ProfileServlet extends BaseController {
 		if(checkLoggedIn(request, response))
 			return;
 		
-		if(mAction != null) {
-			if(mAction.equals("edit")) {
-				
-			}
-		}
-		
 		User user = User.getUserFromUsername(request.getParameter("username"));
 		Task[] taskDone = Task.getTasksDoneFromUsername(user.getUsername());
 		Task[] taskNotDone = Task.getTasksNotDoneFromUsername(user.getUsername());
@@ -55,6 +49,19 @@ public class ProfileServlet extends BaseController {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		super.doPost(request, response);
+		if(mAction.equals("edit")) {
+			User user = User.getUserFromUsername(request.getParameter("username"));
+			user.setBirthdate(request.getParameter("birthdate"));
+			user.setEmail(request.getParameter("email"));
+			user.setFullname(request.getParameter("fullname"));
+			if(user.getPassword().equals(request.getParameter("oldpassword"))) {
+				if(request.getParameter("newpassword").equals(request.getParameter("confirmnewpassword"))) {
+					user.setPassword(request.getParameter("newpassword"));
+				}
+			}
+			user.editOnDB();
+		}
+		doGet(request, response);
 	}
 
 }

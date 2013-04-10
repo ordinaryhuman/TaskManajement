@@ -10,7 +10,9 @@ function toogleEdit() {
 		$id("fullnameDisp").hidden = true;
 		$id("birthdateDisp").hidden = true;
 		$id("emailDisp").hidden = true;
+		$id("editInput").hidden = true;
 		
+		$id("submitInput").hidden = false;
 		$id("avatarEdit").hidden = false;
 		$id("fullnameEdit").hidden = false;
 		$id("birthdateEdit").hidden = false;
@@ -20,7 +22,9 @@ function toogleEdit() {
 		$id("fullnameDisp").hidden = false;
 		$id("birthdateDisp").hidden = false;
 		$id("emailDisp").hidden = false;
+		$id("editInput").hidden = false;
 		
+		$id("submitInput").hidden = true;
 		$id("avatarEdit").hidden = true;
 		$id("fullnameEdit").hidden = true;
 		$id("birthdateEdit").hidden = true;

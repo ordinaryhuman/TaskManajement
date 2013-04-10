@@ -24,11 +24,18 @@ Task[] tasksNotDone = (Task[]) request.getAttribute("tasksNotDone");
 <jsp:include page="../pages/header.jsp"></jsp:include>
 
 <!-- Content -->
+<form action="profile" method="post">
 <div class="kategori2">
 	<h2> Profile </h2>
     <div><img src="upload/avatars/<%= user.getAvatarPath() %>" class="profpic"/></div>
     <div id="avatarEdit" hidden><input type="file" name="avatar"/></div>
-    <p><div align="right"> <input type="button" value="Edit Profile" class="buttonbox1" onclick="toogleEdit()"/> </div></p>
+    <div align="right" id="editInput"> <input type="button" value="Edit Profile" class="buttonbox1" onclick="toogleEdit()"/> </div>
+    <div align="right" id="submitInput" hidden>
+    	<input type="button" value="Undo Edit" class="buttonbox1" onclick="toogleEdit()"/>
+    	<input type="submit" value="Submit Edit" class="buttonbox1" />
+   	</div>
+   	<input value="edit" name="action" hidden/>
+   	<input value="<%= user.getUsername() %>" name="username" hidden/>
 </div>
     
 <div class="contentprofile">
@@ -80,7 +87,7 @@ Task[] tasksNotDone = (Task[]) request.getAttribute("tasksNotDone");
 
 
 </div>
-
+</form>
 
         
 
