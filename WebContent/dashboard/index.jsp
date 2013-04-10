@@ -60,10 +60,10 @@
 	            </div>
 	            <div>
 	                <label for="name">User (Seperated with ";")</label>
-	                <input type="text" id="name" name="users" value="" />
+	                <input type="text" id="name" name="users"/>
 	            </div>
 	            <div align="right">
-	            	<input name="action" value="addCategory" />
+	            	<input name="action" value="addCategory" hidden="true"/>
 	            	<input type="submit" value="Add Category" />
 	     		</div>
 			</form>

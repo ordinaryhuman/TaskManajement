@@ -56,7 +56,8 @@ public class DashboardController extends BaseController {
 		
 		if(mAction.equals("addCategory")) {
 			String categoryName = request.getParameter("categoryname");
-			String usernameMembers = request.getParameter("users").concat(";" + activeUser.getUsername());
+			String usernameMembers = request.getParameter("users");
+			usernameMembers = usernameMembers.concat(";" + activeUser.getUsername());
 			
 			Category category = new Category(Category.getAvailableCategoryID(), categoryName, activeUser.getUsername());
 			category.addOnDB();

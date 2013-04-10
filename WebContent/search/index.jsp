@@ -26,14 +26,14 @@
 <div class="TaskBoard">
 
 	<div align="left">
-		<% if(typeQuery.equals("all") || typeQuery.equals("category")) { %>
+		<% if(typeQuery.equals("all") || typeQuery.equals("kategori")) { %>
 		<h4>Category</h4>
 		<%
 			Category[] categories = (Category[]) request.getAttribute("categories");
 			for(Category category : categories) {
 				out.println("<p>");
-				out.println(String.format("Name     : <a href='category?categoryID=%d'>%s</a> <br>", category.getID(), category.getName()));
-				out.println(String.format("Creator  : <a href='profile?username=%s'>%s <br>", category.getCreator().getUsername(), category.getCreator().getUsername()));
+				out.println(String.format("Name     : %s <br>", category.getName()));
+				out.println(String.format("Creator  : <a href='profile?username=%s'>%s</a> <br>", category.getCreator().getUsername(), category.getCreator().getUsername()));
 				out.println("</p>");
 			}
 		%>

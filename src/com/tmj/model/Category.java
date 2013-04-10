@@ -200,12 +200,14 @@ public class Category extends BaseModel {
 	public void setMembers(String usernameMembers) {
 		DBQueryExecutor executor = new DBQueryExecutor();
 		String[] usernames = usernameMembers.split(";");
+		System.out.println(usernameMembers);
 
 		try {
 			executor.executeQuery(String.format("DELETE FROM `%s` WHERE `%s`.`categoryID` = '%d'", DBTable.CATEGORY_USER, DBTable.CATEGORY_USER, mID));
 			for(String username : usernames) {
+				System.out.println(username);
 				executor.executeQuery(String.format("INSERT INTO `%s` (`categoryID`, `username`) VALUES ('%d', '%s')",
-						mID, username));
+						DBTable.CATEGORY_USER, mID, username));
 			}
 		} catch (SQLException sEx) {
 			sEx.printStackTrace();
