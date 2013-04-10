@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.tmj.model.Task;
 import com.tmj.model.User;
 
 /**
@@ -31,8 +32,19 @@ public class ProfileServlet extends BaseController {
 		if(checkLoggedIn(request, response))
 			return;
 		
+		if(mAction != null) {
+			if(mAction.equals("edit")) {
+				
+			}
+		}
+		
 		User user = User.getUserFromUsername(request.getParameter("username"));
+		Task[] taskDone = Task.getTasksDoneFromUsername(user.getUsername());
+		Task[] taskNotDone = Task.getTasksNotDoneFromUsername(user.getUsername());
+		
 		request.setAttribute("user", user);
+		request.setAttribute("tasksDone", taskDone);
+		request.setAttribute("tasksNotDone", taskNotDone);
 		
 		mRD = request.getRequestDispatcher("profile/index.jsp");
 		mRD.forward(request, response);

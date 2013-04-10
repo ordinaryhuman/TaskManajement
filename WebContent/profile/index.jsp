@@ -3,6 +3,8 @@
 <%@ page import="com.tmj.model.*" %>
 <%
 User user = (User) request.getAttribute("user");
+Task[] tasksDone = (Task[]) request.getAttribute("tasksDone");
+Task[] tasksNotDone = (Task[]) request.getAttribute("tasksNotDone");
 %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -24,7 +26,7 @@ User user = (User) request.getAttribute("user");
 <!-- Content -->
 <div class="kategori2">
 	<h2> Profile </h2>
-    <div><img src="../images/ibuOADTSPD3HEK.gif" class="profpic"/></div>
+    <div><img src="upload/avatars/<%= user.getAvatarPath() %>" class="profpic"/></div>
     <p><div align="right"> <input type="button" value="Edit Profile" class="buttonbox1" onclick="toogleEdit()"/> </div></p>
 </div>
     
@@ -32,7 +34,6 @@ User user = (User) request.getAttribute("user");
 	
 	<p>Username	: <br>
 	<div id="usernameDisp"><%= user.getUsername() %></div>
-	<div id="usernameEdit"hidden><input type="text" name="username" /></div>
 	</p>
     <p>Nama Lengkap	: <br>
     <div id="fullnameDisp"><%= user.getFullname() %></div>
@@ -55,21 +56,25 @@ User user = (User) request.getAttribute("user");
 	    <input type="password" name="confirmnewpassword" /></p>
     </div>
       <hr noshade="noshade" />
-      <p class="paragraph2">Task :</p>
+      <p class="paragraph2">Task DONE :</p>
       <ul class="paragraph2">
-        <li>Tubes Progin</li>
-        <li>Tubes AI</li>
-        <li>Tugas Individu IMK 2</li>
-        <li>Tugas Mingguan KAP</li>
-        <li>Tugas Kecil Main-main</li>
-        <li>Tugas Kecil Main-main</li>
+      <%
+      	for(Task task : tasksDone) {
+      		out.println(String.format("<li><a href='task?taskID=%d'>", task.getID()));
+      		out.println(task.getTaskname());
+      		out.println("</a></li>");
+      	}
+      %>
         </ul>
-	<p class="paragraph2">Done :</p>
+	<p class="paragraph2">Task NOT-DONE :</p>
       <ul class="paragraph2">
-        <li>Tugas Kecil AI</li>
-        <li>Tugas Individu IMK</li>
-        <li>Proposal IMK</li>
-        <li>Tubes OOP</li>
+        <%
+      	for(Task task : tasksNotDone) {
+      		out.println(String.format("<li><a href='task?taskID=%d'>", task.getID()));
+      		out.println(task.getTaskname());
+      		out.println("</a></li>");
+      	}
+      	%>
       </ul>
 
 
