@@ -49,6 +49,9 @@ public class ProfileServlet extends BaseController {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		super.doPost(request, response);
+		if(checkLoggedIn(request, response))
+			return;
+		
 		if(mAction.equals("edit")) {
 			User user = User.getUserFromUsername(request.getParameter("username"));
 			user.setBirthdate(request.getParameter("birthdate"));
@@ -61,7 +64,7 @@ public class ProfileServlet extends BaseController {
 			}
 			user.editOnDB();
 		}
-		doGet(request, response);
+		response.sendRedirect("profile");
 	}
 
 }
