@@ -398,7 +398,7 @@ public class Task extends BaseModel {
 	
 	public void deleteAssignee(String username) {
 		DBQueryExecutor executor = new DBQueryExecutor();
-		String stmt = String.format("DELETE FROM `%s` WHERE `taskID` = '%d' AND `userID` = '%s'", DBTable.TASK, mID, username);
+		String stmt = String.format("DELETE FROM `%s` WHERE `taskID` = '%d' AND `userID` = '%s'", DBTable.TASK_USER, mID, username);
 				
 		try {
 			executor.executeQuery(stmt);

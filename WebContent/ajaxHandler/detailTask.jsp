@@ -24,5 +24,19 @@ if(mAction.equals("deleteAttachment")) {
 	Task task = Task.getTaskFromTaskID(new Integer(request.getParameter("taskID")));
 	task.setStatus(!task.getStatus());
 	task.editOnDB();
+} else if(mAction.equals("tagHint")) {
+	
+} else if(mAction.equals("assigneeHint")) {
+	
+} else if(mAction.equals("addTag")) {
+	Integer taskID = new Integer(request.getParameter("taskID"));
+	String tagname = request.getParameter("tagname");
+	Tag tag = new Tag(taskID, tagname);
+	tag.addOnDB();
+} else if(mAction.equals("addAssignee")) {
+	Task task = Task.getTaskFromTaskID(new Integer(request.getParameter("taskID")));
+	String username = request.getParameter("username");
+	task.addAssignee(username);
+	out.println(User.getUserFromUsername(username).getFullname());
 }
 %>

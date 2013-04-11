@@ -40,14 +40,19 @@
    	    <ul>
    	    	<%
    	    	for(User assignee : assignees) {
-   	    		out.println(String.format("<li id='rincian-assignee-%s'>%s", assignee.getUsername(), assignee.getFullname()));
+   	    		out.println(String.format("<li id='rincian-assignee-%s'><a href='profile?username=%s'>%s<a>", assignee.getUsername(), assignee.getUsername(), assignee.getFullname()));
    	    		if(!assignee.getUsername().equals(task.getUsername())) {
-   	    			out.println(String.format("<input type='button' class='delete' value='Delete' onclick='deleteAssignee(%s, %d)' hidden/>", assignee.getUsername(), task.getID()));
+   	    			out.println(String.format("<input type='button' class='delete' value='Delete' onclick='deleteAssignee(\"%s\", %d)' hidden/>", assignee.getUsername(), task.getID()));
    	    		}
    	    		out.println("</li>");
    	    	}
    	    	%>
    	    </ul>
+   	    </div>
+   	    <div id="rincian-assignee-edit" class="edit" hidden>
+   	    	<input type="text" id="rincian-assignee-edit-username" list="rincian-assignee-edit-username-datalist"/>
+   	    	<datalist id="rincian-assignee-edit-username-datalist"></datalist>
+   	    	<input type="button" value="Submit" onclick="addAssignee(<%= task.getID() %>)"/>
    	    </div>
    	    
    	    <br><a>Tag :</a><br>
@@ -56,11 +61,16 @@
 	   	    <%
 	   	    	for(Tag tag : tags) {
 	   	    		out.println(String.format("<li id='rincian-tag-%s'>%s", tag.getTagname(), tag.getTagname()));
-	   	    		out.println(String.format("<input type='button' class='delete' value='Delete' onclick='deleteTag(%s)' hidden/>", tag.getTagname()));
+	   	    		out.println(String.format("<input type='button' class='delete' value='Delete' onclick='deleteTag(\"%s\", %d)' hidden/>", tag.getTagname(), task.getID()));
 	   	    		out.println("</li>");
 	   	    	}
 	   	    %>
    	    </ul>
+   	    </div>
+   	    <div id="rincian-tag-edit" class="edit" hidden>
+   	    	<input type="text" id="rincian-tag-edit-tagname" list="rincian-tag-edit-tagname-datalist"/>
+   	    	<datalist id="rincian-tag-edit-tagname-datalist"></datalist>
+   	    	<input type="button" value="Submit" onclick="addTag(<%= task.getID() %>)"/>
    	    </div>
    	  	
    	  	<br><a>Status :<br>

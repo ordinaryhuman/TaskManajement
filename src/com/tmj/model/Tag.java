@@ -103,7 +103,7 @@ public class Tag extends BaseModel {
 	@Override
 	public void addOnDB() {
 		DBQueryExecutor executor = new DBQueryExecutor();
-		String stmt = String.format("INSERT INTO `%s` (`taskID`, `tagname`)" +
+		String stmt = String.format("INSERT IGNORE INTO `%s` (`taskID`, `tagname`)" +
 				"VALUES ('%s', '%s');", DBTable.TAG, mTaskID, mTagname);
 		
 		try {

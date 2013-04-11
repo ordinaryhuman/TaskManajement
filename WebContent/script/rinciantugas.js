@@ -19,7 +19,7 @@ function edittask() {
 		edit.hidden = !edit.hidden;
 	}
 	
-	if($id('rincianbutton-edit') == 'Edit Task') {
+	if($id('rincianbutton-edit').value == 'Edit Task') {
 		$id('rincianbutton-edit').value = 'End Edit';
 	} else {
 		$id('rincianbutton-edit').value = 'Edit Task';
@@ -73,7 +73,7 @@ function deleteAttachment(id) {
 	xmlhttp.send();
 }
 
-function deleteTag(tagID, taskID) {
+function deleteTag(tagname, taskID) {
 	var xmlhttp;
 	
 	if (window.XMLHttpRequest)
@@ -89,10 +89,11 @@ function deleteTag(tagID, taskID) {
 	{
 		if (xmlhttp.readyState==4 && xmlhttp.status==200)
 		{
-			deleteChild($id('rincian-tag').childNodes[1], $id('rincian-tag-' + tagID));
+			console.log($id("rincian-tag-" + tagname));
+			deleteChild($id('rincian-tag').childNodes[1], $id('rincian-tag-' + tagname));
 		}
 	}
-	xmlhttp.open("GET","ajaxHandler/detailTask.jsp?action=deleteTag&tagID=" + tagID + "&tagID=" + taskID,true);
+	xmlhttp.open("GET","ajaxHandler/detailTask.jsp?action=deleteTag&tagname=" + tagname + "&taskID=" + taskID,true);
 	xmlhttp.send();
 }
 
@@ -115,7 +116,7 @@ function deleteAssignee(username, taskID) {
 			deleteChild($id('rincian-assignee').childNodes[1], $id('rincian-assignee-' + username));
 		}
 	}
-	xmlhttp.open("GET","ajaxHandler/detailTask.jsp?action=deleteAssignee&tagID=" + username + "&tagID=" + taskID,true);
+	xmlhttp.open("GET","ajaxHandler/detailTask.jsp?action=deleteAssignee&username=" + username + "&taskID=" + taskID,true);
 	xmlhttp.send();
 }
 
@@ -202,5 +203,77 @@ function sendStatus(taskid) {
 	}
 	
 	xmlhttp.open("GET","ajaxHandler/detailTask.jsp?action=editStatus&taskID=" + taskid,true);
+	xmlhttp.send();
+}
+
+function addTag(taskid) {
+	var xmlhttp;
+	
+	if (window.XMLHttpRequest)
+	{// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	}
+	else
+	{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	
+	xmlhttp.onreadystatechange=function()
+	{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			tagname = $id('rincian-tag-edit-tagname').value;
+			
+			newTag = document.createElement("li");
+			newTag.id = "rincian-tag-" + tagname;
+			
+			s = tagname;
+			s = s + "<input type='button' class='delete' value='Delete' onclick='deleteTag(" + tagname + "," + taskid + ")'/>";
+			newTag.innerHTML = s;
+			
+			$id('rincian-tag').childNodes[1].appendChild(newTag);
+			
+			$id('rincian-tag-edit-tagname').value = "";
+		}
+	}
+	
+	tagname = $id('rincian-tag-edit-tagname').value;
+	xmlhttp.open("GET","ajaxHandler/detailTask.jsp?action=addTag&taskID=" + taskid + "&tagname=" + tagname,true);
+	xmlhttp.send();
+}
+
+function addAssignee(taskid) {
+	var xmlhttp;
+	
+	if (window.XMLHttpRequest)
+	{// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	}
+	else
+	{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	
+	xmlhttp.onreadystatechange=function()
+	{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			username = $id('rincian-assignee-edit-username').value;
+			
+			newTag = document.createElement("li");
+			newTag.id = "rincian-assignee-" + username;
+			
+			s = "<a href='profile?username=" + username + "'>" + xmlhttp.responseText + "</a>";
+			s = s + "<input type='button' class='delete' value='Delete' onclick='deleteAssignee(" + username + "," + taskid + ")'/>";
+			newTag.innerHTML = s;
+			
+			$id('rincian-assignee').childNodes[1].appendChild(newTag);
+			
+			$id('rincian-assignee-edit-username').value = "";
+		}
+	}
+	
+	username = $id('rincian-assignee-edit-username').value;
+	xmlhttp.open("GET","ajaxHandler/detailTask.jsp?action=addAssignee&taskID=" + taskid + "&username=" + username,true);
 	xmlhttp.send();
 }
