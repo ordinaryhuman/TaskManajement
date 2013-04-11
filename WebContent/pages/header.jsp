@@ -3,7 +3,17 @@
 <%@ page import="com.tmj.model.User" %>
 <% User user = (User) request.getSession().getAttribute("user"); %>
 <div id="header">
-<img src="images/images/Header_3_ip_01.gif"/><img src="images/images/Header_3_ip_02.gif" /><a href="dashboard"><img src="images/images/Header_3_ip_03.gif" /></a><img src="images/images/Header_3_ip_04.gif"  />
+<img src="images/images/Header_3_ip_01.gif"/>
+<div id="header-profpic">
+<a id="header-avatar" href="profile?username=<%= user.getUsername() %>"><img src="upload/avatars/<%= user.getAvatarPath() %>" class="profpic"/></a>
+<a href="profile?username=<%= user.getUsername() %>"><%= user.getFullname() %></a>
+</div>
+<div id="header-logo">
+<a href="dashboard">
+<img src="images/images/Header_3_ip_03.gif" />
+</a>
+</div>
+<img src="images/images/Header_3_ip_04.gif"  />
 
   	<ul class="navigation">
 		<li> <a href="dashboard"> Dashboard </a> </li>

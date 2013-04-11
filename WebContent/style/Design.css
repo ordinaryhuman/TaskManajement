@@ -669,3 +669,11 @@ a#register_pop:hover {
 	color: #FFFFFF; 
 }
 
+#header-profpic {
+	width: 369px;
+	height: 146px;
+	float:left;
+}
+#header-avatar {
+	float:left;
+}

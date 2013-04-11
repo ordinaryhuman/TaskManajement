@@ -42,7 +42,6 @@ function editDeadline(id) {
 	{
 		if (xmlhttp.readyState==4 && xmlhttp.status==200)
 		{
-			
 		}
 	}
 	
