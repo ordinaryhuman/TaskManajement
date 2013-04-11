@@ -33,33 +33,38 @@
    		<a>Deadline :</a> <br>
    		<a id="rincian-deadline"></a><br>
 	   	<input type="date" name="deadline" id="rincianinput-deadline" value="<%= task.getDeadline() %>"><br>
+	   	<input type="button" class="edit" onclick="editDeadline(<%= task.getID() %>)" hidden value="Edit">
    	    
-   	    <br><a>Asignee :</a><br> 
+   	    <br><a>Asignee :</a><br>
+   	    <div id="rincian-assignee"> 
    	    <ul>
    	    	<%
    	    	for(User assignee : assignees) {
    	    		out.println(String.format("<li id='rincian-assignee-%s'>%s", assignee.getUsername(), assignee.getFullname()));
    	    		if(!assignee.getUsername().equals(task.getUsername())) {
-   	    			out.println(String.format("<a class='delete' href='task'>(delete)</a>"));
+   	    			out.println(String.format("<input type='button' class='delete' value='Delete' onclick='deleteAssignee(%s, %d)' hidden/>", assignee.getUsername(), task.getID()));
    	    		}
    	    		out.println("</li>");
    	    	}
    	    	%>
    	    </ul>
+   	    </div>
    	    
    	    <br><a>Tag :</a><br>
+   	    <div id="rincian-tag">
    	    <ul>
 	   	    <%
 	   	    	for(Tag tag : tags) {
 	   	    		out.println(String.format("<li id='rincian-tag-%s'>%s", tag.getTagname(), tag.getTagname()));
-	   	    		out.println(String.format("<a class='delete' href='task'>(delete)</a>"));
+	   	    		out.println(String.format("<input type='button' class='delete' value='Delete' onclick='deleteTag(%s)' hidden/>", tag.getTagname()));
 	   	    		out.println("</li>");
 	   	    	}
 	   	    %>
    	    </ul>
+   	    </div>
    	  	
    	  	<br><a>Status :<br>
-	   	<input type="checkbox" name="status" onclick="sendStatus()" value="1" <%= task.getStatus() ? "checked" : "" %> > DONE<br>
+	   	<input type="checkbox" name="status" onclick="sendStatus(<%= task.getID() %>)" value="1" <%= task.getStatus() ? "checked" : "" %> > DONE<br>
     </p>
     
     <p> Attachment: </p>

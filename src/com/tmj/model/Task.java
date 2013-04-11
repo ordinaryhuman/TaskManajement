@@ -382,6 +382,34 @@ public class Task extends BaseModel {
 		return retval;
 	}
 	
+	public void addAssignee(String username) {
+		DBQueryExecutor executor = new DBQueryExecutor();
+		String stmt = String.format("INSERT IGNORE INTO `%s` (`taskID`, `userID`) VALUES ('%d', '%s')", DBTable.TASK_USER, mID, username);
+		
+		try {
+			executor.executeQuery(stmt);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
+	}
+	
+	public void deleteAssignee(String username) {
+		DBQueryExecutor executor = new DBQueryExecutor();
+		String stmt = String.format("DELETE FROM `%s` WHERE `taskID` = '%d' AND `userID` = '%s'", DBTable.TASK, mID, username);
+				
+		try {
+			executor.executeQuery(stmt);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
+	}
+	
 	private Integer mID;
 	private Integer mCategoryID;
 	private String mUsername;
@@ -433,7 +461,7 @@ public class Task extends BaseModel {
 		this.mStatus = status;
 	}
 
-	public void setmDeadline(String mDeadline) {
-		this.mDeadline = mDeadline;
+	public void setDeadline(String deadline) {
+		this.mDeadline = deadline;
 	}
 }

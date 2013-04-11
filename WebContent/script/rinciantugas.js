@@ -12,6 +12,43 @@ function edittask() {
 		del = deletes[i];
 		del.hidden = !del.hidden;
 	}
+	
+	edits = document.getElementsByClassName('edit');
+	for(i = 0; i < edits.length; i++) {
+		edit = edits[i];
+		edit.hidden = !edit.hidden;
+	}
+	
+	if($id('rincianbutton-edit') == 'Edit Task') {
+		$id('rincianbutton-edit').value = 'End Edit';
+	} else {
+		$id('rincianbutton-edit').value = 'Edit Task';
+	}
+}
+
+function editDeadline(id) {
+	var xmlhttp;
+	
+	if (window.XMLHttpRequest)
+	{// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	}
+	else
+	{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	
+	xmlhttp.onreadystatechange=function()
+	{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			
+		}
+	}
+	
+	deadline = $id('rincianinput-deadline').value;
+	xmlhttp.open("GET","ajaxHandler/detailTask.jsp?action=editDeadline&taskID=" + id + "&deadline=" + deadline,true);
+	xmlhttp.send();
 }
 
 function deleteAttachment(id) {
@@ -33,7 +70,53 @@ function deleteAttachment(id) {
 			deleteChild($id('rincian-attachment'), $id('rincian-attachment-' + id));
 		}
 	}
-	xmlhttp.open("GET","ajaxHandler/deleteDetailTask.jsp?action=attachment&id=" + id,true);
+	xmlhttp.open("GET","ajaxHandler/detailTask.jsp?action=deleteAttachment&id=" + id,true);
+	xmlhttp.send();
+}
+
+function deleteTag(tagID, taskID) {
+	var xmlhttp;
+	
+	if (window.XMLHttpRequest)
+	{// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	}
+	else
+	{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	
+	xmlhttp.onreadystatechange=function()
+	{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			deleteChild($id('rincian-tag').childNodes[1], $id('rincian-tag-' + tagID));
+		}
+	}
+	xmlhttp.open("GET","ajaxHandler/detailTask.jsp?action=deleteTag&tagID=" + tagID + "&tagID=" + taskID,true);
+	xmlhttp.send();
+}
+
+function deleteAssignee(username, taskID) {
+	var xmlhttp;
+	
+	if (window.XMLHttpRequest)
+	{// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	}
+	else
+	{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	
+	xmlhttp.onreadystatechange=function()
+	{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			deleteChild($id('rincian-assignee').childNodes[1], $id('rincian-assignee-' + username));
+		}
+	}
+	xmlhttp.open("GET","ajaxHandler/detailTask.jsp?action=deleteAssignee&tagID=" + username + "&tagID=" + taskID,true);
 	xmlhttp.send();
 }
 
@@ -100,7 +183,7 @@ function assigneeHints() {
 	xmlhttp.send();
 }
 
-function sendStatus() {
+function sendStatus(taskid) {
 	var xmlhttp;
 	
 	if (window.XMLHttpRequest)
@@ -119,7 +202,6 @@ function sendStatus() {
 		}
 	}
 	
-	taskid = $id('rinciantugas-taskid').innerHTML;
-	xmlhttp.open("GET","rinciantugasAJAX.php?action=status&taskid=" + taskid,true);
+	xmlhttp.open("GET","ajaxHandler/detailTask.jsp?action=editStatus&taskID=" + taskid,true);
 	xmlhttp.send();
 }
