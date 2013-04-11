@@ -63,8 +63,10 @@
     </p>
     
     <p> Attachment: </p>
+    <div id="rincian-attachment">
     <%
     	for(Attachment attachment : attachments) {
+    		out.println(String.format("<div id='rincian-attachment-%d'>", attachment.getID()));
     		if(attachment.getType().equals("file")) {
     			out.println(String.format("<a href='%s'> %s </a>", attachment.getFilePath(), attachment.getFilename()));
     			out.println("<br>");
@@ -72,14 +74,16 @@
     			out.println(String.format("%s<br><img src='%s'></img>", attachment.getFilename(), attachment.getFilePath()));
     			out.println("<br>");
     		} else if(attachment.getType().equals("video")) {
-    			out.println(String.format("%s<br><video width='320' height='240' controls><source src='%s'></video>",
+    			out.println(String.format("%s<br><video width='320' height='240' controls><source src='%s'></video>", 
     					attachment.getFilename(), attachment.getFilePath()));
     			out.println("<br>");
     		}
-    		out.println(String.format("<a class='delete' href='task'>(delete)</a>"));
+    		out.println(String.format("<input type='button' class='delete' value='Delete' onclick='deleteAttachment(%d)' hidden/>", attachment.getID()));
     		out.println("<br><br>");
+    		out.println("</div>");
     	}
     %>
+    </div>
     
 	<br><a>Comment :</a><br> 
 	<ul>

@@ -78,3 +78,7 @@ function showClass(classname) {
 		elements[i].style.visibility = 'visible';
 	}
 }
+
+function deleteChild(parent, child) {
+	parent.removeChild(child);
+}

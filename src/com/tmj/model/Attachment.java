@@ -46,6 +46,30 @@ public class Attachment extends BaseModel {
 		return retval;
 	}
 	
+	public static Attachment getAttachmentFromAttachmentID(Integer attachmentID) {
+		DBQueryExecutor executor = new DBQueryExecutor();
+		Attachment retval = null;
+
+		try {
+			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `attachmentID` = '%d';", DBTable.ATTACHMENT, attachmentID));
+			if (result != null) {
+				while (result.next()) {
+					Integer taskID		= result.getInt("taskID");
+					String filename 	= result.getString("filename");
+					String type 		= result.getString("type");
+					retval = new Attachment(attachmentID, taskID, filename, type);
+				}
+			}
+		} catch (SQLException sEx) {
+			sEx.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
+		
+		return retval;
+	}
+	
 	public static Attachment[] getAttachmentFromTaskID(Integer taskID) {
 		DBQueryExecutor executor = new DBQueryExecutor();
 		Attachment[] retval = new Attachment[0];
