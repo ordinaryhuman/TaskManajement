@@ -303,6 +303,16 @@ public class User extends BaseModel {
 			executor.closeConnection();
 		}
 	}
+	
+	public Boolean isUserCanEditTask(Integer taskID) {
+		Task[] tasks = Task.getTasksFromUsernameAssignee(mUsername);
+		for(Task task: tasks) {
+			if(task.getID() == taskID) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	private String mUsername;
 	private String mPassword;

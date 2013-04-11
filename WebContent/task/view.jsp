@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@ page import="com.tmj.model.*" %>
 <%
+	User user = (User) request.getSession().getAttribute("user");
 	Task task = (Task) request.getAttribute("task");
 	Tag[] tags = (Tag[]) request.getAttribute("tags");
 	Comment[] comments = (Comment[]) request.getAttribute("comments");
@@ -33,7 +34,9 @@
    		<a>Deadline :</a> <br>
    		<a id="rincian-deadline"></a><br>
 	   	<input type="date" name="deadline" id="rincianinput-deadline" value="<%= task.getDeadline() %>"><br>
+	   	<% if(user.isUserCanEditTask(task.getID())) { %>
 	   	<input type="button" class="edit" onclick="editDeadline(<%= task.getID() %>)" hidden value="Edit">
+   	    <% } %>
    	    
    	    <br><a>Asignee :</a><br>
    	    <div id="rincian-assignee"> 
@@ -49,11 +52,13 @@
    	    	%>
    	    </ul>
    	    </div>
+   	    <% if(user.isUserCanEditTask(task.getID())) { %>
    	    <div id="rincian-assignee-edit" class="edit" hidden>
    	    	<input type="text" id="rincian-assignee-edit-username" list="rincian-assignee-edit-username-datalist"/>
    	    	<datalist id="rincian-assignee-edit-username-datalist"></datalist>
    	    	<input type="button" value="Submit" onclick="addAssignee(<%= task.getID() %>)"/>
    	    </div>
+   	    <% } %>
    	    
    	    <br><a>Tag :</a><br>
    	    <div id="rincian-tag">
@@ -67,14 +72,22 @@
 	   	    %>
    	    </ul>
    	    </div>
+   	    <% if(user.isUserCanEditTask(task.getID())) { %>
    	    <div id="rincian-tag-edit" class="edit" hidden>
    	    	<input type="text" id="rincian-tag-edit-tagname" list="rincian-tag-edit-tagname-datalist"/>
    	    	<datalist id="rincian-tag-edit-tagname-datalist"></datalist>
    	    	<input type="button" value="Submit" onclick="addTag(<%= task.getID() %>)"/>
    	    </div>
+   	    <% } %>
    	  	
    	  	<br><a>Status :<br>
-	   	<input type="checkbox" name="status" onclick="sendStatus(<%= task.getID() %>)" value="1" <%= task.getStatus() ? "checked" : "" %> > DONE<br>
+	   	<input type="checkbox" name="status" 
+	   	<% if(user.isUserCanEditTask(task.getID())) { %>
+	   		onclick="sendStatus(<%= task.getID() %>)"
+	   	<% } %>
+	   		value="1" <%= task.getStatus() ? "checked" : "" %> >
+	   	DONE
+	   	<br>
     </p>
     
     <p> Attachment: </p>
@@ -116,8 +129,9 @@
 		-->
 		
 	</ul>
-	
+	<% if(user.isUserCanEditTask(task.getID())) { %>
 	<input type="button" value="Edit Task" class="buttonbox2" id="rincianbutton-edit" onclick="edittask()"/>
+	<% } %>
 </div>
 
 <hr noshade="noshade" />
@@ -125,7 +139,7 @@
 <form id="comment_form" action="#">
 	<h3>Add a Comment</h3>
 	<div>
-   		<textarea rows="5" cols="61"></textarea>
+   		<textarea rows="5" cols="61" id="rincian-comment-input"></textarea>
  	</div>
 	<div>
    		<input type="submit" value="Submit Comment!" class="submitbutton" />
