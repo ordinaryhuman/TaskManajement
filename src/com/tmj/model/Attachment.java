@@ -25,11 +25,11 @@ public class Attachment extends BaseModel {
 			if (result != null) {
 				ArrayList<Attachment> temp = new ArrayList<Attachment>();
 				while (result.next()) {
-					Integer attachmendID= result.getInt("attachmendID");
+					Integer attachmentID= result.getInt("attachmentID");
 					Integer taskID		= result.getInt("taskID");
 					String filename 	= result.getString("filename");
 					String type 		= result.getString("type");
-					Attachment attachment = new Attachment(attachmendID, taskID, filename, type);
+					Attachment attachment = new Attachment(attachmentID, taskID, filename, type);
 					temp.add(attachment);
 				}
 				
@@ -46,19 +46,19 @@ public class Attachment extends BaseModel {
 		return retval;
 	}
 	
-	public Attachment[] getAttachmentFromTaskID(Integer taskID) {
+	public static Attachment[] getAttachmentFromTaskID(Integer taskID) {
 		DBQueryExecutor executor = new DBQueryExecutor();
 		Attachment[] retval = new Attachment[0];
 
 		try {
-			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `taskID` = '%d';", DBTable.TASK, taskID));
+			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `taskID` = '%d';", DBTable.ATTACHMENT, taskID));
 			if (result != null) {
 				ArrayList<Attachment> temp = new ArrayList<Attachment>();
 				while (result.next()) {
-					Integer attachmendID= result.getInt("attachmendID");
+					Integer attachmentID= result.getInt("attachmentID");
 					String filename 	= result.getString("filename");
 					String type 		= result.getString("type");
-					Attachment attachment = new Attachment(attachmendID, taskID, filename, type);
+					Attachment attachment = new Attachment(attachmentID, taskID, filename, type);
 					temp.add(attachment);
 				}
 				
@@ -142,6 +142,10 @@ public class Attachment extends BaseModel {
 			executor.closeQuery();
 			executor.closeConnection();
 		}
+	}
+	
+	public String getFilePath() {
+		return "upload/attachments/".concat(getFilename());
 	}
 	
 	private Integer mID;

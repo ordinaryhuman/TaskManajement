@@ -348,6 +348,40 @@ public class Task extends BaseModel {
 		return User.getUserFromUsername(mUsername);
 	}
 	
+	public Attachment[] getAttachments() {
+		return Attachment.getAttachmentFromTaskID(mID);
+	}
+	
+	public Comment[] getComments() {
+		return Comment.getCommentFromTaskID(mID);
+	}
+	
+	public User[] getAssignees() {
+		DBQueryExecutor executor = new DBQueryExecutor();
+		User[] retval = new User[0];
+
+		try {
+			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `taskID` = '%s';", DBTable.TASK_USER, mID));
+			if (result != null) {
+				ArrayList<User> temp = new ArrayList<User>();
+				while (result.next()) {
+					User user = User.getUserFromUsername(result.getString("userID"));
+					temp.add(user);
+				}
+				
+				retval = new User[temp.size()];
+				retval = temp.toArray(retval);
+			}
+		} catch (SQLException sEx) {
+			sEx.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
+		
+		return retval;
+	}
+	
 	private Integer mID;
 	private Integer mCategoryID;
 	private String mUsername;

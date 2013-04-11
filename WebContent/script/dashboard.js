@@ -52,7 +52,7 @@ function selectCategoryAJAX(selectedCategoryID) {
 			var s = '<h4 align="center">' + response[0].name + '</h4>';
 			s = s + 'Click on task name to see the details<br><br>';
 			if(response[0].ID != 0) {
-				s = s + '<a href="task?action=add">Add Task</a><br>';
+				s = s + '<a href="task?action=add&categoryID=' + response[0].ID + '">Add Task</a><br>';
 			}
 			s = s + '<table width="580" border="1" cellspacing="0" cellpadding="0">';
 			

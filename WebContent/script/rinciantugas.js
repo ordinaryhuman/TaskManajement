@@ -2,43 +2,12 @@
  * @author gmochid
  */
 window.onload = function() {
-	$id("rinciantugas-taskid").style.visibility = 'hidden';
-	$id("rincianinput-form-tag").style.visibility = 'hidden';
-	$id("rincianinput-form-deadline").style.visibility = 'hidden';
-	$id("rincianinput-form-assignee").style.visibility = 'hidden';
-	$id("rincianinput-form-attachment").style.visibility = 'hidden';
-	$id("rincian-deadline").innerHTML = $id("rincianinput-deadline").value;
-	$id("rincianbutton-save").style.visibility = 'hidden';
-	
-	hideClass('delete');
 	tagHints();
 	assigneeHints();
 }
 
 function edittask() {
-	$id("rincianinput-form-tag").style.visibility = 'visible';
-	$id("rincianinput-form-deadline").style.visibility = 'visible';
-	$id("rincianinput-form-assignee").style.visibility = 'visible';
-	$id("rincianinput-form-attachment").style.visibility = 'visible';
-	$id("rincian-deadline").style.visibility = 'hidden';
 	
-	$id("rincianbutton-save").style.visibility = 'visible';
-	$id("rincianbutton-edit").style.visibility = 'hidden';	
-	
-	showClass('delete');
-}
-
-function savetask() {
-	$id("rincianinput-form-tag").style.visibility = 'hidden';
-	$id("rincianinput-form-deadline").style.visibility = 'hidden';
-	$id("rincianinput-form-assignee").style.visibility = 'hidden';
-	$id("rincianinput-form-attachment").style.visibility = 'hidden';
-	$id("rincian-deadline").style.visibility = 'visible';
-	
-	$id("rincianbutton-save").style.visibility = 'hidden';
-	$id("rincianbutton-edit").style.visibility = 'visible';	
-	
-	hideClass('delete');
 }
 
 function tagHints() {
@@ -68,7 +37,7 @@ function tagHints() {
 		}
 	}
 	str = $id('rincianinput-tag');
-	xmlhttp.open("GET","rinciantugasAJAX.php?action=tagHint&taskid=5",true);
+	xmlhttp.open("GET","ajaxHandler/tagHints?str=" + str,true);
 	xmlhttp.send();
 }
 
