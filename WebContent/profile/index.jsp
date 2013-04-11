@@ -68,7 +68,7 @@ Task[] tasksNotDone = (Task[]) request.getAttribute("tasksNotDone");
       <ul class="paragraph2">
       <%
       	for(Task task : tasksDone) {
-      		out.println(String.format("<li><a href='task?taskID=%d'>", task.getID()));
+      		out.println(String.format("<li><a href='task?taskid=%d'>", task.getID()));
       		out.println(task.getTaskname());
       		out.println("</a></li>");
       	}
@@ -78,7 +78,7 @@ Task[] tasksNotDone = (Task[]) request.getAttribute("tasksNotDone");
       <ul class="paragraph2">
         <%
       	for(Task task : tasksNotDone) {
-      		out.println(String.format("<li><a href='task?taskID=%d'>", task.getID()));
+      		out.println(String.format("<li><a href='task?taskid=%d'>", task.getID()));
       		out.println(task.getTaskname());
       		out.println("</a></li>");
       	}

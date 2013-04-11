@@ -107,6 +107,33 @@ public class Task extends BaseModel {
 		return retval;
 	}
 	
+	public static Task[] getTasksFromUsernameAssignee(String username) {
+		DBQueryExecutor executor = new DBQueryExecutor();
+		Task[] retval = new Task[0];
+
+		try {
+			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `userID` = '%s';", DBTable.TASK_USER, username));
+			if (result != null) {
+				ArrayList<Task> temp = new ArrayList<Task>();
+				while (result.next()) {
+					Integer taskID		= result.getInt("taskID");
+					Task task = Task.getTaskFromTaskID(taskID);
+					temp.add(task);
+				}
+				
+				retval = new Task[temp.size()];
+				retval = temp.toArray(retval);
+			}
+		} catch (SQLException sEx) {
+			sEx.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
+		
+		return retval;
+	}
+	
 	public static Task[] getTasksFromUsername(String username) {
 		DBQueryExecutor executor = new DBQueryExecutor();
 		Task[] retval = new Task[0];
@@ -139,63 +166,33 @@ public class Task extends BaseModel {
 	}
 	
 	public static Task[] getTasksDoneFromUsername(String username) {
-		DBQueryExecutor executor = new DBQueryExecutor();
-		Task[] retval = new Task[0];
-
-		try {
-			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `username` = '%s' AND `status` = '%s';", DBTable.TASK, username, 1));
-			if (result != null) {
-				ArrayList<Task> temp = new ArrayList<Task>();
-				while (result.next()) {
-					Integer taskID		= result.getInt("taskID");
-					Integer categoryID	= result.getInt("categoryID");
-					String taskname = result.getString("taskname");
-					String deadline = result.getString("deadline");
-					Task task = new Task(taskID, categoryID, username, taskname, true, deadline);
-					temp.add(task);
-				}
-				
-				retval = new Task[temp.size()];
-				retval = temp.toArray(retval);
+		Task[] tasks = Task.getTasksFromUsernameAssignee(username);
+		ArrayList<Task> ALT = new ArrayList<Task>();
+		for	(Task task : tasks) {
+			if(task.getStatus()) {
+				ALT.add(task);
 			}
-		} catch (SQLException sEx) {
-			sEx.printStackTrace();
-		} finally {
-			executor.closeQuery();
-			executor.closeConnection();
 		}
 		
-		return retval;
+		tasks = new Task[ALT.size()];
+		tasks = ALT.toArray(tasks);
+		
+		return tasks;
 	}
 	
 	public static Task[] getTasksNotDoneFromUsername(String username) {
-		DBQueryExecutor executor = new DBQueryExecutor();
-		Task[] retval = new Task[0];
-
-		try {
-			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `username` = '%s' AND `status` = '%s';", DBTable.TASK, username, 0));
-			if (result != null) {
-				ArrayList<Task> temp = new ArrayList<Task>();
-				while (result.next()) {
-					Integer taskID		= result.getInt("taskID");
-					Integer categoryID	= result.getInt("categoryID");
-					String taskname = result.getString("taskname");
-					String deadline = result.getString("deadline");
-					Task task = new Task(taskID, categoryID, username, taskname, false, deadline);
-					temp.add(task);
-				}
-				
-				retval = new Task[temp.size()];
-				retval = temp.toArray(retval);
+		Task[] tasks = Task.getTasksFromUsernameAssignee(username);
+		ArrayList<Task> ALT = new ArrayList<Task>();
+		for	(Task task : tasks) {
+			if(!task.getStatus()) {
+				ALT.add(task);
 			}
-		} catch (SQLException sEx) {
-			sEx.printStackTrace();
-		} finally {
-			executor.closeQuery();
-			executor.closeConnection();
 		}
 		
-		return retval;
+		tasks = new Task[ALT.size()];
+		tasks = ALT.toArray(tasks);
+		
+		return tasks;
 	}
 	
 	public static Task[] getTaskFromQuery(String query) {
