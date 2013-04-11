@@ -176,6 +176,10 @@ public class Comment extends BaseModel {
 			executor.closeConnection();
 		}
 	}
+	
+	public User getUser() {
+		return User.getUserFromUsername(mUsername);
+	}
 
 	private Integer mID;
 	private Integer mTaskID;

@@ -142,31 +142,20 @@
    		<textarea rows="5" cols="61" id="rincian-comment-input"></textarea>
  	</div>
 	<div>
-   		<input type="submit" value="Submit Comment!" class="submitbutton" />
+   		<input type="button" value="Submit Comment!" class="submitbutton" onclick="sendComment(<%= task.getID() %>)" />
     </div>
 </form>
 
-<div>
-	<div class="commentbox">
-    	<img src="../images/user2.jpg" class="commentuser"/>
-        <div class="nameuser">@Jieun 1 minute ago Said :</div>
-        <div class="comment">Lah kok ada gue di atas?</div>
-    </div>
-    <div class="commentbox">
-    	<img src="../images/ibuOADTSPD3HEK.gif" class="commentuser"/>
-        <div class="nameuser">@Hyosung 3 minute ago Said :</div>
-        <div class="comment">Yaudah gak usah bikin, gue juga udah pasrah :(</div>
-    </div>
-    <div class="commentbox">
-    	<img src="../images/User3.gif" class="commentuser"/>
-        <div class="nameuser">@Hyorin 5 minute ago Said :</div>
-        <div class="comment">Hemm, tadi gue cari di internet pusing lah liatnya -_-</div>
-    </div>
-    <div class="commentbox">
-    	<img src="../images/2507626_460s.jpg" class="commentuser"/>
-        <div class="nameuser">@Dedel 13 minute ago Said :</div>
-        <div class="comment">Nanya dong, cara bikin media queries gimana sih?</div>
-    </div>
+<div id="rincian-comment-list">
+	<%
+	for(Comment comment : comments) {
+		out.println(String.format("<div class='commentbox' id='rincian-comment-list-%d'>", comment.getID()));
+		out.println(String.format("<img src='upload/avatars/%s' class='commentuser'/>", comment.getUser().getAvatarPath()));
+		out.println(String.format("<div class='nameuser'>%s (%s)</div>", comment.getUsername(), comment.getTimestamp()));
+		out.println(String.format("<div class='comment'>%s</div>", comment.getContent()));
+		out.println("</div>");
+	}
+	%>
 </div>
 
 </div>

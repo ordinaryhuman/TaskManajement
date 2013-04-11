@@ -38,5 +38,8 @@ if(mAction.equals("deleteAttachment")) {
 	String username = request.getParameter("username");
 	task.addAssignee(username);
 	out.println(User.getUserFromUsername(username).getFullname());
+} else if(mAction.equals("addComment")) {
+	Task task = Task.getTaskFromTaskID(new Integer(request.getParameter("taskID")));
+	String content = request.getParameter("content");
 }
 %>
