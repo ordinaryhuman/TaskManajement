@@ -50,7 +50,10 @@ function selectCategoryAJAX(selectedCategoryID) {
 			response = JSON.parse(xmlhttp.responseText);
 			
 			var s = '<h4 align="center">' + response[0].name + '</h4>';
-			s = s + 'Click on task name to see the details';
+			s = s + 'Click on task name to see the details<br><br>';
+			if(response[0].ID != 0) {
+				s = s + '<a href="task?action=add">Add Task</a><br>';
+			}
 			s = s + '<table width="580" border="1" cellspacing="0" cellpadding="0">';
 			
 			i = 1;
@@ -62,7 +65,7 @@ function selectCategoryAJAX(selectedCategoryID) {
 					s = s + '<td width="26" class="black"><p class="kategori_status" id="task_status' + obj.ID + '">' + obj.status + '</p>' +
 						'<a class="kategori_statuschange" onclick="changeTaskStateAJAX(' + obj.ID + ')">(change)</a></td>';
 					s = s + '<td width="264" class="' + ((i + j - 1) % 2 == 0 ? 'blue' : 'green') + '">' + 
-						'<a href="rincian?taskid=' + obj.ID + '" target="_parent" class="ordintext">' + obj.taskname + '</a><br />';
+						'<a href="task?taskid=' + obj.ID + '" target="_parent" class="ordintext">' + obj.taskname + '</a><br />';
 					s = s + 'Deadline : <b class="redtext">' + obj.deadline + '</b><br />';
 					s = s + 'Kategori : ' + obj.category + '<br />';
 					s = s + obj.tags;
@@ -81,7 +84,7 @@ function selectCategoryAJAX(selectedCategoryID) {
 				s = s + '<td width="26" class="black"><p class="kategori_status" id="task_status' + obj.ID + '">' + obj.status + '</p>' +
 					'<a class="kategori_statuschange" onclick="changeTaskStateAJAX(' + obj.ID + ')">(change)</a></td>';
 				s = s + '<td width="264" class="' + ((i + j - 1) % 2 == 0 ? 'blue' : 'green') + '">' + 
-					'<a href="rincian?taskid=' + obj.ID + '" target="_parent" class="ordintext">' + obj.taskname + '</a><br />';
+					'<a href="task?taskid=' + obj.ID + '" target="_parent" class="ordintext">' + obj.taskname + '</a><br />';
 				s = s + 'Deadline : <b class="redtext">' + obj.deadline + '</b><br />';
 				s = s + 'Kategori : ' + obj.category + '<br />';
 				s = s + obj.tags;
