@@ -148,7 +148,8 @@
 
 <div id="rincian-comment-list">
 	<%
-	for(Comment comment : comments) {
+	for(int i = comments.length - 1; i >= 0; i--) {
+		Comment comment = comments[i];
 		out.println(String.format("<div class='commentbox' id='rincian-comment-list-%d'>", comment.getID()));
 		out.println(String.format("<img src='upload/avatars/%s' class='commentuser'/>", comment.getUser().getAvatarPath()));
 		out.println(String.format("<div class='nameuser'>%s (%s)</div>", comment.getUsername(), comment.getTimestamp()));

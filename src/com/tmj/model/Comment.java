@@ -17,6 +17,13 @@ public class Comment extends BaseModel {
 		mTimestamp = timestamp;
 	}
 	
+	public Comment(Integer ID, Integer taskID, String username, String content) {
+		mID = ID;
+		mTaskID = taskID;
+		mUsername = username;
+		mContent = content;
+	}
+	
 	public static Comment[] getAllComment() {
 		DBQueryExecutor executor = new DBQueryExecutor();
 		Comment[] retval = new Comment[0];
@@ -37,6 +44,32 @@ public class Comment extends BaseModel {
 				
 				retval = new Comment[temp.size()];
 				retval = temp.toArray(retval);
+			}
+		} catch (SQLException sEx) {
+			sEx.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
+		
+		return retval;
+	}
+	
+	public static Comment getCommentFromCommentID(Integer commentID) {
+		DBQueryExecutor executor = new DBQueryExecutor();
+		Comment retval = null;
+
+		try {
+			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `commentID` = '%d';", DBTable.COMMENT, commentID));
+			if (result != null) {
+				ArrayList<Comment> temp = new ArrayList<Comment>();
+				while (result.next()) {
+					Integer taskID		= result.getInt("taskID");
+					String username 	= result.getString("username");
+					String content 		= result.getString("content");
+					String timestamps = result.getString("timestamps");
+					retval = new Comment(commentID, taskID, username, content, timestamps);
+				}
 			}
 		} catch (SQLException sEx) {
 			sEx.printStackTrace();
@@ -133,8 +166,8 @@ public class Comment extends BaseModel {
 	@Override
 	public void addOnDB() {
 		DBQueryExecutor executor = new DBQueryExecutor();
-		String stmt = String.format("INSERT INTO `%s` (`commentID`, `taskID`, `username`, `content`, `timestamp`)" +
-				"VALUES ('%s', '%s', '%s', '%s', '%s');", DBTable.COMMENT, mID, mTaskID, mUsername, mContent, mTimestamp);
+		String stmt = String.format("INSERT INTO `%s` (`commentID`, `taskID`, `username`, `content`)" +
+				"VALUES ('%s', '%s', '%s', '%s');", DBTable.COMMENT, mID, mTaskID, mUsername, mContent);
 		
 		try {
 			executor.executeQuery(stmt);

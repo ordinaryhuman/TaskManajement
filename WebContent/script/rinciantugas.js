@@ -281,6 +281,8 @@ function addAssignee(taskid) {
 function sendComment(taskid) {
 	var xmlhttp;
 	
+	content = $id('rincian-comment-input').value;
+	
 	if (window.XMLHttpRequest)
 	{// code for IE7+, Firefox, Chrome, Opera, Safari
 		xmlhttp=new XMLHttpRequest();
@@ -294,11 +296,22 @@ function sendComment(taskid) {
 	{
 		if (xmlhttp.readyState==4 && xmlhttp.status==200)
 		{
+			response = JSON.parse(xmlhttp.responseText);
 			
+			newCom = document.createElement('div');
+			newCom.id = "rincian-comment-list-" + response.id;
+			newCom.className = "commentbox";
+			
+			s = '<img src="upload/avatars/' + response.avatarPath + '" class="commentuser">';
+			s = s + '<div class="nameuser">' + response.username + ' (' + response.timestamp + ')</div>';
+			s = s + '<div class="comment">' + content + '</div>';
+			
+			newCom.innerHTML = s;
+			
+			$id('rincian-comment-list').insertBefore(newCom, $id('rincian-comment-list').firstElementChild);
 		}
 	}
 	
-	content = $id('rincian-comment-input').value;
 	xmlhttp.open("GET","ajaxHandler/detailTask.jsp?action=addComment&taskID=" + taskid + "&content=" + content,true);
 	xmlhttp.send();
 }

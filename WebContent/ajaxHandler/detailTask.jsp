@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="com.tmj.model.*" %>
+<%@ page import="org.json.*" %>
 <%
 String mAction = request.getParameter("action");
 if(mAction.equals("deleteAttachment")) {
@@ -39,7 +40,20 @@ if(mAction.equals("deleteAttachment")) {
 	task.addAssignee(username);
 	out.println(User.getUserFromUsername(username).getFullname());
 } else if(mAction.equals("addComment")) {
+	User user = (User) request.getSession().getAttribute("user");
 	Task task = Task.getTaskFromTaskID(new Integer(request.getParameter("taskID")));
 	String content = request.getParameter("content");
+	
+	Integer commentID = Comment.getAvailableCommentID();
+	new Comment(commentID, task.getID(), user.getUsername(), content).addOnDB();
+	
+	Comment comment = Comment.getCommentFromCommentID(commentID); 
+	
+	JSONObject obj = new JSONObject();
+	obj.append("id", comment.getID());
+	obj.append("username", comment.getUsername());
+	obj.append("timestamp", comment.getTimestamp());
+	obj.append("avatarPath", user.getAvatarPath());
+	out.println(obj.toString());
 }
 %>
