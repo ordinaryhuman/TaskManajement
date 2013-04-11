@@ -30,7 +30,7 @@
 			obj.append("taskname", tasks[i-1].getTaskname());
 			obj.append("status", tasks[i-1].getStatus() ? "DONE" : "NOT-DONE");
 			obj.append("deadline", tasks[i-1].getDeadline());
-			obj.append("tags", "tasks[i-1].getTagsString()");
+			obj.append("tags", tasks[i-1].getTagsString());
 			
 			retval.put(i, obj);
 		}
