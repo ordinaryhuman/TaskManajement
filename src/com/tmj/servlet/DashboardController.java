@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.tmj.model.Category;
+import com.tmj.model.Task;
 import com.tmj.model.User;
 
 /**
@@ -40,8 +41,7 @@ public class DashboardController extends BaseController {
 			Integer categoryID = new Integer(request.getParameter("categoryID"));
 			Category.getCategoryFromCategoryID(categoryID).deleteOnDB();
 			
-			mRD = request.getRequestDispatcher("dashboard/index.jsp");
-			mRD.forward(request, response);
+			response.sendRedirect("dashboard");
 		}
 	}
 
@@ -50,7 +50,8 @@ public class DashboardController extends BaseController {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		super.doPost(request, response);
-		checkLoggedIn(request, response);
+		if(checkLoggedIn(request, response))
+			return;
 		
 		User activeUser = (User) request.getSession().getAttribute("user");
 		
@@ -63,8 +64,13 @@ public class DashboardController extends BaseController {
 			category.addOnDB();
 			category.setMembers(usernameMembers);
 			
-			mRD = request.getRequestDispatcher("dashboard/index.jsp");
-			mRD.forward(request, response);
+			response.sendRedirect("dashboard");
+		} else if(mAction.equals("deleteTask")) {
+			Integer taskID = new Integer(request.getParameter("taskID"));
+			Task task = Task.getTaskFromTaskID(taskID);
+			task.deleteOnDB();
+			
+			response.sendRedirect("dashboard");
 		}
 	}
 

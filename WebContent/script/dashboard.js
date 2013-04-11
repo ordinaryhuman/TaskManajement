@@ -8,7 +8,7 @@ window.onload = function() {
 }
 
 function changeTaskStateAJAX(taskID) {
-var xmlhttp;
+	var xmlhttp;
 	
 	if (window.XMLHttpRequest)
 	{// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -66,6 +66,12 @@ function selectCategoryAJAX(selectedCategoryID) {
 					s = s + 'Deadline : <b class="redtext">' + obj.deadline + '</b><br />';
 					s = s + 'Kategori : ' + obj.category + '<br />';
 					s = s + obj.tags;
+					s = s + '<br>';
+					s = s + '<form action="dashboard" method="post">';
+					s = s + '<input name="action" value="deleteTask" hidden/>';
+					s = s + '<input name="taskID" value="' + obj.ID + '" hidden/>';
+					s = s + '<input type="submit" value="Delete">';
+					s = s + '</form>';
 				}
 				s = s + '</tr>';
 			}
@@ -79,6 +85,12 @@ function selectCategoryAJAX(selectedCategoryID) {
 				s = s + 'Deadline : <b class="redtext">' + obj.deadline + '</b><br />';
 				s = s + 'Kategori : ' + obj.category + '<br />';
 				s = s + obj.tags;
+				s = s + '<br>';
+				s = s + '<form action="dashboard" method="post">';
+				s = s + '<input name="action" value="deleteTask" hidden/>';
+				s = s + '<input name="taskID" value="' + obj.ID + '" hidden/>';
+				s = s + '<input type="submit" value="Delete">';
+				s = s + '</form>';
 				s = s + '</tr>';
 			}
 			
