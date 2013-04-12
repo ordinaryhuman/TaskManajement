@@ -129,6 +129,29 @@ function deleteAssignee(username, taskID) {
 	xmlhttp.send();
 }
 
+function deleteComment(username, commentID) {
+	var xmlhttp;
+	
+	if (window.XMLHttpRequest)
+	{// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	}
+	else
+	{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	
+	xmlhttp.onreadystatechange=function()
+	{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			deleteChild($id('rincian-comment-list').childNodes[1], $id('rincian-comment-list-' + commentID));
+		}
+	}
+	xmlhttp.open("GET","ajaxHandler/detailTask.jsp?action=deleteComment&username=" + username + "&commentID=" + commentID,true);
+	xmlhttp.send();
+}
+
 function tagHints() {
 	var xmlhttp;
 	
@@ -371,23 +394,6 @@ function comment_pages(taskid, page) {
 	xmlhttp.send();
 }
 
-function setType(taskid) {
-	var type;
-	if($id('rincian-attachment-type-file').checked) {
-		type = "file";
-	} else if($id('rincian-attachment-type-video').checked) {
-		type = "video";
-	} else {
-		type = "image";
-	}
-	
-	sourcePath = $id('rincian-attachment-path').value;
-	sourceFilename = (sourcePath == null) ? "" : sourcePath.split('\\').pop();
-	
-	$id('rincian-attachment-form').action = "task?action=addAttachment&taskID=" + taskid + 
-		"&file-name=" + sourceFilename + "&type=" + type;
-}
-/*
 function addAttachment(taskid) {
 	var xmlhttp;
 	
@@ -452,4 +458,3 @@ function addAttachment(taskid) {
 			"&sourcePath=" + sourcePath + "&sourceFilename=" + sourceFilename, true);
 	xmlhttp.send();	
 }
-*/
