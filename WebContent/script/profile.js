@@ -5,6 +5,11 @@ window.onload = function() {
 	
 }
 
+function getAvatarPath(username) {
+	filename = $id('avatar').value.split('.').pop();
+	$id('avatarForm').action = "profile?action=uploadAvatar&username=" + username + "&filename=" + filename;
+}
+
 function toogleEdit() {
 	if($id("password").hidden == true) {
 		$id("fullnameDisp").hidden = true;
