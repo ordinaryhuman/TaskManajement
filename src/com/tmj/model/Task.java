@@ -253,12 +253,11 @@ public class Task extends BaseModel {
 	}
 	
 	public static Task[] getTaskFromQueryComment(String query) {
-		// TODO : change query
 		DBQueryExecutor executor = new DBQueryExecutor();
 		Task[] retval = new Task[0];
 
 		try {
-			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `taskname` LIKE '%s';", DBTable.TASK, "%" + query + "%"));
+			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `taskID` IN (SELECT `taskID` FROM `%s` WHERE `content` LIKE `%s`);", DBTable.TASK, DBTable.COMMENT, "%" + query + "%"));
 			if (result != null) {
 				ArrayList<Task> temp = new ArrayList<Task>();
 				
