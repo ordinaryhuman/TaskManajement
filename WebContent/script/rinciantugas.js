@@ -13,6 +13,23 @@ window.onload = function() {
 	}
 }
 
+function setType(taskid) {
+	  var type;
+	  if($id('rincian-attachment-type-file').checked) {
+	    type = "file";
+	  } else if($id('rincian-attachment-type-video').checked) {
+	    type = "video";
+	  } else {
+	    type = "image";
+	 }
+	  
+	  sourcePath = $id('rincian-attachment-path').value;
+	  sourceFilename = (sourcePath == null) ? "" : sourcePath.split('\\').pop();
+	  
+	  $id('rincian-attachment-form').action = "task?action=addAttachment&taskID=" + taskid + 
+	    "&file-name=" + sourceFilename + "&type=" + type;
+	}
+
 function edittask() {
 	deletes = document.getElementsByClassName('delete');
 	for(i = 0; i < deletes.length; i++) {
@@ -398,7 +415,7 @@ function comment_pages(taskid, page) {
 	xmlhttp.open("GET","ajaxHandler/detailTask.jsp?action=getCommentPages&taskID=" + taskid + "&pages=" + page,true);
 	xmlhttp.send();
 }
-
+/*
 function addAttachment(taskid) {
 	var xmlhttp;
 	
@@ -463,3 +480,4 @@ function addAttachment(taskid) {
 			"&sourcePath=" + sourcePath + "&sourceFilename=" + sourceFilename, true);
 	xmlhttp.send();	
 }
+*/

@@ -85,7 +85,7 @@
 	   	<% if(user.isUserCanEditTask(task.getID())) { %>
 	   		onclick="sendStatus(<%= task.getID() %>)"
 	   	<% } %>
-	   		value="1" <%= task.getStatus() ? "checked" : "" %> >
+	   		value="1" <%= task.getStatus() ? "checked" : "" %> />
 	   	DONE
 	   	<br>
     </p>
@@ -114,18 +114,18 @@
     </div>
     
     <% if(user.isUserCanEditTask(task.getID())) { %>
- 	<div id="rincian-attachment-edit" class="edit" hidden>
-    	<input type="radio" id="rincian-attachment-type-file" name="rincian-attachment-type" value="file" checked/> File <br>
-    	<input type="radio" id="rincian-attachment-type-image" name="rincian-attachment-type" value="image"/> Image <br>
-    	<input type="radio" id="rincian-attachment-type-video" name="rincian-attachment-type" value="video"/> Video <br>
-    	<input type="file" id="rincian-attachment-path"/>
-    	<input type="button" value="Submit" onclick="addAttachment(<%= task.getID() %>)"/>
-    </div>
+ 	<form class="edit" id="rincian-attachment-form" hidden action="task?action=addAttachment&taskID=<%= task.getID() %>" method="post" enctype="multipart/form-data">
+      <input type="radio" id="rincian-attachment-type-file" name="rincian-attachment-type" value="file" onclick="setType(<%= task.getID() %>)" checked/> File <br>
+      <input type="radio" id="rincian-attachment-type-image" name="rincian-attachment-type" value="image" onclick="setType(<%= task.getID() %>)"/> Image <br>
+      <input type="radio" id="rincian-attachment-type-video" name="rincian-attachment-type" value="video" onclick="setType(<%= task.getID() %>)"/> Video <br>
+      <input type="file" id="rincian-attachment-path" name="rincian-attachment-path" onchange="setType(<%= task.getID() %>)"/>
+      <input type="submit" value="Submit"/>
+    </form>
     <% } %>
     
 	<% if(user.isUserCanEditTask(task.getID())) { %>
 	<input type="button" value="Edit Task" class="buttonbox2" id="rincianbutton-edit" onclick="edittask()"/>
-	<form action="task" method="post">
+	<form action="task" method="post" id="test">
 		<input name="taskID" value="<%=task.getID()%>"hidden/>
 		<input type="submit" name="action" value="Delete Task" class="buttonbox2" id="rincianbutton-delete" hidden/>
 	</form>
