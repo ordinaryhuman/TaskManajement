@@ -5,7 +5,7 @@ function login(){
 	var password = document.getElementById('passlogin').value;
 	if((username=="hanif" && password=="hanif") || (username=="patrick" && password=="patrick") || (username=="novry" && password=="novry"))
    		window.location="src/Dashboard.html";
-	else alert("Invalid Username or Password!")
+	else alert("Invalid Username or Password!");
 }
 
 function validate_Output(regexp, input, syntaxerror, syntaxvalid, idToWrite) {
@@ -32,8 +32,8 @@ function validate_confirmpass() {
 	else			document.getElementById('confpass_info').innerHTML = '<span class="valid">VALID</span>';
 }
 
-function validate_oldpass(pass) {
-	var pw1 = request.getSession().getAttribute("user").getPassword();
+function validate_oldpass() {
+	var pw1 = document.getElementById('test').value;
 	var pw2 = document.getElementById('oldpass').value;
 	if(pw2 != pw1)	document.getElementById('oldpass_info').innerHTML = '<span class="error">INVALID</span>';
 	else			document.getElementById('oldpass_info').innerHTML = '<span class="valid">VALID</span>';
