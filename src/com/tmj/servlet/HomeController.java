@@ -67,7 +67,7 @@ public class HomeController extends BaseController {
 			
 			// upload file
 			
-			String avatarPath = request.getParameter("avatar_path");
+			String avatarPath = username.concat(".jpg");
 			User user = new User(username, password, fullname, birthdate, email, avatarPath);
 			
 			user.addOnDB();

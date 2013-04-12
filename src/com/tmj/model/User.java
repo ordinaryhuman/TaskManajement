@@ -261,7 +261,7 @@ public class User extends BaseModel {
 	public void addOnDB() {
 		DBQueryExecutor executor = new DBQueryExecutor();
 		String stmt = String.format("INSERT INTO `%s` (`username`, `password`, `fullname`, `birthdate`, `email`, `avatar`)" +
-				"VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s');", DBTable.USER, mUsername, mPassword, mFullname, mBirthdate, mEmail, mAvatarPath);
+				"VALUES ('%s', '%s', '%s', '%s', '%s', '%s');", DBTable.USER, mUsername, mPassword, mFullname, mBirthdate, mEmail, mAvatarPath);
 		
 		try {
 			executor.executeQuery(stmt);
