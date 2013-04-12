@@ -23,7 +23,7 @@
 
 <div class="task1">	
 	<div class="task2">
-		<form action="addtugas2.php" method="post" enctype="multipart/form-data">
+		<form action="task?action=addTask" method="post">
 		<div class="maketask">
 			<div class="fieldhead">
 				<h2>Make a Task</h2>
@@ -35,12 +35,12 @@
             </div>
             <div class="iinfo" id="taskname_info"></div>
             <div class="field">
-				<input type="text" id="taskname" onkeyup="checkInput()" onchange="validate_taskname()" name="name"/>
+				<input type="text" id="taskname" onkeyup="checkInput()" onchange="validate_taskname()" name="taskname"/>
 			</div>
 			<div class="fieldhelp">
 				Maksimal 25 karakter. Tidak boleh menggunakan karakter khusus.
 			</div>
-            
+            <!-- 
 			<div class="field1">
 					File
 			</div>
@@ -71,6 +71,7 @@
 			<div class="fieldhelp">
 				*.mp4;*.avi;*.wmv;*.mkv
 			</div>
+			-->
 			<div class="field1">
 				Deadline
             </div>
@@ -117,8 +118,9 @@
             </div>
             <div class="field">
             	<a id="addtugas-assignee"></a>
+            	<input name="assignee" id="addtugas-assignee2" hidden />
             	<br>
-				<input id="addtugas-assigneeinput" type="textarea" name="assignee" list="hintlist-assignee">
+				<input id="addtugas-assigneeinput" type="textarea" list="hintlist-assignee" onkeyup="checkInput()">
    	    		<datalist id="hintlist-assignee"></datalist>
 				<input type="button" onclick="addAssignee()" value="Add"/>
 			</div>
@@ -129,7 +131,7 @@
 				Tag
             </div>
             <div class="field">
-				<input type="textarea" name="tag">
+				<input type="textarea" name="tag" onkeyup="checkInput()">
 			</div>
 			<div class="fieldhelp">
 				Lebih dari satu dipisahkan dengan koma ','

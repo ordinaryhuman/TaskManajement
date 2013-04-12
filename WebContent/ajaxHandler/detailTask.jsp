@@ -59,9 +59,7 @@ if(mAction.equals("deleteAttachment")) {
 	Category category = task.getCategory();
 	String username = request.getParameter("username");
 	
-	if(!category.isMember(username)) {
-		category.addMember(username);
-	}
+	category.addMember(username);
 	
 	task.addAssignee(username);
 	out.println(User.getUserFromUsername(username).getFullname());

@@ -8,10 +8,11 @@ window.onload = function() {
 }
 
 function isValid() {
-	var requirement = Array();
+	requirement = Array();
 	
 	requirement[0] = ($id('taskname').value.length != 0);
 	requirement[1] = ($id('bir').value.length != 0);
+	requirement[2] = /^[a-zA-Z ]{1,}$/.test($id('taskname').value);
 	
 	for(i = 0; i < requirement.length; i++) {
 		if(!requirement[i])
@@ -56,19 +57,22 @@ function getAssigneeHint() {
 					$id('hintlist-assignee').appendChild(x);
 				}
 			}
+			
+			$id('addtugas-assigneeinput').value = "";
 		}
 	}
 	
-	categoryid = $id('addtugas-categoryid').innerHTML;
-	xmlhttp.open("GET","addtugasAJAX.php?action=assigneeHint&categoryid=" + categoryid, true);
+	xmlhttp.open("GET","ajaxHandler/detailTask.jsp?action=assigneeHint", true);
 	xmlhttp.send();
 }
 
 function addAssignee() {
 	if($id('addtugas-assignee').innerHTML == "") {
 		$id('addtugas-assignee').innerHTML += $id('addtugas-assigneeinput').value;
+		$id('addtugas-assignee2').value += $id('addtugas-assigneeinput').value;
 	} else {
 		$id('addtugas-assignee').innerHTML += "," + $id('addtugas-assigneeinput').value;
+		$id('addtugas-assignee2').value += "," + $id('addtugas-assigneeinput').value;
 	}
 	getAssigneeHint();
 }

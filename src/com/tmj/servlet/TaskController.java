@@ -104,7 +104,26 @@ public class TaskController extends BaseController {
 			response.sendRedirect("dashboard");
 			
 		} else if(mAction.equals("addTask")) {
+			User user = (User) request.getSession().getAttribute("user");
 			Integer taskID = Task.getAvailableTaskID();
+			Category category = Category.getCategoryFromCategoryID(new Integer(request.getParameter("categoryID")));
+			String taskname = request.getParameter("taskname");
+			String deadline = request.getParameter("deadline");
+			String[] assignees = request.getParameter("assignee").split(",");
+			String[] tags = request.getParameter("tag").split(",");
+			
+			Task task = new Task(taskID, category.getID(), user.getUsername(), taskname, false, deadline);
+			task.addOnDB();
+			task.addAssignee(user.getUsername());
+			
+			for(String assignee: assignees) {
+				task.addAssignee(assignee);
+				category.addMember(assignee);
+			}
+			
+			for(String tag: tags) {
+				new Tag(taskID, tag).addOnDB();
+			}
 			
 			response.sendRedirect(String.format("task?taskid=%d", taskID));
 		} else if(mAction.equals("addAttachment")) {

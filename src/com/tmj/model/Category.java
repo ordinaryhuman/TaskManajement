@@ -219,7 +219,7 @@ public class Category extends BaseModel {
 		DBQueryExecutor executor = new DBQueryExecutor();
 		
 		try {
-			executor.executeQuery(String.format("INSERT INTO `%s` (`categoryID`, `username`) VALUES ('%d', '%s')",
+			executor.executeQuery(String.format("INSERT IGNORE INTO `%s` (`categoryID`, `username`) VALUES ('%d', '%s')",
 					DBTable.CATEGORY_USER, mID, username));
 		} catch (SQLException e) {
 			e.printStackTrace();
