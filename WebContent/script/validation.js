@@ -60,7 +60,11 @@ function validate_avatar() {
 }
 
 function validate_taskname() {
-		validate_Output(/^.{1,25}$/, document.getElementById('taskname').value,'INVALID','VALID','taskname_info');
+	var regexp = /[^a-zA-Z0-9 ]/;
+	var valid = (!regexp.test(document.getElementById('taskname').value));	
+	syntaxvalid = '<span class="valid">' + 'VALID' + '</span>';
+	syntaxerror = '<span class="error">' + 'INVALID' + '</span>';
+	document.getElementById('taskname_info').innerHTML = valid ? syntaxvalid : syntaxerror;
 }
 
 function validate_taskfile() {
