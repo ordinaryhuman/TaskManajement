@@ -32,8 +32,7 @@ function validate_confirmpass() {
 	else			document.getElementById('confpass_info').innerHTML = '<span class="valid">VALID</span>';
 }
 
-function validate_oldpass() {
-	var pw1 = document.getElementById('test').value;
+function validate_oldpass(pw1) {
 	var pw2 = document.getElementById('oldpass').value;
 	if(pw2 != pw1)	document.getElementById('oldpass_info').innerHTML = '<span class="error">INVALID</span>';
 	else			document.getElementById('oldpass_info').innerHTML = '<span class="valid">VALID</span>';
