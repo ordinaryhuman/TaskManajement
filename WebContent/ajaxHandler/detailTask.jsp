@@ -74,7 +74,9 @@ if(mAction.equals("deleteAttachment")) {
 	}
 	
 	out.println(arr.toString());
-} else if(mAction.equals("addAttachment")) {
+}
+/*
+else if(mAction.equals("addAttachment")) {
 	Integer taskID = new Integer(request.getParameter("taskID"));
 	Integer id = Attachment.getAvailableAttachmentID();
 	String type = request.getParameter("type");
@@ -96,4 +98,5 @@ if(mAction.equals("deleteAttachment")) {
 	obj.append("destPath", destPath);
 	out.println(obj.toString());
 }
+*/
 %>

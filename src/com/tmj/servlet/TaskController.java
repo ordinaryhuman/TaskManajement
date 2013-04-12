@@ -1,10 +1,26 @@
 package com.tmj.servlet;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Iterator;
+import java.util.List;
+import java.nio.file.*;
+
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.tomcat.util.http.fileupload.FileItem;
+import org.apache.tomcat.util.http.fileupload.FileItemFactory;
+import org.apache.tomcat.util.http.fileupload.FileUploadException;
+import org.apache.tomcat.util.http.fileupload.disk.*;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.tmj.model.Attachment;
 import com.tmj.model.Category;
@@ -90,7 +106,51 @@ public class TaskController extends BaseController {
 		} else if(mAction.equals("addTask")) {
 			Integer taskID = Task.getAvailableTaskID();
 			
-			response.sendRedirect(String.format("task?taskID=%d", taskID));
+			response.sendRedirect(String.format("task?taskid=%d", taskID));
+		} else if(mAction.equals("addAttachment")) {
+			Integer taskID = new Integer(request.getParameter("taskID"));
+			Integer id = Attachment.getAvailableAttachmentID();
+			String filename = String.format("att_%d_%s", taskID, request.getParameter("file-name"));
+			String type = request.getParameter("type");
+			request.getParameter("rincian-attachment-path");
+			String filepath = String.format("%s/upload/attachments/%s", request.getRealPath("/"), filename);
+			
+			// Create a factory for disk-based file items
+			FileItemFactory factory = new DiskFileItemFactory();
+
+			// Configure a repository (to ensure a secure temp location is used)
+			ServletContext servletContext = this.getServletConfig().getServletContext();
+			File repository = (File) servletContext.getAttribute("javax.servlet.context.tempdir");
+			((DiskFileItemFactory) factory).setRepository(repository);
+
+			// Create a new file upload handler
+			ServletFileUpload upload = new ServletFileUpload(factory);
+
+			// Parse the request
+			try {
+				List<FileItem> items = upload.parseRequest(request);
+				Iterator<FileItem> iter = items.iterator();
+				while (iter.hasNext()) {
+				    FileItem item = iter.next();
+				    InputStream input = item.getInputStream();
+				    FileOutputStream output = new FileOutputStream(filepath);
+				    
+				    int tmp;
+				    while ((tmp = input.read()) != -1 ) {
+				    	output.write(tmp);
+				    }
+				    
+				    output.close();
+				    input.close();
+				}
+			} catch (FileUploadException e) {
+				e.printStackTrace();
+			}
+			
+			Attachment attachment = new Attachment(id, taskID, filename, type);
+			attachment.addOnDB();
+			
+			response.sendRedirect(String.format("task?taskid=%d", taskID));
 		}
 	}
 
