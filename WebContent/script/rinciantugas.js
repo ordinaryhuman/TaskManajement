@@ -31,6 +31,8 @@ function edittask() {
 	} else {
 		$id('rincianbutton-edit').value = 'Edit Task';
 	}
+	
+	$id('rincianbutton-delete').hidden = !$id('rincianbutton-delete').hidden; 
 }
 
 function editDeadline(id) {

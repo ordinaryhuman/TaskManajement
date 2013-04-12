@@ -113,24 +113,12 @@
     %>
     </div>
     
-	<br><a>Comment :</a><br> 
-	<ul>
-		<!--
-			$comments = $task->getComments();
-			
-			foreach ($comments as $comment) {
-				if ($comment->taskid == $task->id) {
-					printf("<li id='rincian-asignee-%s'>%s ", $comment->username, $comment->username);
-					printf('<a class="delete" href="rinciantugas2.php?taskid=%s&action=delete&username=%s">(delete)</a>', $task->id, $user->username);
-					printf("<li id='rincian-comment-%s'>%s ", $comment->i, $comment->content);
-					printf("</li>");
-				}
-			}
-		-->
-		
-	</ul>
 	<% if(user.isUserCanEditTask(task.getID())) { %>
 	<input type="button" value="Edit Task" class="buttonbox2" id="rincianbutton-edit" onclick="edittask()"/>
+	<form action="task" method="post">
+		<input name="taskID" value="<%=task.getID()%>"hidden/>
+		<input type="submit" name="action" value="Delete Task" class="buttonbox2" id="rincianbutton-delete" hidden/>
+	</form>
 	<% } %>
 </div>
 

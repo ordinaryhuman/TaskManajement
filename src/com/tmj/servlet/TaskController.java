@@ -70,9 +70,28 @@ public class TaskController extends BaseController {
 		if(checkLoggedIn(request, response))
 			return;
 		
-		Integer taskID = Task.getAvailableTaskID();
-		
-		response.sendRedirect(String.format("task?taskID=%d", taskID));
+		if(mAction.equals("Delete Task")) {
+			Task task = Task.getTaskFromTaskID(new Integer(request.getParameter("taskID")));
+			User user = (User) request.getSession().getAttribute("user");
+			
+			if(task.getUsername().equals(user.getUsername())) {
+				// user is owner
+				// so delete task completely
+				task.deleteOnDB();
+			} else {
+				// user is assignee
+				// so remove him from assignee
+				task.deleteAssignee(user.getUsername());
+			}
+			
+			//redirect to dashboard
+			response.sendRedirect("dashboard");
+			
+		} else if(mAction.equals("addTask")) {
+			Integer taskID = Task.getAvailableTaskID();
+			
+			response.sendRedirect(String.format("task?taskID=%d", taskID));
+		}
 	}
 
 }

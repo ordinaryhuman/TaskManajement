@@ -307,7 +307,7 @@ public class User extends BaseModel {
 	public Boolean isUserCanEditTask(Integer taskID) {
 		Task[] tasks = Task.getTasksFromUsernameAssignee(mUsername);
 		for(Task task: tasks) {
-			if(task.getID() == taskID) {
+			if(taskID.equals(task.getID())) {
 				return true;
 			}
 		}
