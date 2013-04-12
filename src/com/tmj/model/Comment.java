@@ -29,7 +29,7 @@ public class Comment extends BaseModel {
 		Comment[] retval = new Comment[0];
 
 		try {
-			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s`;", DBTable.COMMENT));
+			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` ORDER BY `timestamps` DESC;", DBTable.COMMENT));
 			if (result != null) {
 				ArrayList<Comment> temp = new ArrayList<Comment>();
 				while (result.next()) {
@@ -60,7 +60,7 @@ public class Comment extends BaseModel {
 		Comment retval = null;
 
 		try {
-			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `commentID` = '%d';", DBTable.COMMENT, commentID));
+			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `commentID` = '%d' ORDER BY `timestamps` DESC;", DBTable.COMMENT, commentID));
 			if (result != null) {
 				ArrayList<Comment> temp = new ArrayList<Comment>();
 				while (result.next()) {
@@ -86,7 +86,7 @@ public class Comment extends BaseModel {
 		Comment[] retval = new Comment[0];
 
 		try {
-			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `taskID` = '%d';", DBTable.COMMENT, taskID));
+			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `taskID` = '%d' ORDER BY `timestamps` DESC;", DBTable.COMMENT, taskID));
 			if (result != null) {
 				ArrayList<Comment> temp = new ArrayList<Comment>();
 				while (result.next()) {
@@ -116,7 +116,7 @@ public class Comment extends BaseModel {
 		Comment[] retval = new Comment[0];
 
 		try {
-			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `username` = '%s';", DBTable.COMMENT, username));
+			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `username` = '%s' ORDER BY `timestamps` DESC;", DBTable.COMMENT, username));
 			if (result != null) {
 				ArrayList<Comment> temp = new ArrayList<Comment>();
 				while (result.next()) {

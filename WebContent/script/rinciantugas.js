@@ -4,6 +4,13 @@
 window.onload = function() {
 	//tagHints();
 	//assigneeHints();
+	
+	len = $id('comment-length').value;
+	
+	$id('button_previous').style.visibility = "hidden";
+	if(len <= 10) {
+		$id('button_next').style.visibility = "hidden";
+	}
 }
 
 function edittask() {
@@ -296,22 +303,68 @@ function sendComment(taskid) {
 	{
 		if (xmlhttp.readyState==4 && xmlhttp.status==200)
 		{
-			response = JSON.parse(xmlhttp.responseText);
-			
-			newCom = document.createElement('div');
-			newCom.id = "rincian-comment-list-" + response.id;
-			newCom.className = "commentbox";
-			
-			s = '<img src="upload/avatars/' + response.avatarPath + '" class="commentuser">';
-			s = s + '<div class="nameuser">' + response.username + ' (' + response.timestamp + ')</div>';
-			s = s + '<div class="comment">' + content + '</div>';
-			
-			newCom.innerHTML = s;
-			
-			$id('rincian-comment-list').insertBefore(newCom, $id('rincian-comment-list').firstElementChild);
+			comment_pages(taskid, 0);
 		}
 	}
 	
 	xmlhttp.open("GET","ajaxHandler/detailTask.jsp?action=addComment&taskID=" + taskid + "&content=" + content,true);
+	xmlhttp.send();
+}
+
+function comment_pages(taskid, page) {
+	var xmlhttp;
+	
+	if (window.XMLHttpRequest)
+	{// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	}
+	else
+	{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	
+	xmlhttp.onreadystatechange=function()
+	{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			response = JSON.parse(xmlhttp.responseText);
+			
+			console.log(xmlhttp.responseText);
+			
+			$id('rincian-comment-list').innerHTML = "";
+			for(i = 0; i < response.length; i++) {
+				newCom = document.createElement('div');
+				newCom.id = "rincian-comment-list-" + response[i].id;
+				newCom.className = "commentbox";
+				
+				s = '<img src="upload/avatars/' + response[i].avatarPath + '" class="commentuser">';
+				s = s + '<div class="nameuser">' + response[i].username + ' (' + response[i].timestamp + ')</div>';
+				s = s + '<div class="comment">' + response[i].content + '</div>';
+				
+				newCom.innerHTML = s;
+				
+				$id('rincian-comment-list').insertBefore(newCom, $id('rincian-comment-list').firstElementChild);
+			}
+			
+			len = $id('comment-length').value;
+			len = len - len %10;
+			
+			if(page == 0) {
+				$id('button_previous').style.visibility = "hidden";
+			} else {
+				$id('button_previous').style.visibility = "visible";
+				$id('button_previous').onclick = function() { comment_pages(taskid, page - 1);};
+			}
+			
+			if((len / 10) == page) {
+				$id('button_next').style.visibility = "hidden";
+			} else {
+				$id('button_next').style.visibility = "visible";
+				$id('button_next').onclick = function() { comment_pages(taskid, page + 1);};
+			}
+		}
+	}
+	
+	xmlhttp.open("GET","ajaxHandler/detailTask.jsp?action=getCommentPages&taskID=" + taskid + "&pages=" + page,true);
 	xmlhttp.send();
 }

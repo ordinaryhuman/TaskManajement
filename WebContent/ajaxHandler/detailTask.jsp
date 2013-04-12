@@ -48,12 +48,28 @@ if(mAction.equals("deleteAttachment")) {
 	new Comment(commentID, task.getID(), user.getUsername(), content).addOnDB();
 	
 	Comment comment = Comment.getCommentFromCommentID(commentID); 
+} else if(mAction.equals("getCommentPages")) {
+	Task task = Task.getTaskFromTaskID(new Integer(request.getParameter("taskID")));
+	Integer pages = new Integer(request.getParameter("pages"));
+	User user = (User) request.getSession().getAttribute("user");
 	
-	JSONObject obj = new JSONObject();
-	obj.append("id", comment.getID());
-	obj.append("username", comment.getUsername());
-	obj.append("timestamp", comment.getTimestamp());
-	obj.append("avatarPath", user.getAvatarPath());
-	out.println(obj.toString());
+	Comment[] comments = Comment.getCommentFromTaskID(task.getID());
+	
+	JSONArray arr = new JSONArray();
+	int j = 0;
+	for(int i = pages * 10; i < (pages * 10 + 10); i++) {
+		if(i < comments.length) {
+			JSONObject obj = new JSONObject();
+			obj.append("id", comments[i].getID());
+			obj.append("content", comments[i].getContent());
+			obj.append("username", comments[i].getUsername());
+			obj.append("timestamp", comments[i].getTimestamp());
+			obj.append("avatarPath", user.getAvatarPath());
+			
+			arr.put(j++, obj);
+		}
+	}
+	
+	out.println(arr.toString());
 }
 %>

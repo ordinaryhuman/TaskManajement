@@ -148,7 +148,10 @@
 
 <div id="rincian-comment-list">
 	<%
-	for(int i = comments.length - 1; i >= 0; i--) {
+	for(int i = 0; i < comments.length; i++) {
+		if(i == 10) {
+			break;
+		}
 		Comment comment = comments[i];
 		out.println(String.format("<div class='commentbox' id='rincian-comment-list-%d'>", comment.getID()));
 		out.println(String.format("<img src='upload/avatars/%s' class='commentuser'/>", comment.getUser().getAvatarPath()));
@@ -158,6 +161,12 @@
 	}
 	%>
 </div>
+<div id="rincian-comment-command">
+	<input id="button_previous" type="button" value="Previous"/>
+	<input id="button_next" type="button" value="Next" onclick="comment_pages(<%=task.getID()%>,1)"/>
+</div>
+
+<input id="comment-length" value="<%= comments.length %>" hidden/>
 
 </div>
 
@@ -166,7 +175,6 @@
     By Abdurrosyid Broto Handoyo, Rubiano Adityas, Novriady Saputra<br />
     Maret 2013
 </div>
-<a id="rinciantugas-taskid"><?php echo $task->id; ?></a>
 
 </body>
 </html>

@@ -677,3 +677,10 @@ a#register_pop:hover {
 #header-avatar {
 	float:left;
 }
+
+#expandButton {
+	margin-left: 135px;
+}
+#rincian-comment-command {
+	margin-left: 335px;
+}
