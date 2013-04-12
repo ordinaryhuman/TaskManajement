@@ -25,6 +25,7 @@
     	<input type="radio" name="typeQuery" value="user"/> User
     	<input type="radio" name="typeQuery" value="kategori"/> Kategori
     	<input type="radio" name="typeQuery" value="task"/> Task
+    	<input type="radio" name="typeQuery" value="tag"/> Tag
     	<input type="radio" name="typeQuery" value="all" checked="checked"/> All
     	<input type="submit" value="Search" />
     </form>

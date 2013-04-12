@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.tmj.model.Category;
+import com.tmj.model.Tag;
 import com.tmj.model.Task;
 import com.tmj.model.User;
 
@@ -49,6 +50,9 @@ public class SearchController extends BaseController {
 		} else if(typeQuery.equals("kategori")) {
 			Category[] categories = Category.getCategoryFromQuery(query);
 			request.setAttribute("categories", categories);
+		} else if(typeQuery.equals("tag")) {
+			Task[] tasks = Tag.getAllTaskFromTagname(query);
+			request.setAttribute("tasks", tasks);
 		} else if(typeQuery.equals("task")) {
 			Task[] tasks = Task.getTaskFromQuery(query);
 			request.setAttribute("tasks", tasks);
