@@ -32,6 +32,13 @@ function validate_confirmpass() {
 	else			document.getElementById('confpass_info').innerHTML = '<span class="valid">VALID</span>';
 }
 
+function validate_oldpass(pass) {
+	var pw1 = request.getSession().getAttribute("user").getPassword();
+	var pw2 = document.getElementById('oldpass').value;
+	if(pw2 != pw1)	document.getElementById('oldpass_info').innerHTML = '<span class="error">INVALID</span>';
+	else			document.getElementById('oldpass_info').innerHTML = '<span class="valid">VALID</span>';
+}
+
 function validate_fullname() {
 	validate_Output(/^[a-zA-Z ]{1,} [a-zA-Z ]{1,}$/,document.getElementById('fullname').value,'INVALID','VALID','fullname_info');
 }
