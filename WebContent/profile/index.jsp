@@ -3,6 +3,7 @@
 <%@ page import="com.tmj.model.*" %>
 <%
 User user = (User) request.getAttribute("user");
+String pass = user.getPassword();
 Task[] tasksDone = (Task[]) request.getAttribute("tasksDone");
 Task[] tasksNotDone = (Task[]) request.getAttribute("tasksNotDone");
 %>
@@ -56,12 +57,16 @@ Task[] tasksNotDone = (Task[]) request.getAttribute("tasksNotDone");
     <div id="emailEdit" hidden><input type="text" name="email" value="<%= user.getEmail() %>" /></div>
     </p>
     <div id="password" hidden>
+    	<div class="iinfo" id="oldpass_info"></div>
+   	    <div id="test" value="<%= pass %>"></div>
     	<p>Password Lama : <br>
-	    <input type="password" name="oldpassword" /></p>
+	    <input type="password" id="oldpass" name="oldpassword"  onChange="validate_oldpass('test')"/></p>
+	    <div class="iinfo" id="pass_info"></div>
 	    <p>Password Baru : <br>
-	    <input type="password" name="newpassword" /></p>
+	    <input type="password" id="passid" name="newpassword" onChange="validate_passid()"/></p>
+	    <div class="iinfo" id="confpass_info"></div>
 	    <p>Konfirmasi Password : <br>
-	    <input type="password" name="confirmnewpassword" /></p>
+	    <input type="password" id="confirmpass" name="confirmnewpassword" onChange="validate_confirmpass()"/></p>
     </div>
       <hr noshade="noshade" />
       <p class="paragraph2">Task DONE :</p>
