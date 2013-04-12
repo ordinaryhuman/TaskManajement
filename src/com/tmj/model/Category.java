@@ -222,7 +222,7 @@ public class Category extends BaseModel {
 			executor.executeQuery(String.format("INSERT IGNORE INTO `%s` (`categoryID`, `username`) VALUES ('%d', '%s')",
 					DBTable.CATEGORY_USER, mID, username));
 		} catch (SQLException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} finally {
 			executor.closeQuery();
 			executor.closeConnection();

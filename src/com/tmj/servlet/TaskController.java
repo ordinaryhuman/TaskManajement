@@ -125,8 +125,11 @@ public class TaskController extends BaseController {
 				new Tag(taskID, tag).addOnDB();
 			}
 			
-			response.sendRedirect(String.format("task?taskid=%d", taskID));
-		} else if(mAction.equals("addAttachment")) {
+			request.setAttribute("task", task);
+			
+			mRD = request.getRequestDispatcher("task/addAttachment.jsp");
+			mRD.forward(request, response);
+		} else if((mAction.equals("addAttachmentFromAddTask")) || (mAction.equals("addAttachment"))) {
 			Integer taskID = new Integer(request.getParameter("taskID"));
 			Integer id = Attachment.getAvailableAttachmentID();
 			String filename = String.format("att_%d_%s", taskID, request.getParameter("file-name"));
@@ -169,7 +172,17 @@ public class TaskController extends BaseController {
 			Attachment attachment = new Attachment(id, taskID, filename, type);
 			attachment.addOnDB();
 			
-			response.sendRedirect(String.format("task?taskid=%d", taskID));
+			if(mAction.equals("addAttachmentFromAddTask")) {
+				Task task = Task.getTaskFromTaskID(taskID);
+				request.setAttribute("task", task);
+				request.setAttribute("attachments", task.getAttachments());
+				
+				mRD = request.getRequestDispatcher("task/addAttachment.jsp");
+				mRD.forward(request, response);
+			} else {
+				response.sendRedirect(String.format("task?taskid=%d", taskID));
+			}
+			
 		}
 	}
 

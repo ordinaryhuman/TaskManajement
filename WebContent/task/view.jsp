@@ -93,6 +93,7 @@
     <p> Attachment: </p>
     <div id="rincian-attachment">
     <%
+    	if(attachments != null)
     	for(Attachment attachment : attachments) {
     		out.println(String.format("<div id='rincian-attachment-%d'>", attachment.getID()));
     		if(attachment.getType().equals("file")) {
