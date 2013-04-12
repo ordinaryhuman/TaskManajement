@@ -196,6 +196,64 @@ public class Task extends BaseModel {
 	}
 	
 	public static Task[] getTaskFromQuery(String query) {
+		Task[] a = Task.getTaskFromQueryComment(query);
+		Task[] b = Task.getTaskFromQueryTaskname(query);
+		ArrayList<Task> AL = new ArrayList<Task>();
+		
+		for(Task u : a)		
+			AL.add(u);
+		for(Task u : b) {
+			boolean x = true;
+			for(Task uAL: AL) {
+				if(uAL.getUsername().equals(u.getUsername())) {
+					x = false;
+				}
+			}
+			if(x)
+				AL.add(u);
+		}
+		
+		Task[] retval = new Task[AL.size()];
+		retval = AL.toArray(retval);
+		
+		return retval;
+	}
+	
+	public static Task[] getTaskFromQueryTaskname(String query) {
+		DBQueryExecutor executor = new DBQueryExecutor();
+		Task[] retval = new Task[0];
+
+		try {
+			ResultSet result = executor.executeQuery(String.format("SELECT * FROM `%s` WHERE `taskname` LIKE '%s';", DBTable.TASK, "%" + query + "%"));
+			if (result != null) {
+				ArrayList<Task> temp = new ArrayList<Task>();
+				
+				while (result.next()) {
+					Integer ID		 	= result.getInt("taskID");
+					Integer categoryID 	= result.getInt("categoryID");
+					String username 	= result.getString("username");
+					String taskname 	= result.getString("taskname");
+					Boolean status 		= result.getBoolean("status");
+					String deadline		= result.getString("deadline");
+					Task task = new Task(ID, categoryID, username, taskname, status, deadline);
+					temp.add(task);
+				}
+				
+				retval = new Task[temp.size()];
+				retval = temp.toArray(retval);
+			}
+		} catch (SQLException sEx) {
+			sEx.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
+		
+		return retval;
+	}
+	
+	public static Task[] getTaskFromQueryComment(String query) {
+		// TODO : change query
 		DBQueryExecutor executor = new DBQueryExecutor();
 		Task[] retval = new Task[0];
 

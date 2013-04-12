@@ -63,6 +63,8 @@ public class ProfileServlet extends BaseController {
 				}
 			}
 			user.editOnDB();
+		} else if(mAction.equals("uploadAvatar")) {
+			
 		}
 		response.sendRedirect("profile");
 	}
