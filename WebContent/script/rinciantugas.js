@@ -370,3 +370,68 @@ function comment_pages(taskid, page) {
 	xmlhttp.open("GET","ajaxHandler/detailTask.jsp?action=getCommentPages&taskID=" + taskid + "&pages=" + page,true);
 	xmlhttp.send();
 }
+
+function addAttachment(taskid) {
+	var xmlhttp;
+	
+	var type;
+	if($id('rincian-attachment-type-file').checked) {
+		type = "file";
+	} else if($id('rincian-attachment-type-video').checked) {
+		type = "video";
+	} else {
+		type = "image";
+	}
+	
+	sourcePath = $id('rincian-attachment-path').value;
+	sourceFilename = sourcePath.split('\\').pop();
+	console.log(sourceFilename);
+	
+	if (window.XMLHttpRequest)
+	{// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	}
+	else
+	{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	
+	xmlhttp.onreadystatechange=function()
+	{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			response = JSON.parse(xmlhttp.responseText)
+			
+			newElm = document.createElement("div");
+			newElm.id = 'rincian-attachment-' + response.id;
+			
+			s = "";
+			
+    		if(type == "file") {
+    			s = s + "<a href='" + response.destPath + "'> " + response.destPath.split('/').pop() + " </a>";
+    			s = s + "<br>";
+    		} else if(type == "image") {
+    			s = s + response.destPath.split('/').pop() + "<br>";
+    			s = s + "<img src='" + response.destPath + "'></img>";
+    			s = s + "<br>";
+    		} else if(type == "video") {
+    			s = s + response.destPath.split('/').pop() + "<br>";
+    			s = s + "<video width='320' height='240' controls>";
+    			s = s + "<source src='" + response.destPath + "'>";
+    			s = s + "</video>";
+    			s = s + "<br>";
+    		}
+    		
+    		s = s + "<input type='button' class='delete' value='Delete' onclick='deleteAttachment(" + response.id + ")'/>";
+    		s = s + "<br><br>";
+    		
+    		newElm.innerHTML = s;
+    		
+    		$id('rincian-attachment').appendChild = newElm;
+		}
+	}
+	
+	xmlhttp.open("GET","ajaxHandler/detailTask.jsp?action=addAttachment&taskID=" + taskid + "&type=" + type +
+			"&sourcePath=" + sourcePath + "&sourceFilename=" + sourceFilename, true);
+	xmlhttp.send();	
+}

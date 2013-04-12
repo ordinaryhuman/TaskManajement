@@ -1,7 +1,10 @@
+<%@page import="sun.org.mozilla.javascript.internal.JavaAdapter"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="com.tmj.model.*" %>
 <%@ page import="org.json.*" %>
+<%@ page import="java.nio.file.*" %>
+<%@ page import="java.io.*" %>
 <%
 String mAction = request.getParameter("action");
 if(mAction.equals("deleteAttachment")) {
@@ -71,5 +74,26 @@ if(mAction.equals("deleteAttachment")) {
 	}
 	
 	out.println(arr.toString());
+} else if(mAction.equals("addAttachment")) {
+	Integer taskID = new Integer(request.getParameter("taskID"));
+	Integer id = Attachment.getAvailableAttachmentID();
+	String type = request.getParameter("type");
+	
+	String sourcePath = request.getParameter("sourcePath");
+	String filename = request.getParameter("sourceFilename");
+	String destPath = String.format("upload\\attachments\\att_%d_%s", taskID, filename);
+	
+	Path source = Paths.get(sourcePath);
+	Path dest = Paths.get(destPath);
+	
+	Files.copy(source, dest);
+	
+	Attachment attachment = new Attachment(id, taskID, filename, type);
+	attachment.addOnDB();
+	
+	JSONObject obj = new JSONObject();
+	obj.append("id", id);
+	obj.append("destPath", destPath);
+	out.println(obj.toString());
 }
 %>

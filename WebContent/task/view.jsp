@@ -113,6 +113,16 @@
     %>
     </div>
     
+    <% if(user.isUserCanEditTask(task.getID())) { %>
+ 	<div id="rincian-attachment-edit" class="edit" hidden>
+    	<input type="radio" id="rincian-attachment-type-file" name="rincian-attachment-type" value="file" checked/> File <br>
+    	<input type="radio" id="rincian-attachment-type-image" name="rincian-attachment-type" value="image"/> Image <br>
+    	<input type="radio" id="rincian-attachment-type-video" name="rincian-attachment-type" value="video"/> Video <br>
+    	<input type="file" id="rincian-attachment-path"/>
+    	<input type="button" value="Submit" onclick="addAttachment(<%= task.getID() %>)"/>
+    </div>
+    <% } %>
+    
 	<% if(user.isUserCanEditTask(task.getID())) { %>
 	<input type="button" value="Edit Task" class="buttonbox2" id="rincianbutton-edit" onclick="edittask()"/>
 	<form action="task" method="post">
