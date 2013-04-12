@@ -2,8 +2,8 @@
  * @author gmochid
  */
 window.onload = function() {
-	//tagHints();
-	//assigneeHints();
+	tagHints();
+	assigneeHints();
 	
 	len = $id('comment-length').value;
 	
@@ -168,18 +168,18 @@ function tagHints() {
 	{
 		if (xmlhttp.readyState==4 && xmlhttp.status==200)
 		{
-			deleteAllChildElements('hintlist-tag');
+			deleteAllChildElements('rincian-tag-edit-tagname-datalist');
 			response = JSON.parse(xmlhttp.responseText);
 			
 			for(i = 0; i < response.length; i++) {
 				x = document.createElement('option');
 				x.value = response[i];
-				$id('hintlist-tag').appendChild(x);
+				$id('rincian-tag-edit-tagname-datalist').appendChild(x);
 			}
 		}
 	}
-	str = $id('rincianinput-tag');
-	xmlhttp.open("GET","ajaxHandler/tagHints?str=" + str,true);
+	str = $id('rincian-tag-edit-tagname');
+	xmlhttp.open("GET","ajaxHandler/detailTask.jsp?action=tagHint",true);
 	xmlhttp.send();
 }
 
@@ -199,19 +199,19 @@ function assigneeHints() {
 	{
 		if (xmlhttp.readyState==4 && xmlhttp.status==200)
 		{
-			deleteAllChildElements('hintlist-assignee');
+			console.log(xmlhttp.responseText);
+			deleteAllChildElements('rincian-assignee-edit-username-datalist');
 			response = JSON.parse(xmlhttp.responseText);
 			
 			for(i = 0; i < response.length; i++) {
 				x = document.createElement('option');
 				x.value = response[i];
-				$id('hintlist-assignee').appendChild(x);
+				$id('rincian-assignee-edit-username-datalist').appendChild(x);
 			}
 		}
 	}
-	str = $id('rincianinput-assignee');
-	taskid = $id('rinciantugas-taskid').innerHTML;
-	xmlhttp.open("GET","rinciantugasAJAX.php?action=assigneeHint&taskid=" + taskid,true);
+	str = $id('rincian-assignee-edit-username');
+	xmlhttp.open("GET","ajaxHandler/detailTask.jsp?action=assigneeHint",true);
 	xmlhttp.send();
 }
 
@@ -260,7 +260,7 @@ function addTag(taskid) {
 			newTag.id = "rincian-tag-" + tagname;
 			
 			s = tagname;
-			s = s + "<input type='button' class='delete' value='Delete' onclick='deleteTag(" + tagname + "," + taskid + ")'/>";
+			s = s + "<input type='button' class='delete' value='Delete' onclick='deleteTag(\"" + tagname + "\"," + taskid + ")'/>";
 			newTag.innerHTML = s;
 			
 			$id('rincian-tag').childNodes[1].appendChild(newTag);
@@ -296,7 +296,7 @@ function addAssignee(taskid) {
 			newTag.id = "rincian-assignee-" + username;
 			
 			s = "<a href='profile?username=" + username + "'>" + xmlhttp.responseText + "</a>";
-			s = s + "<input type='button' class='delete' value='Delete' onclick='deleteAssignee(" + username + "," + taskid + ")'/>";
+			s = s + "<input type='button' class='delete' value='Delete' onclick='deleteAssignee(\"" + username + "\"," + taskid + ")'/>";
 			newTag.innerHTML = s;
 			
 			$id('rincian-assignee').childNodes[1].appendChild(newTag);

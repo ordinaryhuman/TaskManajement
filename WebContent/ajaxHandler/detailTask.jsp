@@ -32,9 +32,23 @@ if(mAction.equals("deleteAttachment")) {
 	task.setStatus(!task.getStatus());
 	task.editOnDB();
 } else if(mAction.equals("tagHint")) {
+	Tag[] tags = Tag.getAllTag();
 	
+	JSONArray arr = new JSONArray();
+	int i = 0;
+	for(Tag tag: tags) {
+		arr.put(i++, tag.getTagname());
+	}
+	out.println(arr.toString());
 } else if(mAction.equals("assigneeHint")) {
+	User[] users = User.getAllUsers();
 	
+	JSONArray arr = new JSONArray();
+	int i = 0;
+	for(User user: users) {
+		arr.put(i++, user.getUsername());
+	}
+	out.println(arr.toString());
 } else if(mAction.equals("addTag")) {
 	Integer taskID = new Integer(request.getParameter("taskID"));
 	String tagname = request.getParameter("tagname");
@@ -42,7 +56,13 @@ if(mAction.equals("deleteAttachment")) {
 	tag.addOnDB();
 } else if(mAction.equals("addAssignee")) {
 	Task task = Task.getTaskFromTaskID(new Integer(request.getParameter("taskID")));
+	Category category = task.getCategory();
 	String username = request.getParameter("username");
+	
+	if(!category.isMember(username)) {
+		category.addMember(username);
+	}
+	
 	task.addAssignee(username);
 	out.println(User.getUserFromUsername(username).getFullname());
 } else if(mAction.equals("addComment")) {

@@ -178,6 +178,7 @@
 </div>
 
 <input id="activeUser" value="<%= user.getUsername() %>" hidden/>
+<input id="rinciantugas-taskid" value="<%= task.getID() %>" hidden/>
 
 </body>
 </html>

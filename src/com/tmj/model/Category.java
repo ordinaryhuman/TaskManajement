@@ -200,17 +200,29 @@ public class Category extends BaseModel {
 	public void setMembers(String usernameMembers) {
 		DBQueryExecutor executor = new DBQueryExecutor();
 		String[] usernames = usernameMembers.split(";");
-		System.out.println(usernameMembers);
 
 		try {
 			executor.executeQuery(String.format("DELETE FROM `%s` WHERE `%s`.`categoryID` = '%d'", DBTable.CATEGORY_USER, DBTable.CATEGORY_USER, mID));
 			for(String username : usernames) {
-				System.out.println(username);
 				executor.executeQuery(String.format("INSERT INTO `%s` (`categoryID`, `username`) VALUES ('%d', '%s')",
 						DBTable.CATEGORY_USER, mID, username));
 			}
 		} catch (SQLException sEx) {
 			sEx.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
+	}
+	
+	public void addMember(String username) {
+		DBQueryExecutor executor = new DBQueryExecutor();
+		
+		try {
+			executor.executeQuery(String.format("INSERT INTO `%s` (`categoryID`, `username`) VALUES ('%d', '%s')",
+					DBTable.CATEGORY_USER, mID, username));
+		} catch (SQLException e) {
+			e.printStackTrace();
 		} finally {
 			executor.closeQuery();
 			executor.closeConnection();
@@ -251,6 +263,16 @@ public class Category extends BaseModel {
 		}
 		
 		return retval;
+	}
+	
+	public Boolean isMember(String username) {
+		User[] users = this.getMembers();
+		for(User user : users) {
+			if(user.getUsername().equals(username)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public User getCreator() {

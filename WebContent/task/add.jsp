@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import="com.tmj.model.*" %>
+<%
+	Category category = (Category) request.getAttribute("category");
+%>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -23,7 +27,7 @@
 		<div class="maketask">
 			<div class="fieldhead">
 				<h2>Make a Task</h2>
-				<h4><?php echo $category->name ?></h4>
+				<h4><%= category.getName() %></h4>
 			</div>
 			<hr>
             <div class="field1">
@@ -132,7 +136,7 @@
 			</div>
             
 			<div class="field1">
-				<input type="text" name="categoryID" value="<?php echo $category->id; ?>" style="visibility: hidden"/><br>
+				<input type="text" name="categoryID" value="<%= category.getID() %>" style="visibility: hidden"/><br>
 				<input id="addtugas-submit" type="submit" value="Save" disabled/>
 			</div>
             
@@ -145,6 +149,6 @@
     By Abdurrosyid Broto Handoyo, Rubiano Adityas, Novriady Saputra<br />
     Maret 2013
 </div>
-<a id='addtugas-categoryid'><?php echo $category->id; ?></a>
+<a id='addtugas-categoryid' hidden><%= category.getID() %></a>
 </body>
 </html>
