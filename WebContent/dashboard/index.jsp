@@ -86,6 +86,7 @@
     By Abdurrosyid Broto Handoyo, Rubiano Adityas, Novriady Saputra<br />
     Maret 2013
 </div>
+<a id="activeUser" hidden><%= user.getUsername() %></a>
 
 </body>
 </html>

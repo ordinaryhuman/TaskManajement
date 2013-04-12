@@ -45,6 +45,7 @@ function selectCategoryAJAX(selectedCategoryID) {
 	
 	xmlhttp.onreadystatechange=function()
 	{
+		activeUser = $id('activeUser').innerHTML;
 		if (xmlhttp.readyState==4 && xmlhttp.status==200)
 		{
 			response = JSON.parse(xmlhttp.responseText);
@@ -70,10 +71,12 @@ function selectCategoryAJAX(selectedCategoryID) {
 					s = s + 'Kategori : ' + obj.category + '<br />';
 					s = s + obj.tags;
 					s = s + '<br>';
-					s = s + '<form action="dashboard" method="post">';
-					s = s + '<input name="action" value="deleteTask" hidden/>';
-					s = s + '<input name="taskID" value="' + obj.ID + '" hidden/>';
-					s = s + '<input type="submit" value="Delete">';
+					if(obj.username == activeUser) {
+						s = s + '<form action="dashboard" method="post">';
+						s = s + '<input name="action" value="deleteTask" hidden/>';
+						s = s + '<input name="taskID" value="' + obj.ID + '" hidden/>';
+						s = s + '<input type="submit" value="Delete">';
+					}
 					s = s + '</form>';
 				}
 				s = s + '</tr>';
@@ -89,11 +92,13 @@ function selectCategoryAJAX(selectedCategoryID) {
 				s = s + 'Kategori : ' + obj.category + '<br />';
 				s = s + obj.tags;
 				s = s + '<br>';
-				s = s + '<form action="dashboard" method="post">';
-				s = s + '<input name="action" value="deleteTask" hidden/>';
-				s = s + '<input name="taskID" value="' + obj.ID + '" hidden/>';
-				s = s + '<input type="submit" value="Delete">';
-				s = s + '</form>';
+				if(obj.username == activeUser) {
+					s = s + '<form action="dashboard" method="post">';
+					s = s + '<input name="action" value="deleteTask" hidden/>';
+					s = s + '<input name="taskID" value="' + obj.ID + '" hidden/>';
+					s = s + '<input type="submit" value="Delete">';
+					s = s + '</form>';
+				}
 				s = s + '</tr>';
 			}
 			
