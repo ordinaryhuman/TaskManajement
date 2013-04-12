@@ -81,7 +81,7 @@
             <div class="iinfo" id="name_info"></div>
             <div>
                 <label for="userid">Username</label>
-                <input type="text" id="userid" value="" name="username" onChange="validate_userid()" onkeyup="validateUsernameAJAX()"/>
+                <input type="text" id="userid" value="" name="username" onChange="validate_userid();validate_subreg();" onkeyup="validateUsernameAJAX()"/>
                 <div class="requirement">
                 Min. 5 characters, only space and alphabet.<br>
                 <a id="userVal"></a>
@@ -91,21 +91,21 @@
             <div class="iinfo" id="pass_info"></div>
             <div>
                 <label for="passid">Password</label>
-                <input type="password" id="passid" name="password" value="" onChange="validate_passid()"/>
+                <input type="password" id="passid" name="password" value="" onChange="validate_passid();validate_subreg();"/>
                 <div class="requirement">Min. 8 characters.</div>
             </div>
             
             <div class="iinfo" id="confpass_info"></div>
             <div>
                 <label for="confirmpass">Confirm Password</label>
-                <input type="password" id="confirmpass" value="" onChange="validate_confirmpass()"/>
+                <input type="password" id="confirmpass" value="" onChange="validate_confirmpass();validate_subreg();"/>
                 <div class="requirement">Must be equal with password</div>
             </div>
             
             <div class="iinfo" id="fullname_info"></div>
             <div>
                 <label for="fullname">Full Name</label>
-                <input type="text" id="fullname" value="" name="fullname" onChange="validate_fullname()"/>
+                <input type="text" id="fullname" value="" name="fullname" onChange="validate_fullname();validate_subreg();"/>
                 <div class="requirement">Must have space between two character.</div>
             </div>
             
@@ -150,7 +150,7 @@
 	            <div class="iinfo" id="email_info"></div>
 	            <div>
 	                <label for="email">Email</label>
-	                <input name="email" type="text" id="email" value="" onChange="validate_email()"  onkeyup="validateEmailAJAX()"/>
+	                <input name="email" type="text" id="email" value="" onChange="validate_email();validate_subreg();"  onkeyup="validateEmailAJAX()"/>
 	                <div class="requirement">
 	                Min. 1 character before @.<br/>Min. 1 character between @ and'.'<br/>Top level domain should contain at least 2 characters.<br/>ex. x@x.xx<br>
 	                <a id="emailVal"></a>
@@ -160,11 +160,12 @@
 	             <div class="iinfo" id="avatar_info"></div>
 	            <div>
 	                <label for="avatar">Avatar</label>
-	                <input type="file" name="avatar_path" id="avatar" value="" onChange="validate_avatar()"/>
+	                <input type="file" name="avatar_path" id="avatar" value="" onChange="validate_avatar();validate_subreg();"/>
 	                <div class="requirement">File must be .jpg or .jpeg.</div>
 	            </div>
 	            <input name="action" value="register" hidden="true"/>
-	       		<div align="right"><input type="submit" value="Register" name="register">
+	       		<div align="right"><input id="subreg" type="submit" value="Register" name="register">
+	       		<script>document.getElementById("subreg").disabled=true;</script>
 	            </div>
      
             

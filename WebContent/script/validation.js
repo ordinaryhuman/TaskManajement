@@ -77,3 +77,17 @@ function validate_taskpic() {
 function validate_taskvideo() {
 	validate_Output(/\.(mp4|avi|wmv|mkv)$/, document.getElementById('taskvideo').value,'INVALID','VALID','taskvideo_info');
 }
+
+function validate_subreg() {
+	if (	/^.{5,}$/.test(document.getElementById('userid').value) &&
+			/^.{8,}$/.test(document.getElementById('passid').value) &&
+			document.getElementById('passid').value == document.getElementById('confirmpass').value &&
+			/^[a-zA-Z ]{1,} [a-zA-Z ]{1,}$/.test(document.getElementById('fullname').value) &&
+			/^\w+@(\w+\.)+\w{2,}$/.test(document.getElementById('email').value) &&
+			/\.(jpg|jpeg)$/.test(document.getElementById('avatar').value)) {
+		document.getElementById("subreg").disabled=false;
+	}
+	else {
+		document.getElementById("subreg").disabled=true;
+	}
+}
