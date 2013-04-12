@@ -345,7 +345,7 @@ function comment_pages(taskid, page) {
 				
 				newCom.innerHTML = s;
 				
-				$id('rincian-comment-list').insertBefore(newCom, $id('rincian-comment-list').firstElementChild);
+				$id('rincian-comment-list').appendChild(newCom);
 			}
 			
 			len = $id('comment-length').value;
