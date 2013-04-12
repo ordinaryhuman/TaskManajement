@@ -213,6 +213,20 @@ public class Comment extends BaseModel {
 	public User getUser() {
 		return User.getUserFromUsername(mUsername);
 	}
+	
+	public void deleteComment() {
+		DBQueryExecutor executor = new DBQueryExecutor();
+		String stmt = String.format("DELETE FROM `%s` WHERE `commentID` = '%d'", DBTable.COMMENT, this.getID());
+				
+		try {
+			executor.executeQuery(stmt);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			executor.closeQuery();
+			executor.closeConnection();
+		}
+	}
 
 	private Integer mID;
 	private Integer mTaskID;

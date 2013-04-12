@@ -19,6 +19,9 @@ if(mAction.equals("deleteAttachment")) {
 	String username = request.getParameter("username");
 	Task task = Task.getTaskFromTaskID(new Integer(request.getParameter("taskID")));
 	task.deleteAssignee(username);
+} else if(mAction.equals("deleteComment")) {
+	Comment comment = Comment.getCommentFromCommentID(new Integer(request.getParameter("commentID")));
+	comment.deleteComment();
 } else if(mAction.equals("editDeadline")) {
 	Task task = Task.getTaskFromTaskID(new Integer(request.getParameter("taskID")));
 	String deadline = request.getParameter("deadline");
@@ -74,9 +77,7 @@ if(mAction.equals("deleteAttachment")) {
 	}
 	
 	out.println(arr.toString());
-}
-/*
-else if(mAction.equals("addAttachment")) {
+} else if(mAction.equals("addAttachment")) {
 	Integer taskID = new Integer(request.getParameter("taskID"));
 	Integer id = Attachment.getAvailableAttachmentID();
 	String type = request.getParameter("type");
@@ -98,5 +99,4 @@ else if(mAction.equals("addAttachment")) {
 	obj.append("destPath", destPath);
 	out.println(obj.toString());
 }
-*/
 %>

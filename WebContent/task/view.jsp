@@ -114,13 +114,13 @@
     </div>
     
     <% if(user.isUserCanEditTask(task.getID())) { %>
- 	<form class="edit" id="rincian-attachment-form" hidden action="task?action=addAttachment&taskID=<%= task.getID() %>" method="post" enctype="multipart/form-data">
-    	<input type="radio" id="rincian-attachment-type-file" name="rincian-attachment-type" value="file" onclick="setType(<%= task.getID() %>)" checked/> File <br>
-    	<input type="radio" id="rincian-attachment-type-image" name="rincian-attachment-type" value="image" onclick="setType(<%= task.getID() %>)"/> Image <br>
-    	<input type="radio" id="rincian-attachment-type-video" name="rincian-attachment-type" value="video" onclick="setType(<%= task.getID() %>)"/> Video <br>
-    	<input type="file" id="rincian-attachment-path" name="rincian-attachment-path" onchange="setType(<%= task.getID() %>)"/>
-    	<input type="submit" value="Submit"/>
-    </form>
+ 	<div id="rincian-attachment-edit" class="edit" hidden>
+    	<input type="radio" id="rincian-attachment-type-file" name="rincian-attachment-type" value="file" checked/> File <br>
+    	<input type="radio" id="rincian-attachment-type-image" name="rincian-attachment-type" value="image"/> Image <br>
+    	<input type="radio" id="rincian-attachment-type-video" name="rincian-attachment-type" value="video"/> Video <br>
+    	<input type="file" id="rincian-attachment-path"/>
+    	<input type="button" value="Submit" onclick="addAttachment(<%= task.getID() %>)"/>
+    </div>
     <% } %>
     
 	<% if(user.isUserCanEditTask(task.getID())) { %>
@@ -152,9 +152,12 @@
 		}
 		Comment comment = comments[i];
 		out.println(String.format("<div class='commentbox' id='rincian-comment-list-%d'>", comment.getID()));
-		out.println(String.format("<img src='upload/avatars/%s' class='commentuser'/>", comment.getUser().getAvatarPath()));
-		out.println(String.format("<div class='nameuser'>%s (%s)</div>", comment.getUsername(), comment.getTimestamp()));
-		out.println(String.format("<div class='comment'>%s</div>", comment.getContent()));
+		out.println(String.format("<img id='rincian-comment-list-%d' src='upload/avatars/%s' class='commentuser' />", comment.getID(), comment.getUser().getAvatarPath()));
+		out.println(String.format("<div class='nameuser' id='rincian-comment-list-%d'>%s (%s)</div>", comment.getID(), comment.getUsername(), comment.getTimestamp()));
+		out.println(String.format("<div class='comment' id='rincian-comment-list-%d'>%s</div>", comment.getID(), comment.getContent()));
+		if(comment.getUsername().equals(user.getUsername())) {
+   			out.println(String.format("<input id='rincian-comment-list-%d' type='button' class='delete' value='Delete' onclick='deleteComment(\"%s\", %d)'/>", comment.getID(), user.getUsername(), comment.getID()));
+   		}
 		out.println("</div>");
 	}
 	%>
