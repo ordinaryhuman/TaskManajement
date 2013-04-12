@@ -145,7 +145,7 @@ function deleteComment(username, commentID) {
 	{
 		if (xmlhttp.readyState==4 && xmlhttp.status==200)
 		{
-			deleteChild($id('rincian-comment-list').childNodes[1], $id('rincian-comment-list-' + commentID));
+			deleteChild($id('rincian-comment-list'), $id('rincian-comment-list-' + commentID));
 		}
 	}
 	xmlhttp.open("GET","ajaxHandler/detailTask.jsp?action=deleteComment&username=" + username + "&commentID=" + commentID,true);
@@ -365,6 +365,11 @@ function comment_pages(taskid, page) {
 				s = '<img src="upload/avatars/' + response[i].avatarPath + '" class="commentuser">';
 				s = s + '<div class="nameuser">' + response[i].username + ' (' + response[i].timestamp + ')</div>';
 				s = s + '<div class="comment">' + response[i].content + '</div>';
+				
+				if(response[i].username == $id('activeUser').value) {
+					s = s + "<input id='rincian-comment-list-" + response[i].id + "' type='button' value='Delete' " + 
+					"onclick='deleteComment(\"" + response[i].username + "\", " + response[i].id + ")'/>";
+				}
 				
 				newCom.innerHTML = s;
 				

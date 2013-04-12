@@ -156,7 +156,7 @@
 		out.println(String.format("<div class='nameuser' id='rincian-comment-list-%d'>%s (%s)</div>", comment.getID(), comment.getUsername(), comment.getTimestamp()));
 		out.println(String.format("<div class='comment' id='rincian-comment-list-%d'>%s</div>", comment.getID(), comment.getContent()));
 		if(comment.getUsername().equals(user.getUsername())) {
-   			out.println(String.format("<input id='rincian-comment-list-%d' type='button' class='delete' value='Delete' onclick='deleteComment(\"%s\", %d)'/>", comment.getID(), user.getUsername(), comment.getID()));
+   			out.println(String.format("<input id='rincian-comment-list-%d' type='button' value='Delete' onclick='deleteComment(\"%s\", %d)'/>", comment.getID(), user.getUsername(), comment.getID()));
    		}
 		out.println("</div>");
 	}
@@ -176,6 +176,8 @@
     By Abdurrosyid Broto Handoyo, Rubiano Adityas, Novriady Saputra<br />
     Maret 2013
 </div>
+
+<input id="activeUser" value="<%= user.getUsername() %>" hidden/>
 
 </body>
 </html>
