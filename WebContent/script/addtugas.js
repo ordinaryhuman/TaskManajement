@@ -12,7 +12,7 @@ function isValid() {
 	
 	requirement[0] = ($id('taskname').value.length != 0);
 	requirement[1] = ($id('bir').value.length != 0);
-	requirement[2] = /^[a-zA-Z ]{1,}$/.test($id('taskname').value);
+	requirement[2] = /^[a-zA-Z ]{1,25}$/.test($id('taskname').value);
 	
 	for(i = 0; i < requirement.length; i++) {
 		if(!requirement[i])

@@ -35,7 +35,7 @@
             </div>
             <div class="iinfo" id="taskname_info"></div>
             <div class="field">
-				<input type="text" id="taskname" onkeyup="checkInput()" onchange="validate_taskname()" name="taskname"/>
+				<input type="text" id="taskname" maxlength="25" onkeyup="checkInput()" onchange="validate_taskname()" name="taskname"/>
 			</div>
 			<div class="fieldhelp">
 				Maksimal 25 karakter. Tidak boleh menggunakan karakter khusus.

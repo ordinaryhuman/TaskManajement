@@ -32,8 +32,7 @@ function validate_confirmpass() {
 	else			document.getElementById('confpass_info').innerHTML = '<span class="valid">VALID</span>';
 }
 
-function validate_oldpass() {
-	var pw1 = document.getElementById('test').value;
+function validate_oldpass(pw1) {
 	var pw2 = document.getElementById('oldpass').value;
 	if(pw2 != pw1)	document.getElementById('oldpass_info').innerHTML = '<span class="error">INVALID</span>';
 	else			document.getElementById('oldpass_info').innerHTML = '<span class="valid">VALID</span>';
@@ -60,7 +59,11 @@ function validate_avatar() {
 }
 
 function validate_taskname() {
-		validate_Output(/^.{1,25}$/, document.getElementById('taskname').value,'INVALID','VALID','taskname_info');
+	var regexp = /[^a-zA-Z0-9 ]/;
+	var valid = (!regexp.test(document.getElementById('taskname').value));	
+	syntaxvalid = '<span class="valid">' + 'VALID' + '</span>';
+	syntaxerror = '<span class="error">' + 'INVALID' + '</span>';
+	document.getElementById('taskname_info').innerHTML = valid ? syntaxvalid : syntaxerror;
 }
 
 function validate_taskfile() {
