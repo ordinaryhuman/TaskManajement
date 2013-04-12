@@ -12,7 +12,7 @@ function validate_Output(regexp, input, syntaxerror, syntaxvalid, idToWrite) {
 	var valid = (regexp.test(input));	
 	syntaxvalid = '<span class="valid">' + syntaxvalid + '</span>';
 	syntaxerror = '<span class="error">' + syntaxerror + '</span>';
-	document.getElementById('idToWrite').innerHTML = valid ? syntaxvalid : syntaxerror;
+	document.getElementById(idToWrite).innerHTML = valid ? syntaxvalid : syntaxerror;
 	return valid;
 	if (valid == syntaxvalid) {}
 }
