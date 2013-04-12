@@ -96,7 +96,7 @@
     	for(Attachment attachment : attachments) {
     		out.println(String.format("<div id='rincian-attachment-%d'>", attachment.getID()));
     		if(attachment.getType().equals("file")) {
-    			out.println(String.format("<a href='%s'> %s </a>", attachment.getFilePath(), attachment.getFilename()));
+    			out.println(String.format("<a href='%s' target='_blank'> %s </a>", attachment.getFilePath(), attachment.getFilename()));
     			out.println("<br>");
     		} else if(attachment.getType().equals("image")) {
     			out.println(String.format("%s<br><img src='%s'></img>", attachment.getFilename(), attachment.getFilePath()));
