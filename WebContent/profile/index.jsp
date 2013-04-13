@@ -43,7 +43,6 @@ Task[] tasksNotDone = (Task[]) request.getAttribute("tasksNotDone");
     <div align="right" id="submitInput" hidden>
     	<input type="button" value="Undo Edit" class="buttonbox1" onclick="toogleEdit()"/>
     	<input id="subpro" type="submit" value="Submit Edit" class="buttonbox1" onclick="isChanged()" />
-    	<!--  <script>document.getElementById("subpro").disabled=true;</script> -->
    	</div>
    	<input value="edit" name="action" hidden/>
    	<input value="<%= user.getUsername() %>" name="username" hidden/>
@@ -55,7 +54,9 @@ Task[] tasksNotDone = (Task[]) request.getAttribute("tasksNotDone");
     <div id="fullnameDisp"><%= user.getFullname() %></div>
     <div id="fullnameEdit" hidden>
     	<div class="iinfo" id="fullname_info"></div>
-    	<input id="fullname" type="text" name="fullname" value="<%= user.getFullname() %>" onChange="validate_fullname()" />
+    	<%
+    		out.println(String.format("<input id='fullname' type='text' name='fullname' value='%s' onKeyUp='validate_fullname()'/>", user.getFullname()));
+   		%>
    	</div>
     </p>
 	<p>Tanggal lahir : <br>
@@ -66,21 +67,27 @@ Task[] tasksNotDone = (Task[]) request.getAttribute("tasksNotDone");
     <div id="emailDisp"><%= user.getEmail() %></div>
     <div id="emailEdit" hidden>
     	<div class="iinfo" id="email_info"></div>
-    	<input id="email" type="text" name="email" value="<%= user.getEmail() %>" onChange="validate_email()"/>
+    	<%
+    		out.println(String.format("<input id='email' type='text' name='email' value='%s' onKeyUp='validate_email()'/>", user.getEmail()));
+   		%>
    	</div>
     </p>
     <div id="password" hidden>
     	<div class="iinfo" id="oldpass_info"></div>
     	<p>Password Lama : <br>
     	<% 
-    		out.println(String.format("<input type='password' id='oldpass' name='oldpassword'  onChange='validate_oldpass(\"%s\")'/></p>", user.getPassword()));
+    		out.println(String.format("<input type='password' id='oldpass' name='oldpassword'  onKeyUp='validate_oldpass(\"%s\")'/></p>", user.getPassword()));
     	%>
 	    <div class="iinfo" id="pass_info"></div>
 	    <p>Password Baru : <br>
-	    <input type="password" id="passid" name="newpassword" onChange="validate_passid()"/></p>
+	    <%
+	    	out.println(String.format("<input type='password' id='passid' name='newpassword' onKeyUp='validate_passid()'/></p>"));
+    	%>
 	    <div class="iinfo" id="confpass_info"></div>
 	    <p>Konfirmasi Password : <br>
-	    <input type="password" id="confirmpass" name="confirmnewpassword" onChange="validate_confirmpass()"/></p>
+	    <%
+	    	out.println(String.format("<input type='password' id='confirmpass' name='confirmnewpassword' onKeyUp='validate_confirmpass()'/></p>"));
+    	%>
     </div>
       <hr noshade="noshade" />
       <p class="paragraph2">Task DONE :</p>
