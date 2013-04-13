@@ -69,7 +69,7 @@
             <div class="iinfo" id="name_info"></div>
             <div>
                 <label for="userid">Username</label>
-                <input type="text" id="userid" value="" name="username" onKeyUp="validate_userid();validate_subreg();" onkeyup="validateUsernameAJAX()"/>
+                <input type="text" id="userid" value="" name="username" onKeyUp="validate_userid();validate_subreg();validateUsernameAJAX();"/>
                 <div class="requirement">
                 Min. 5 characters, only space and alphabet.<br>
                 <a id="userVal" class="ajaxAlert"></a>
@@ -138,7 +138,7 @@
 	            <div class="iinfo" id="email_info"></div>
 	            <div>
 	                <label for="email">Email</label>
-	                <input name="email" type="text" id="email" value="" onKeyUp="validate_email();validate_subreg();"  onkeyup="validateEmailAJAX()"/>
+	                <input name="email" type="text" id="email" value="" onKeyUp="validate_email();validate_subreg();validateEmailAJAX();"/>
 	                <div class="requirement">
 	                Min. 1 character before @.<br/>Min. 1 character between @ and'.'<br/>Top level domain should contain at least 2 characters.<br/>ex. x@x.xx<br>
 	                <a id="emailVal" class="ajaxAlert"></a>
