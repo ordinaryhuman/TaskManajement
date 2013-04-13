@@ -79,21 +79,21 @@
             <div class="iinfo" id="pass_info"></div>
             <div>
                 <label for="passid">Password</label>
-                <input type="password" id="passid" name="password" value="" onKeyUp="validate_passid();validate_subreg();"/>
+                <input type="password" id="passid" name="password" value="" onKeyUp="validate_passid()" onChange="validate_subreg()"/>
                 <div class="requirement">Min. 8 characters.</div>
             </div>
             
             <div class="iinfo" id="confpass_info"></div>
             <div>
                 <label for="confirmpass">Confirm Password</label>
-                <input type="password" id="confirmpass" value="" onKeyUp="validate_confirmpass();validate_subreg();"/>
+                <input type="password" id="confirmpass" value="" onKeyUp="validate_confirmpass()" onChange="validate_subreg()"/>
                 <div class="requirement">Must be equal with password</div>
             </div>
             
             <div class="iinfo" id="fullname_info"></div>
             <div>
                 <label for="fullname">Full Name</label>
-                <input type="text" id="fullname" value="" name="fullname" onKeyUp="validate_fullname();validate_subreg();"/>
+                <input type="text" id="fullname" value="" name="fullname" onKeyUp="validate_fullname()" onChange="validate_subreg()"/>
                 <div class="requirement">Must have space between two character.</div>
             </div>
             
@@ -148,7 +148,7 @@
 	             <div class="iinfo" id="avatar_info"></div>
 	            <div>
 	                <label for="avatar">Avatar</label>
-	                <input type="file" name="avatar_path" id="avatar" value="" onKeyUp="validate_avatar();validate_subreg();"/>
+	                <input type="file" name="avatar_path" id="avatar" value="" onKeyUp="validate_avatar()" onChange="validate_subreg()"/>
 	                <div class="requirement">File must be .jpg or .jpeg.</div>
 	            </div>
 	            <input name="action" value="register" hidden="true"/>
