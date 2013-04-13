@@ -2,12 +2,25 @@
  * @author gmochid
  */
 window.onload = function() {
-	
 }
 
 function getAvatarPath(username) {
 	filename = $id('avatar').value.split('.').pop();
 	$id('avatarForm').action = "profile?action=uploadAvatar&username=" + username + "&filename=" + filename;
+}
+
+function isChanged() {
+	check = Array();
+	check[0] = $id("emailDisp").innerHTML == $id("emailEdit").childNodes[0].value;
+	check[1] = $id("fullnameDisp").innerHTML == $id("fullnameEdit").childNodes[0].value;
+	check[2] = $id("birthdateDisp").innerHTML == $id("birthdateEdit").childNodes[0].value;
+	check[3] = "" == $id("oldpass").value;
+	for(i = 0; i < check.length; i++) {
+		if(!check[i]) {
+			return;
+		}
+	}
+	alert('Tidak ada field yang diubah');
 }
 
 function toogleEdit() {

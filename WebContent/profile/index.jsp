@@ -42,7 +42,7 @@ Task[] tasksNotDone = (Task[]) request.getAttribute("tasksNotDone");
 	<div align="right" id="editInput"> <input type="button" value="Edit Profile" class="buttonbox1" onclick="toogleEdit()"/> </div>
     <div align="right" id="submitInput" hidden>
     	<input type="button" value="Undo Edit" class="buttonbox1" onclick="toogleEdit()"/>
-    	<input type="submit" value="Submit Edit" class="buttonbox1" />
+    	<input type="submit" value="Submit Edit" class="buttonbox1" onclick="isChanged()" />
    	</div>
    	<input value="edit" name="action" hidden/>
    	<input value="<%= user.getUsername() %>" name="username" hidden/>
