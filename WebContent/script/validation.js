@@ -93,3 +93,27 @@ function validate_subreg() {
 		document.getElementById("subreg").disabled=true;
 	}
 }
+
+function validate_subpro(pass) {
+	if (	document.getElementById('oldpass').value == pass &&
+			/^[a-zA-Z ]{1,} [a-zA-Z ]{1,}$/.test(document.getElementById('fullname').value) &&
+			/^\w+@(\w+\.)+\w{2,}$/.test(document.getElementById('email').value)
+			) {
+		if (document.getElementById('passid').value == "") {
+			document.getElementById("subreg").disabled=false;
+		}
+		else {
+			if (	/^.{8,}$/.test(document.getElementById('passid').value) &&
+					document.getElementById('passid').value == document.getElementById('confirmpass').value
+					) {
+				document.getElementById("subreg").disabled=false;
+			}
+			else {
+				document.getElementById("subreg").disabled=true;
+			}
+		}
+	}
+	else {
+		document.getElementById("subreg").disabled=true;
+	}
+}

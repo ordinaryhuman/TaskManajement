@@ -42,7 +42,8 @@ Task[] tasksNotDone = (Task[]) request.getAttribute("tasksNotDone");
 	<div align="right" id="editInput"> <input type="button" value="Edit Profile" class="buttonbox1" onclick="toogleEdit()"/> </div>
     <div align="right" id="submitInput" hidden>
     	<input type="button" value="Undo Edit" class="buttonbox1" onclick="toogleEdit()"/>
-    	<input type="submit" value="Submit Edit" class="buttonbox1" onclick="isChanged()" />
+    	<input id="subpro" type="submit" value="Submit Edit" class="buttonbox1" onclick="isChanged()" />
+    	<!--  <script>document.getElementById("subpro").disabled=true;</script> -->
    	</div>
    	<input value="edit" name="action" hidden/>
    	<input value="<%= user.getUsername() %>" name="username" hidden/>
@@ -52,7 +53,10 @@ Task[] tasksNotDone = (Task[]) request.getAttribute("tasksNotDone");
 	</p>
     <p>Nama Lengkap	: <br>
     <div id="fullnameDisp"><%= user.getFullname() %></div>
-    <div id="fullnameEdit" hidden><input type="text" name="fullname" value="<%= user.getFullname() %>" /></div>
+    <div id="fullnameEdit" hidden>
+    	<div class="iinfo" id="fullname_info"></div>
+    	<input id="fullname" type="text" name="fullname" value="<%= user.getFullname() %>" onChange="validate_fullname()" />
+   	</div>
     </p>
 	<p>Tanggal lahir : <br>
 	<div id="birthdateDisp"><%= user.getBirthdate() %></div>
@@ -60,7 +64,10 @@ Task[] tasksNotDone = (Task[]) request.getAttribute("tasksNotDone");
 	</p>
     <p>Email : <br>
     <div id="emailDisp"><%= user.getEmail() %></div>
-    <div id="emailEdit" hidden><input type="text" name="email" value="<%= user.getEmail() %>" /></div>
+    <div id="emailEdit" hidden>
+    	<div class="iinfo" id="email_info"></div>
+    	<input id="email" type="text" name="email" value="<%= user.getEmail() %>" onChange="validate_email()"/>
+   	</div>
     </p>
     <div id="password" hidden>
     	<div class="iinfo" id="oldpass_info"></div>
