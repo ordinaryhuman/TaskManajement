@@ -81,7 +81,7 @@ public class Tag extends BaseModel {
 					Integer categoryID 	= result.getInt("categoryID");
 					String username 	= result.getString("username");
 					String taskname 	= result.getString("taskname");
-					Boolean status 		= result.getBoolean("email");
+					Boolean status 		= result.getBoolean("status");
 					String deadline		= result.getString("deadline");
 					Task task = new Task(ID, categoryID, username, taskname, status, deadline);
 					temp.add(task);

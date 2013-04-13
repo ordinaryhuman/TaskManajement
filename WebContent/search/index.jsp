@@ -39,7 +39,7 @@
 		%>
 		<% } %>
 		
-		<% if(typeQuery.equals("all") || typeQuery.equals("task")) { %>
+		<% if(typeQuery.equals("all") || typeQuery.equals("task")  || typeQuery.equals("tag")) { %>
 		<h4>Task</h4>
 		<%
 			Task[] tasks = (Task[]) request.getAttribute("tasks");

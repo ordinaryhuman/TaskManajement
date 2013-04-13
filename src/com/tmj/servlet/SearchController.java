@@ -31,7 +31,8 @@ public class SearchController extends BaseController {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		super.doGet(request, response);
-		checkLoggedIn(request, response);
+		if(checkLoggedIn(request, response))
+			return;
 	}
 
 	/**
@@ -39,7 +40,8 @@ public class SearchController extends BaseController {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		super.doPost(request, response);
-		checkLoggedIn(request, response);
+		if(checkLoggedIn(request, response))
+			return;
 		
 		String query = request.getParameter("query");
 		String typeQuery = request.getParameter("typeQuery");
@@ -58,7 +60,7 @@ public class SearchController extends BaseController {
 			request.setAttribute("tasks", tasks);
 		} else if(typeQuery.equals("all")) {
 			User[] users = User.getUserFromQuery(query);
-			Task[] tasks = Task.getTaskFromQuery(query);
+			Task[] tasks = Task.getTaskFromQueryComplete(query);
 			Category[] categories = Category.getCategoryFromQuery(query);
 			
 			request.setAttribute("users", users);

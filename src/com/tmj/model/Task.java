@@ -195,6 +195,30 @@ public class Task extends BaseModel {
 		return tasks;
 	}
 	
+	public static Task[] getTaskFromQueryComplete(String query) {
+		Task[] a = Task.getTaskFromQuery(query);
+		Task[] b = Tag.getAllTaskFromTagname(query);
+		ArrayList<Task> AL = new ArrayList<Task>();
+		
+		for(Task u : a)		
+			AL.add(u);
+		for(Task u : b) {
+			boolean x = true;
+			for(Task uAL: AL) {
+				if(uAL.getUsername().equals(u.getUsername())) {
+					x = false;
+				}
+			}
+			if(x)
+				AL.add(u);
+		}
+		
+		Task[] retval = new Task[AL.size()];
+		retval = AL.toArray(retval);
+		
+		return retval;
+	}
+	
 	public static Task[] getTaskFromQuery(String query) {
 		Task[] a = Task.getTaskFromQueryComment(query);
 		Task[] b = Task.getTaskFromQueryTaskname(query);
