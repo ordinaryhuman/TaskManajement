@@ -684,3 +684,7 @@ a#register_pop:hover {
 #rincian-comment-command {
 	margin-left: 335px;
 }
+.ajaxAlert {
+	color: red;
+	font-weight: bold;
+}

@@ -34,19 +34,7 @@
     	<p>You can also share your Task with your friends.</p>
     	<p>Like our motto, Prodictiveness is the key to Success, So <b>LET'S STAY PRODUCTIVE</b> with <b>TaskManajement.</b></p>
     	<p>Click <b>REGISTER</b> if you wants to join us or <b>LOGIN</b> if you already join.</p>
-    	<p style="color: red;">
-    	<%
-    	if(request.getParameter("status") != null) {
-    		String s = request.getParameter("status");
-    		if(s == "1") {
-    			out.println("User not found");
-    		} else {
-    			out.println("Password mismatch");
-    		}
-    	}
-    	%>
-    	</p>
-    </div>
+        </div>
     
 <!-- Popup Login -->
     <a href="#x" class="overlay" id="login_form"> </a>
@@ -81,38 +69,38 @@
             <div class="iinfo" id="name_info"></div>
             <div>
                 <label for="userid">Username</label>
-                <input type="text" id="userid" value="" name="username" onChange="validate_userid();validate_subreg();" onkeyup="validateUsernameAJAX()"/>
+                <input type="text" id="userid" value="" name="username" onKeyUp="validate_userid();validate_subreg();" onkeyup="validateUsernameAJAX()"/>
                 <div class="requirement">
                 Min. 5 characters, only space and alphabet.<br>
-                <a id="userVal"></a>
+                <a id="userVal" class="ajaxAlert"></a>
                 </div>
             </div>
             
             <div class="iinfo" id="pass_info"></div>
             <div>
                 <label for="passid">Password</label>
-                <input type="password" id="passid" name="password" value="" onChange="validate_passid();validate_subreg();"/>
+                <input type="password" id="passid" name="password" value="" onKeyUp="validate_passid();validate_subreg();"/>
                 <div class="requirement">Min. 8 characters.</div>
             </div>
             
             <div class="iinfo" id="confpass_info"></div>
             <div>
                 <label for="confirmpass">Confirm Password</label>
-                <input type="password" id="confirmpass" value="" onChange="validate_confirmpass();validate_subreg();"/>
+                <input type="password" id="confirmpass" value="" onKeyUp="validate_confirmpass();validate_subreg();"/>
                 <div class="requirement">Must be equal with password</div>
             </div>
             
             <div class="iinfo" id="fullname_info"></div>
             <div>
                 <label for="fullname">Full Name</label>
-                <input type="text" id="fullname" value="" name="fullname" onChange="validate_fullname();validate_subreg();"/>
+                <input type="text" id="fullname" value="" name="fullname" onKeyUp="validate_fullname();validate_subreg();"/>
                 <div class="requirement">Must have space between two character.</div>
             </div>
             
             <div class="iinfo" id="birth_info"></div>
             <div>
                 <label for="birth">Birth Date</label>
-              <input type="text" id="birth" value="" name="birthdate" class="birthcal" onChange="validate_birth()"/>
+              <input type="text" id="birth" value="" name="birthdate" class="birthcal" onchange="validate_birth()"/>
               <input type="button" class="cal" onClick="openCal()" value="calendar"/>
                 
                 <!-- CALENDAR -->
@@ -150,17 +138,17 @@
 	            <div class="iinfo" id="email_info"></div>
 	            <div>
 	                <label for="email">Email</label>
-	                <input name="email" type="text" id="email" value="" onChange="validate_email();validate_subreg();"  onkeyup="validateEmailAJAX()"/>
+	                <input name="email" type="text" id="email" value="" onKeyUp="validate_email();validate_subreg();"  onkeyup="validateEmailAJAX()"/>
 	                <div class="requirement">
 	                Min. 1 character before @.<br/>Min. 1 character between @ and'.'<br/>Top level domain should contain at least 2 characters.<br/>ex. x@x.xx<br>
-	                <a id="emailVal"></a>
+	                <a id="emailVal" class="ajaxAlert"></a>
 	                </div>
 	            </div>
 	            
 	             <div class="iinfo" id="avatar_info"></div>
 	            <div>
 	                <label for="avatar">Avatar</label>
-	                <input type="file" name="avatar_path" id="avatar" value="" onChange="validate_avatar();validate_subreg();"/>
+	                <input type="file" name="avatar_path" id="avatar" value="" onKeyUp="validate_avatar();validate_subreg();"/>
 	                <div class="requirement">File must be .jpg or .jpeg.</div>
 	            </div>
 	            <input name="action" value="register" hidden="true"/>
@@ -182,5 +170,19 @@
     By Abdurrosyid Broto Handoyo, Rubiano Adityas, Novriady Saputra<br />
     Maret 2013
 </div>
+<script type="text/javascript">
+window.onload = function() {
+<%
+if(request.getParameter("status") != null) {
+	String s = request.getParameter("status");
+	if(s == "1") {
+		out.println("alert('User not found');");
+	} else {
+		out.println("alert('Password mismatch');");
+	}
+}
+%>
+}
+</script>
 
 </body>

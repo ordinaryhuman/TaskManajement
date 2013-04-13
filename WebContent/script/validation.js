@@ -84,7 +84,10 @@ function validate_subreg() {
 			document.getElementById('passid').value == document.getElementById('confirmpass').value &&
 			/^[a-zA-Z ]{1,} [a-zA-Z ]{1,}$/.test(document.getElementById('fullname').value) &&
 			/^\w+@(\w+\.)+\w{2,}$/.test(document.getElementById('email').value) &&
-			/\.(jpg|jpeg)$/.test(document.getElementById('avatar').value)) {
+			/\.(jpg|jpeg)$/.test(document.getElementById('avatar').value) &&
+			(document.getElementById("userVal").innerHTML == "Username Available") &&
+			(document.getElementById("emailVal").innerHTML == "Email Available")
+			) {
 		document.getElementById("subreg").disabled=false;
 	}
 	else {
