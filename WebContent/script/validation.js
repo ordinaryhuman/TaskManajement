@@ -43,7 +43,7 @@ function validate_fullname() {
 }
 
 function validate_email() {
-	validate_Output(/^\w+@(\w+\.)+\w{2,}$/, document.getElementById('email').value,'INVALID','VALID','email_info');
+	validate_Output(/^([a-zA-Z0-9_.-])+([a-zA-Z0-9_.-])+([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/, document.getElementById('email').value,'INVALID','VALID','email_info');
 }
 
 function validate_birth() {
@@ -83,7 +83,7 @@ function validate_subreg() {
 			/^.{8,}$/.test(document.getElementById('passid').value) &&
 			document.getElementById('passid').value == document.getElementById('confirmpass').value &&
 			/^[a-zA-Z ]{1,} [a-zA-Z ]{1,}$/.test(document.getElementById('fullname').value) &&
-			/^\w+@(\w+\.)+\w{2,}$/.test(document.getElementById('email').value) &&
+			/^([a-zA-Z0-9_.-])+([a-zA-Z0-9_.-])+([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/.test(document.getElementById('email').value) &&
 			(document.getElementById("userVal").innerHTML == "Username Available") &&
 			(document.getElementById("emailVal").innerHTML == "Email Available")
 			) {
@@ -97,7 +97,7 @@ function validate_subreg() {
 function validate_subpro(pass) {
 	if (	document.getElementById('oldpass').value == pass &&
 			/^[a-zA-Z ]{1,} [a-zA-Z ]{1,}$/.test(document.getElementById('fullname').value) &&
-			/^\w+@(\w+\.)+\w{2,}$/.test(document.getElementById('email').value)
+			/^([a-zA-Z0-9_.-])+([a-zA-Z0-9_.-])+([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/.test(document.getElementById('email').value)
 			) {
 		if (document.getElementById('passid').value == "") {
 			document.getElementById("subreg").disabled=false;
@@ -115,5 +115,32 @@ function validate_subpro(pass) {
 	}
 	else {
 		document.getElementById("subreg").disabled=true;
+	}
+}
+
+function validate_subpro(pass) {
+	if (	/^[a-zA-Z ]{1,} [a-zA-Z ]{1,}$/.test(document.getElementById('fullname').value) &&
+			/^\w+@(\w+\.)+\w{2,}$/.test(document.getElementById('email').value)
+			) {
+		if (	document.getElementById('oldpass').value != "" ||
+				document.getElementById('passid').value != "" ||
+				document.getElementById('confirmpass').value != ""
+				) {
+			if (	document.getElementById('oldpass').value == pass &&
+					/^.{8,}$/.test(document.getElementById('passid').value) &&
+					document.getElementById('passid').value == document.getElementById('oldpass').value
+					) {
+				document.getElementById("subpro").disabled=false;
+			}
+			else {
+				document.getElementById("subpro").disabled=true;
+			}
+		}
+		else {
+			document.getElementById("subpro").disabled=false;
+		}
+	}
+	else {
+		document.getElementById("subpro").disabled=true;
 	}
 }
